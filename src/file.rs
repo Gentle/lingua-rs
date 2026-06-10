@@ -195,7 +195,7 @@ pub(crate) fn read_probability_model_data_file(
     let directory = get_language_models_directory(language);
     let fst_file = directory.get_file(file_name).ok_or(ErrorKind::NotFound)?;
     let fst_map = fst::Map::new(Cow::Borrowed(fst_file.contents())).unwrap();
-    Ok(fst_map)
+    Ok(LanguageModelFst::from_fst_map(fst_map))
 }
 
 pub(crate) fn read_count_model_data_file(

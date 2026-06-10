@@ -22,6 +22,7 @@ use std::sync::LazyLock;
 
 use counter::Counter;
 use dashmap::DashMap;
+use fst::Streamer;
 use itertools::Itertools;
 #[cfg(not(target_family = "wasm"))]
 use rayon::prelude::*;
@@ -40,7 +41,63 @@ use crate::model::{
 use crate::ngram::NgramRef;
 use crate::result::DetectionResult;
 
-pub(crate) type LanguageModelFst = fst::Map<Cow<'static, [u8]>>;
+/// Reserved fst keys storing the quantization grid bounds as f64 bit patterns.
+/// Single non-letter bytes cannot collide with real ngram keys because ngrams
+/// consist of letters only.
+pub(crate) const QUANTIZATION_MIN_KEY: &[u8] = &[0x00];
+pub(crate) const QUANTIZATION_MAX_KEY: &[u8] = &[0x01];
+pub(crate) const QUANTIZATION_LEVELS: f64 = 65535.0;
+
+/// An fst map storing ngram log-probabilities quantized to a 16-bit grid
+/// between the minimum and maximum log-probability of the model.
+#[derive(Debug)]
+pub(crate) struct LanguageModelFst {
+    map: fst::Map<Cow<'static, [u8]>>,
+    min: f64,
+    step: f64,
+}
+
+impl LanguageModelFst {
+    pub(crate) fn from_fst_map(map: fst::Map<Cow<'static, [u8]>>) -> Self {
+        let min = f64::from_bits(
+            map.get(QUANTIZATION_MIN_KEY)
+                .expect("language model misses quantization min key"),
+        );
+        let max = f64::from_bits(
+            map.get(QUANTIZATION_MAX_KEY)
+                .expect("language model misses quantization max key"),
+        );
+        let step = (max - min) / QUANTIZATION_LEVELS;
+        Self { map, min, step }
+    }
+
+    pub(crate) fn get<K: AsRef<[u8]>>(&self, key: K) -> Option<f64> {
+        self.map
+            .get(key)
+            .map(|quantized| self.min + quantized as f64 * self.step)
+    }
+
+    #[cfg(test)]
+    pub(crate) fn contains_key<K: AsRef<[u8]>>(&self, key: K) -> bool {
+        self.map.contains_key(key)
+    }
+
+    pub(crate) fn as_fst_bytes(&self) -> &[u8] {
+        self.map.as_fst().as_bytes()
+    }
+
+    pub(crate) fn dequantized_entries(&self) -> Vec<(Vec<u8>, f64)> {
+        let mut entries = vec![];
+        let mut stream = self.map.stream();
+        while let Some((key, quantized)) = stream.next() {
+            if key != QUANTIZATION_MIN_KEY && key != QUANTIZATION_MAX_KEY {
+                entries.push((key.to_vec(), self.min + quantized as f64 * self.step));
+            }
+        }
+        entries
+    }
+}
+
 pub(crate) type CountModelFst = fst::Set<Cow<'static, [u8]>>;
 
 type LanguageModelMap = DashMap<Language, LanguageModelFst>;
@@ -1068,7 +1125,6 @@ impl LanguageDetector {
             .get(&language)
             .unwrap()
             .get(ngram.value)
-            .map(f64::from_bits)
     }
 
     fn count_unigrams(
@@ -1321,7 +1377,7 @@ mod tests {
     fn language_model_fst(data: HashMap<&'static str, f64>) -> LanguageModelFst {
         let fst_data = data
             .iter()
-            .map(|(&key, &value)| (key.as_bytes().to_vec(), value.ln().to_bits()))
+            .map(|(&key, &value)| (key.as_bytes().to_vec(), value.ln()))
             .collect_vec();
 
         create_fst_map(fst_data)
@@ -1597,11 +1653,18 @@ mod tests {
         let probability =
             detector_for_english_and_german.look_up_ngram_probability(language, &ngram_ref);
 
-        assert_eq!(
-            probability, expected_probability,
-            "expected probability {:?} for language '{:?}' and ngram '{}', got {:?}",
-            expected_probability, language, ngram, probability
-        );
+        match (probability, expected_probability) {
+            (Some(actual), Some(expected)) => assert!(
+                (actual - expected).abs() < 1e-3,
+                "expected probability {expected} within quantization tolerance \
+                 for language '{language:?}' and ngram '{ngram}', got {actual}"
+            ),
+            (None, None) => {}
+            _ => panic!(
+                "expected probability {:?} for language '{:?}' and ngram '{}', got {:?}",
+                expected_probability, language, ngram, probability
+            ),
+        }
     }
 
     #[rstest(
@@ -1635,7 +1698,7 @@ mod tests {
                 f64,
                 sum_of_probabilities,
                 expected_sum_of_probabilities,
-                ulps = 1
+                epsilon = 1e-3
             ),
             "expected sum {} for language '{:?}' and ngrams {:?}, got {}",
             expected_sum_of_probabilities,
@@ -1683,7 +1746,7 @@ mod tests {
             let expected_probability = expected_probabilities[&language];
 
             assert!(
-                approx_eq!(f64, probability, expected_probability, ulps = 1),
+                approx_eq!(f64, probability, expected_probability, epsilon = 1e-3),
                 "expected probability {} for language '{:?}', got {}",
                 expected_probability,
                 language,

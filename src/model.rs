@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-use crate::detector::{CountModelFst, LanguageModelFst};
+use crate::detector::{
+    CountModelFst, LanguageModelFst, QUANTIZATION_LEVELS, QUANTIZATION_MAX_KEY,
+    QUANTIZATION_MIN_KEY,
+};
 use crate::file::{read_count_model_data_file, read_probability_model_data_file};
 use crate::language::Language;
 use crate::ngram::{Ngram, NgramRef};
@@ -35,8 +38,8 @@ pub(crate) struct NgramProbabilityModel {
 
 impl PartialEq for NgramProbabilityModel {
     fn eq(&self, other: &Self) -> bool {
-        let ngrams = self.ngrams.as_fst().as_bytes();
-        let other_ngrams = other.ngrams.as_fst().as_bytes();
+        let ngrams = self.ngrams.as_fst_bytes();
+        let other_ngrams = other.ngrams.as_fst_bytes();
         self.language == other.language && ngrams == other_ngrams
     }
 }
@@ -91,14 +94,38 @@ pub(crate) fn load_ngram_count_model(
     }
 }
 
-pub(crate) fn create_fst_map(mut data: Vec<(Vec<u8>, u64)>) -> LanguageModelFst {
-    data.sort_unstable_by(|(first, _), (second, _)| first.cmp(second));
+pub(crate) fn create_fst_map(data: Vec<(Vec<u8>, f64)>) -> LanguageModelFst {
+    let (mut min, mut max) = (0.0_f64, 0.0_f64);
+    for (i, (_, value)) in data.iter().enumerate() {
+        if i == 0 {
+            (min, max) = (*value, *value);
+        } else {
+            min = min.min(*value);
+            max = max.max(*value);
+        }
+    }
+    let range = max - min;
+
+    let mut fst_data = data
+        .into_iter()
+        .map(|(key, value)| {
+            let quantized = if range > 0.0 {
+                ((value - min) / range * QUANTIZATION_LEVELS).round() as u64
+            } else {
+                0
+            };
+            (key, quantized)
+        })
+        .collect_vec();
+    fst_data.push((QUANTIZATION_MIN_KEY.to_vec(), min.to_bits()));
+    fst_data.push((QUANTIZATION_MAX_KEY.to_vec(), max.to_bits()));
+    fst_data.sort_unstable_by(|(first, _), (second, _)| first.cmp(second));
 
     let mut fst_builder = fst::MapBuilder::memory();
-    fst_builder.extend_iter(data).unwrap();
+    fst_builder.extend_iter(fst_data).unwrap();
 
     let bytes = fst_builder.into_inner().unwrap();
-    fst::Map::new(Cow::Owned(bytes)).unwrap()
+    LanguageModelFst::from_fst_map(fst::Map::new(Cow::Owned(bytes)).unwrap())
 }
 
 pub(crate) fn create_fst_set(mut data: Vec<Vec<u8>>) -> CountModelFst {
@@ -193,7 +220,7 @@ impl TrainingDataLanguageModel {
                     .unwrap()
             };
             let key = ngram.value.as_bytes().to_vec();
-            let value = (*frequency as f64 / denominator as f64).ln().to_bits();
+            let value = (*frequency as f64 / denominator as f64).ln();
             fst_data.push((key, value));
         }
 
@@ -271,9 +298,12 @@ mod tests {
         assert_eq!(ngram_model.language, Language::English);
         assert!(ngram_model.ngrams.contains_key(b"a".to_vec()));
 
-        let expected_value = (7915445f64 / 93616591f64).ln().to_bits();
+        let expected_value = (7915445f64 / 93616591f64).ln();
         let actual_value = ngram_model.ngrams.get(b"a".to_vec()).unwrap();
-        assert_eq!(actual_value, expected_value);
+        assert!(
+            (actual_value - expected_value).abs() < 1e-3,
+            "expected {expected_value} within quantization tolerance, got {actual_value}"
+        );
     }
 
     #[test]
@@ -349,7 +379,7 @@ mod tests {
                     .collect_tuple()
                     .unwrap();
                 let key = ngram.as_bytes().to_vec();
-                let value = (numerator as f64 / denominator as f64).ln().to_bits();
+                let value = (numerator as f64 / denominator as f64).ln();
                 fst_data.push((key, value));
             }
 
