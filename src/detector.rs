@@ -862,11 +862,11 @@ impl LanguageDetector {
             let mut optional_language: Option<Language> = None;
             for language in self.languages.iter() {
                 if ngram_length == 1 {
-                    let is_hindi = cfg!(feature = "hindi")
+                    let is_hindi = cfg!(any(feature = "hindi", feature = "external-models"))
                         && language == &Language::from_str("Hindi").unwrap();
-                    let is_marathi = cfg!(feature = "marathi")
+                    let is_marathi = cfg!(any(feature = "marathi", feature = "external-models"))
                         && language == &Language::from_str("Marathi").unwrap();
-                    let is_japanese = cfg!(feature = "japanese")
+                    let is_japanese = cfg!(any(feature = "japanese", feature = "external-models"))
                         && language == &Language::from_str("Japanese").unwrap();
 
                     if is_hindi
@@ -934,9 +934,9 @@ impl LanguageDetector {
                 }
 
                 if !is_match {
-                    if cfg!(feature = "chinese") && Alphabet::Han.matches_char(character) {
+                    if cfg!(any(feature = "chinese", feature = "external-models")) && Alphabet::Han.matches_char(character) {
                         word_language_counter[&Language::from_str("Chinese").unwrap()] += 1;
-                    } else if cfg!(feature = "japanese")
+                    } else if cfg!(any(feature = "japanese", feature = "external-models"))
                         && JAPANESE_CHARACTER_SET.is_char_match(character)
                     {
                         word_language_counter[&Language::from_str("Japanese").unwrap()] += 1;
@@ -962,8 +962,8 @@ impl LanguageDetector {
                 } else {
                     total_language_counter[&None] += 1;
                 }
-            } else if cfg!(feature = "chinese")
-                && cfg!(feature = "japanese")
+            } else if cfg!(any(feature = "chinese", feature = "external-models"))
+                && cfg!(any(feature = "japanese", feature = "external-models"))
                 && word_language_counter.contains_key(&Language::from_str("Chinese").unwrap())
                 && word_language_counter.contains_key(&Language::from_str("Japanese").unwrap())
             {
@@ -998,8 +998,8 @@ impl LanguageDetector {
         let top2_language_counts = total_language_counter.k_most_common_ordered(2);
         let (most_frequent_language, first_count) = top2_language_counts[0];
         let (second_frequent_language, second_count) = top2_language_counts[1];
-        if cfg!(feature = "chinese")
-            && cfg!(feature = "japanese")
+        if cfg!(any(feature = "chinese", feature = "external-models"))
+            && cfg!(any(feature = "japanese", feature = "external-models"))
             && hashset!(most_frequent_language, second_frequent_language)
                 == hashset!(
                     Some(Language::from_str("Japanese").unwrap()),

@@ -1618,6 +1618,7 @@ dependencies = [
  "lingua-yoruba-language-model",
  "lingua-zulu-language-model",
  "maplit",
+ "memmap2",
  "polars",
  "pyo3",
  "rayon",

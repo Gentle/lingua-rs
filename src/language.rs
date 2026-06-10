@@ -55,232 +55,232 @@ use crate::isocode::{IsoCode639_1, IsoCode639_3};
     )
 )]
 pub enum Language {
-    #[cfg(feature = "afrikaans")]
+    #[cfg(any(feature = "afrikaans", feature = "external-models"))]
     Afrikaans,
 
-    #[cfg(feature = "albanian")]
+    #[cfg(any(feature = "albanian", feature = "external-models"))]
     Albanian,
 
-    #[cfg(feature = "arabic")]
+    #[cfg(any(feature = "arabic", feature = "external-models"))]
     Arabic,
 
-    #[cfg(feature = "armenian")]
+    #[cfg(any(feature = "armenian", feature = "external-models"))]
     Armenian,
 
-    #[cfg(feature = "azerbaijani")]
+    #[cfg(any(feature = "azerbaijani", feature = "external-models"))]
     Azerbaijani,
 
-    #[cfg(feature = "basque")]
+    #[cfg(any(feature = "basque", feature = "external-models"))]
     Basque,
 
-    #[cfg(feature = "belarusian")]
+    #[cfg(any(feature = "belarusian", feature = "external-models"))]
     Belarusian,
 
-    #[cfg(feature = "bengali")]
+    #[cfg(any(feature = "bengali", feature = "external-models"))]
     Bengali,
 
-    #[cfg(feature = "bokmal")]
+    #[cfg(any(feature = "bokmal", feature = "external-models"))]
     Bokmal,
 
-    #[cfg(feature = "bosnian")]
+    #[cfg(any(feature = "bosnian", feature = "external-models"))]
     Bosnian,
 
-    #[cfg(feature = "bulgarian")]
+    #[cfg(any(feature = "bulgarian", feature = "external-models"))]
     Bulgarian,
 
-    #[cfg(feature = "catalan")]
+    #[cfg(any(feature = "catalan", feature = "external-models"))]
     Catalan,
 
-    #[cfg(feature = "chinese")]
+    #[cfg(any(feature = "chinese", feature = "external-models"))]
     Chinese,
 
-    #[cfg(feature = "croatian")]
+    #[cfg(any(feature = "croatian", feature = "external-models"))]
     Croatian,
 
-    #[cfg(feature = "czech")]
+    #[cfg(any(feature = "czech", feature = "external-models"))]
     Czech,
 
-    #[cfg(feature = "danish")]
+    #[cfg(any(feature = "danish", feature = "external-models"))]
     Danish,
 
-    #[cfg(feature = "dutch")]
+    #[cfg(any(feature = "dutch", feature = "external-models"))]
     Dutch,
 
-    #[cfg(feature = "english")]
+    #[cfg(any(feature = "english", feature = "external-models"))]
     English,
 
-    #[cfg(feature = "esperanto")]
+    #[cfg(any(feature = "esperanto", feature = "external-models"))]
     Esperanto,
 
-    #[cfg(feature = "estonian")]
+    #[cfg(any(feature = "estonian", feature = "external-models"))]
     Estonian,
 
-    #[cfg(feature = "finnish")]
+    #[cfg(any(feature = "finnish", feature = "external-models"))]
     Finnish,
 
-    #[cfg(feature = "french")]
+    #[cfg(any(feature = "french", feature = "external-models"))]
     French,
 
-    #[cfg(feature = "ganda")]
+    #[cfg(any(feature = "ganda", feature = "external-models"))]
     Ganda,
 
-    #[cfg(feature = "georgian")]
+    #[cfg(any(feature = "georgian", feature = "external-models"))]
     Georgian,
 
-    #[cfg(feature = "german")]
+    #[cfg(any(feature = "german", feature = "external-models"))]
     German,
 
-    #[cfg(feature = "greek")]
+    #[cfg(any(feature = "greek", feature = "external-models"))]
     Greek,
 
-    #[cfg(feature = "gujarati")]
+    #[cfg(any(feature = "gujarati", feature = "external-models"))]
     Gujarati,
 
-    #[cfg(feature = "hebrew")]
+    #[cfg(any(feature = "hebrew", feature = "external-models"))]
     Hebrew,
 
-    #[cfg(feature = "hindi")]
+    #[cfg(any(feature = "hindi", feature = "external-models"))]
     Hindi,
 
-    #[cfg(feature = "hungarian")]
+    #[cfg(any(feature = "hungarian", feature = "external-models"))]
     Hungarian,
 
-    #[cfg(feature = "icelandic")]
+    #[cfg(any(feature = "icelandic", feature = "external-models"))]
     Icelandic,
 
-    #[cfg(feature = "indonesian")]
+    #[cfg(any(feature = "indonesian", feature = "external-models"))]
     Indonesian,
 
-    #[cfg(feature = "irish")]
+    #[cfg(any(feature = "irish", feature = "external-models"))]
     Irish,
 
-    #[cfg(feature = "italian")]
+    #[cfg(any(feature = "italian", feature = "external-models"))]
     Italian,
 
-    #[cfg(feature = "japanese")]
+    #[cfg(any(feature = "japanese", feature = "external-models"))]
     Japanese,
 
-    #[cfg(feature = "kazakh")]
+    #[cfg(any(feature = "kazakh", feature = "external-models"))]
     Kazakh,
 
-    #[cfg(feature = "korean")]
+    #[cfg(any(feature = "korean", feature = "external-models"))]
     Korean,
 
-    #[cfg(feature = "latin")]
+    #[cfg(any(feature = "latin", feature = "external-models"))]
     Latin,
 
-    #[cfg(feature = "latvian")]
+    #[cfg(any(feature = "latvian", feature = "external-models"))]
     Latvian,
 
-    #[cfg(feature = "lithuanian")]
+    #[cfg(any(feature = "lithuanian", feature = "external-models"))]
     Lithuanian,
 
-    #[cfg(feature = "luxembourgish")]
+    #[cfg(any(feature = "luxembourgish", feature = "external-models"))]
     Luxembourgish,
 
-    #[cfg(feature = "macedonian")]
+    #[cfg(any(feature = "macedonian", feature = "external-models"))]
     Macedonian,
 
-    #[cfg(feature = "malay")]
+    #[cfg(any(feature = "malay", feature = "external-models"))]
     Malay,
 
-    #[cfg(feature = "maori")]
+    #[cfg(any(feature = "maori", feature = "external-models"))]
     Maori,
 
-    #[cfg(feature = "marathi")]
+    #[cfg(any(feature = "marathi", feature = "external-models"))]
     Marathi,
 
-    #[cfg(feature = "mongolian")]
+    #[cfg(any(feature = "mongolian", feature = "external-models"))]
     Mongolian,
 
-    #[cfg(feature = "nynorsk")]
+    #[cfg(any(feature = "nynorsk", feature = "external-models"))]
     Nynorsk,
 
-    #[cfg(feature = "persian")]
+    #[cfg(any(feature = "persian", feature = "external-models"))]
     Persian,
 
-    #[cfg(feature = "polish")]
+    #[cfg(any(feature = "polish", feature = "external-models"))]
     Polish,
 
-    #[cfg(feature = "portuguese")]
+    #[cfg(any(feature = "portuguese", feature = "external-models"))]
     Portuguese,
 
-    #[cfg(feature = "punjabi")]
+    #[cfg(any(feature = "punjabi", feature = "external-models"))]
     Punjabi,
 
-    #[cfg(feature = "romanian")]
+    #[cfg(any(feature = "romanian", feature = "external-models"))]
     Romanian,
 
-    #[cfg(feature = "russian")]
+    #[cfg(any(feature = "russian", feature = "external-models"))]
     Russian,
 
-    #[cfg(feature = "serbian")]
+    #[cfg(any(feature = "serbian", feature = "external-models"))]
     Serbian,
 
-    #[cfg(feature = "shona")]
+    #[cfg(any(feature = "shona", feature = "external-models"))]
     Shona,
 
-    #[cfg(feature = "slovak")]
+    #[cfg(any(feature = "slovak", feature = "external-models"))]
     Slovak,
 
-    #[cfg(feature = "slovene")]
+    #[cfg(any(feature = "slovene", feature = "external-models"))]
     Slovene,
 
-    #[cfg(feature = "somali")]
+    #[cfg(any(feature = "somali", feature = "external-models"))]
     Somali,
 
-    #[cfg(feature = "sotho")]
+    #[cfg(any(feature = "sotho", feature = "external-models"))]
     Sotho,
 
-    #[cfg(feature = "spanish")]
+    #[cfg(any(feature = "spanish", feature = "external-models"))]
     Spanish,
 
-    #[cfg(feature = "swahili")]
+    #[cfg(any(feature = "swahili", feature = "external-models"))]
     Swahili,
 
-    #[cfg(feature = "swedish")]
+    #[cfg(any(feature = "swedish", feature = "external-models"))]
     Swedish,
 
-    #[cfg(feature = "tagalog")]
+    #[cfg(any(feature = "tagalog", feature = "external-models"))]
     Tagalog,
 
-    #[cfg(feature = "tamil")]
+    #[cfg(any(feature = "tamil", feature = "external-models"))]
     Tamil,
 
-    #[cfg(feature = "telugu")]
+    #[cfg(any(feature = "telugu", feature = "external-models"))]
     Telugu,
 
-    #[cfg(feature = "thai")]
+    #[cfg(any(feature = "thai", feature = "external-models"))]
     Thai,
 
-    #[cfg(feature = "tsonga")]
+    #[cfg(any(feature = "tsonga", feature = "external-models"))]
     Tsonga,
 
-    #[cfg(feature = "tswana")]
+    #[cfg(any(feature = "tswana", feature = "external-models"))]
     Tswana,
 
-    #[cfg(feature = "turkish")]
+    #[cfg(any(feature = "turkish", feature = "external-models"))]
     Turkish,
 
-    #[cfg(feature = "ukrainian")]
+    #[cfg(any(feature = "ukrainian", feature = "external-models"))]
     Ukrainian,
 
-    #[cfg(feature = "urdu")]
+    #[cfg(any(feature = "urdu", feature = "external-models"))]
     Urdu,
 
-    #[cfg(feature = "vietnamese")]
+    #[cfg(any(feature = "vietnamese", feature = "external-models"))]
     Vietnamese,
 
-    #[cfg(feature = "welsh")]
+    #[cfg(any(feature = "welsh", feature = "external-models"))]
     Welsh,
 
-    #[cfg(feature = "xhosa")]
+    #[cfg(any(feature = "xhosa", feature = "external-models"))]
     Xhosa,
 
-    #[cfg(feature = "yoruba")]
+    #[cfg(any(feature = "yoruba", feature = "external-models"))]
     Yoruba,
 
-    #[cfg(feature = "zulu")]
+    #[cfg(any(feature = "zulu", feature = "external-models"))]
     Zulu,
 }
 
@@ -301,7 +301,7 @@ impl Language {
     pub fn all_spoken_ones() -> HashSet<Language> {
         Language::iter()
             .filter(|it| {
-                if cfg!(feature = "latin") {
+                if cfg!(any(feature = "latin", feature = "external-models")) {
                     it != &<Language as FromStr>::from_str("Latin").unwrap()
                 } else {
                     true
@@ -368,232 +368,232 @@ impl Language {
     /// Returns the ISO 639-1 code of this language.
     pub fn iso_code_639_1(&self) -> IsoCode639_1 {
         match self {
-            #[cfg(feature = "afrikaans")]
+            #[cfg(any(feature = "afrikaans", feature = "external-models"))]
             Language::Afrikaans => IsoCode639_1::AF,
 
-            #[cfg(feature = "albanian")]
+            #[cfg(any(feature = "albanian", feature = "external-models"))]
             Language::Albanian => IsoCode639_1::SQ,
 
-            #[cfg(feature = "arabic")]
+            #[cfg(any(feature = "arabic", feature = "external-models"))]
             Language::Arabic => IsoCode639_1::AR,
 
-            #[cfg(feature = "armenian")]
+            #[cfg(any(feature = "armenian", feature = "external-models"))]
             Language::Armenian => IsoCode639_1::HY,
 
-            #[cfg(feature = "azerbaijani")]
+            #[cfg(any(feature = "azerbaijani", feature = "external-models"))]
             Language::Azerbaijani => IsoCode639_1::AZ,
 
-            #[cfg(feature = "basque")]
+            #[cfg(any(feature = "basque", feature = "external-models"))]
             Language::Basque => IsoCode639_1::EU,
 
-            #[cfg(feature = "belarusian")]
+            #[cfg(any(feature = "belarusian", feature = "external-models"))]
             Language::Belarusian => IsoCode639_1::BE,
 
-            #[cfg(feature = "bengali")]
+            #[cfg(any(feature = "bengali", feature = "external-models"))]
             Language::Bengali => IsoCode639_1::BN,
 
-            #[cfg(feature = "bokmal")]
+            #[cfg(any(feature = "bokmal", feature = "external-models"))]
             Language::Bokmal => IsoCode639_1::NB,
 
-            #[cfg(feature = "bosnian")]
+            #[cfg(any(feature = "bosnian", feature = "external-models"))]
             Language::Bosnian => IsoCode639_1::BS,
 
-            #[cfg(feature = "bulgarian")]
+            #[cfg(any(feature = "bulgarian", feature = "external-models"))]
             Language::Bulgarian => IsoCode639_1::BG,
 
-            #[cfg(feature = "catalan")]
+            #[cfg(any(feature = "catalan", feature = "external-models"))]
             Language::Catalan => IsoCode639_1::CA,
 
-            #[cfg(feature = "chinese")]
+            #[cfg(any(feature = "chinese", feature = "external-models"))]
             Language::Chinese => IsoCode639_1::ZH,
 
-            #[cfg(feature = "croatian")]
+            #[cfg(any(feature = "croatian", feature = "external-models"))]
             Language::Croatian => IsoCode639_1::HR,
 
-            #[cfg(feature = "czech")]
+            #[cfg(any(feature = "czech", feature = "external-models"))]
             Language::Czech => IsoCode639_1::CS,
 
-            #[cfg(feature = "danish")]
+            #[cfg(any(feature = "danish", feature = "external-models"))]
             Language::Danish => IsoCode639_1::DA,
 
-            #[cfg(feature = "dutch")]
+            #[cfg(any(feature = "dutch", feature = "external-models"))]
             Language::Dutch => IsoCode639_1::NL,
 
-            #[cfg(feature = "english")]
+            #[cfg(any(feature = "english", feature = "external-models"))]
             Language::English => IsoCode639_1::EN,
 
-            #[cfg(feature = "esperanto")]
+            #[cfg(any(feature = "esperanto", feature = "external-models"))]
             Language::Esperanto => IsoCode639_1::EO,
 
-            #[cfg(feature = "estonian")]
+            #[cfg(any(feature = "estonian", feature = "external-models"))]
             Language::Estonian => IsoCode639_1::ET,
 
-            #[cfg(feature = "finnish")]
+            #[cfg(any(feature = "finnish", feature = "external-models"))]
             Language::Finnish => IsoCode639_1::FI,
 
-            #[cfg(feature = "french")]
+            #[cfg(any(feature = "french", feature = "external-models"))]
             Language::French => IsoCode639_1::FR,
 
-            #[cfg(feature = "ganda")]
+            #[cfg(any(feature = "ganda", feature = "external-models"))]
             Language::Ganda => IsoCode639_1::LG,
 
-            #[cfg(feature = "georgian")]
+            #[cfg(any(feature = "georgian", feature = "external-models"))]
             Language::Georgian => IsoCode639_1::KA,
 
-            #[cfg(feature = "german")]
+            #[cfg(any(feature = "german", feature = "external-models"))]
             Language::German => IsoCode639_1::DE,
 
-            #[cfg(feature = "greek")]
+            #[cfg(any(feature = "greek", feature = "external-models"))]
             Language::Greek => IsoCode639_1::EL,
 
-            #[cfg(feature = "gujarati")]
+            #[cfg(any(feature = "gujarati", feature = "external-models"))]
             Language::Gujarati => IsoCode639_1::GU,
 
-            #[cfg(feature = "hebrew")]
+            #[cfg(any(feature = "hebrew", feature = "external-models"))]
             Language::Hebrew => IsoCode639_1::HE,
 
-            #[cfg(feature = "hindi")]
+            #[cfg(any(feature = "hindi", feature = "external-models"))]
             Language::Hindi => IsoCode639_1::HI,
 
-            #[cfg(feature = "hungarian")]
+            #[cfg(any(feature = "hungarian", feature = "external-models"))]
             Language::Hungarian => IsoCode639_1::HU,
 
-            #[cfg(feature = "icelandic")]
+            #[cfg(any(feature = "icelandic", feature = "external-models"))]
             Language::Icelandic => IsoCode639_1::IS,
 
-            #[cfg(feature = "indonesian")]
+            #[cfg(any(feature = "indonesian", feature = "external-models"))]
             Language::Indonesian => IsoCode639_1::ID,
 
-            #[cfg(feature = "irish")]
+            #[cfg(any(feature = "irish", feature = "external-models"))]
             Language::Irish => IsoCode639_1::GA,
 
-            #[cfg(feature = "italian")]
+            #[cfg(any(feature = "italian", feature = "external-models"))]
             Language::Italian => IsoCode639_1::IT,
 
-            #[cfg(feature = "japanese")]
+            #[cfg(any(feature = "japanese", feature = "external-models"))]
             Language::Japanese => IsoCode639_1::JA,
 
-            #[cfg(feature = "kazakh")]
+            #[cfg(any(feature = "kazakh", feature = "external-models"))]
             Language::Kazakh => IsoCode639_1::KK,
 
-            #[cfg(feature = "korean")]
+            #[cfg(any(feature = "korean", feature = "external-models"))]
             Language::Korean => IsoCode639_1::KO,
 
-            #[cfg(feature = "latin")]
+            #[cfg(any(feature = "latin", feature = "external-models"))]
             Language::Latin => IsoCode639_1::LA,
 
-            #[cfg(feature = "latvian")]
+            #[cfg(any(feature = "latvian", feature = "external-models"))]
             Language::Latvian => IsoCode639_1::LV,
 
-            #[cfg(feature = "lithuanian")]
+            #[cfg(any(feature = "lithuanian", feature = "external-models"))]
             Language::Lithuanian => IsoCode639_1::LT,
 
-            #[cfg(feature = "luxembourgish")]
+            #[cfg(any(feature = "luxembourgish", feature = "external-models"))]
             Language::Luxembourgish => IsoCode639_1::LB,
 
-            #[cfg(feature = "macedonian")]
+            #[cfg(any(feature = "macedonian", feature = "external-models"))]
             Language::Macedonian => IsoCode639_1::MK,
 
-            #[cfg(feature = "malay")]
+            #[cfg(any(feature = "malay", feature = "external-models"))]
             Language::Malay => IsoCode639_1::MS,
 
-            #[cfg(feature = "maori")]
+            #[cfg(any(feature = "maori", feature = "external-models"))]
             Language::Maori => IsoCode639_1::MI,
 
-            #[cfg(feature = "marathi")]
+            #[cfg(any(feature = "marathi", feature = "external-models"))]
             Language::Marathi => IsoCode639_1::MR,
 
-            #[cfg(feature = "mongolian")]
+            #[cfg(any(feature = "mongolian", feature = "external-models"))]
             Language::Mongolian => IsoCode639_1::MN,
 
-            #[cfg(feature = "nynorsk")]
+            #[cfg(any(feature = "nynorsk", feature = "external-models"))]
             Language::Nynorsk => IsoCode639_1::NN,
 
-            #[cfg(feature = "persian")]
+            #[cfg(any(feature = "persian", feature = "external-models"))]
             Language::Persian => IsoCode639_1::FA,
 
-            #[cfg(feature = "polish")]
+            #[cfg(any(feature = "polish", feature = "external-models"))]
             Language::Polish => IsoCode639_1::PL,
 
-            #[cfg(feature = "portuguese")]
+            #[cfg(any(feature = "portuguese", feature = "external-models"))]
             Language::Portuguese => IsoCode639_1::PT,
 
-            #[cfg(feature = "punjabi")]
+            #[cfg(any(feature = "punjabi", feature = "external-models"))]
             Language::Punjabi => IsoCode639_1::PA,
 
-            #[cfg(feature = "romanian")]
+            #[cfg(any(feature = "romanian", feature = "external-models"))]
             Language::Romanian => IsoCode639_1::RO,
 
-            #[cfg(feature = "russian")]
+            #[cfg(any(feature = "russian", feature = "external-models"))]
             Language::Russian => IsoCode639_1::RU,
 
-            #[cfg(feature = "serbian")]
+            #[cfg(any(feature = "serbian", feature = "external-models"))]
             Language::Serbian => IsoCode639_1::SR,
 
-            #[cfg(feature = "shona")]
+            #[cfg(any(feature = "shona", feature = "external-models"))]
             Language::Shona => IsoCode639_1::SN,
 
-            #[cfg(feature = "slovak")]
+            #[cfg(any(feature = "slovak", feature = "external-models"))]
             Language::Slovak => IsoCode639_1::SK,
 
-            #[cfg(feature = "slovene")]
+            #[cfg(any(feature = "slovene", feature = "external-models"))]
             Language::Slovene => IsoCode639_1::SL,
 
-            #[cfg(feature = "somali")]
+            #[cfg(any(feature = "somali", feature = "external-models"))]
             Language::Somali => IsoCode639_1::SO,
 
-            #[cfg(feature = "sotho")]
+            #[cfg(any(feature = "sotho", feature = "external-models"))]
             Language::Sotho => IsoCode639_1::ST,
 
-            #[cfg(feature = "spanish")]
+            #[cfg(any(feature = "spanish", feature = "external-models"))]
             Language::Spanish => IsoCode639_1::ES,
 
-            #[cfg(feature = "swahili")]
+            #[cfg(any(feature = "swahili", feature = "external-models"))]
             Language::Swahili => IsoCode639_1::SW,
 
-            #[cfg(feature = "swedish")]
+            #[cfg(any(feature = "swedish", feature = "external-models"))]
             Language::Swedish => IsoCode639_1::SV,
 
-            #[cfg(feature = "tagalog")]
+            #[cfg(any(feature = "tagalog", feature = "external-models"))]
             Language::Tagalog => IsoCode639_1::TL,
 
-            #[cfg(feature = "tamil")]
+            #[cfg(any(feature = "tamil", feature = "external-models"))]
             Language::Tamil => IsoCode639_1::TA,
 
-            #[cfg(feature = "telugu")]
+            #[cfg(any(feature = "telugu", feature = "external-models"))]
             Language::Telugu => IsoCode639_1::TE,
 
-            #[cfg(feature = "thai")]
+            #[cfg(any(feature = "thai", feature = "external-models"))]
             Language::Thai => IsoCode639_1::TH,
 
-            #[cfg(feature = "tsonga")]
+            #[cfg(any(feature = "tsonga", feature = "external-models"))]
             Language::Tsonga => IsoCode639_1::TS,
 
-            #[cfg(feature = "tswana")]
+            #[cfg(any(feature = "tswana", feature = "external-models"))]
             Language::Tswana => IsoCode639_1::TN,
 
-            #[cfg(feature = "turkish")]
+            #[cfg(any(feature = "turkish", feature = "external-models"))]
             Language::Turkish => IsoCode639_1::TR,
 
-            #[cfg(feature = "ukrainian")]
+            #[cfg(any(feature = "ukrainian", feature = "external-models"))]
             Language::Ukrainian => IsoCode639_1::UK,
 
-            #[cfg(feature = "urdu")]
+            #[cfg(any(feature = "urdu", feature = "external-models"))]
             Language::Urdu => IsoCode639_1::UR,
 
-            #[cfg(feature = "vietnamese")]
+            #[cfg(any(feature = "vietnamese", feature = "external-models"))]
             Language::Vietnamese => IsoCode639_1::VI,
 
-            #[cfg(feature = "welsh")]
+            #[cfg(any(feature = "welsh", feature = "external-models"))]
             Language::Welsh => IsoCode639_1::CY,
 
-            #[cfg(feature = "xhosa")]
+            #[cfg(any(feature = "xhosa", feature = "external-models"))]
             Language::Xhosa => IsoCode639_1::XH,
 
-            #[cfg(feature = "yoruba")]
+            #[cfg(any(feature = "yoruba", feature = "external-models"))]
             Language::Yoruba => IsoCode639_1::YO,
 
-            #[cfg(feature = "zulu")]
+            #[cfg(any(feature = "zulu", feature = "external-models"))]
             Language::Zulu => IsoCode639_1::ZU,
         }
     }
@@ -601,464 +601,464 @@ impl Language {
     /// Returns the ISO 639-3 code of this language.
     pub fn iso_code_639_3(&self) -> IsoCode639_3 {
         match self {
-            #[cfg(feature = "afrikaans")]
+            #[cfg(any(feature = "afrikaans", feature = "external-models"))]
             Language::Afrikaans => IsoCode639_3::AFR,
 
-            #[cfg(feature = "albanian")]
+            #[cfg(any(feature = "albanian", feature = "external-models"))]
             Language::Albanian => IsoCode639_3::SQI,
 
-            #[cfg(feature = "arabic")]
+            #[cfg(any(feature = "arabic", feature = "external-models"))]
             Language::Arabic => IsoCode639_3::ARA,
 
-            #[cfg(feature = "armenian")]
+            #[cfg(any(feature = "armenian", feature = "external-models"))]
             Language::Armenian => IsoCode639_3::HYE,
 
-            #[cfg(feature = "azerbaijani")]
+            #[cfg(any(feature = "azerbaijani", feature = "external-models"))]
             Language::Azerbaijani => IsoCode639_3::AZE,
 
-            #[cfg(feature = "basque")]
+            #[cfg(any(feature = "basque", feature = "external-models"))]
             Language::Basque => IsoCode639_3::EUS,
 
-            #[cfg(feature = "belarusian")]
+            #[cfg(any(feature = "belarusian", feature = "external-models"))]
             Language::Belarusian => IsoCode639_3::BEL,
 
-            #[cfg(feature = "bengali")]
+            #[cfg(any(feature = "bengali", feature = "external-models"))]
             Language::Bengali => IsoCode639_3::BEN,
 
-            #[cfg(feature = "bokmal")]
+            #[cfg(any(feature = "bokmal", feature = "external-models"))]
             Language::Bokmal => IsoCode639_3::NOB,
 
-            #[cfg(feature = "bosnian")]
+            #[cfg(any(feature = "bosnian", feature = "external-models"))]
             Language::Bosnian => IsoCode639_3::BOS,
 
-            #[cfg(feature = "bulgarian")]
+            #[cfg(any(feature = "bulgarian", feature = "external-models"))]
             Language::Bulgarian => IsoCode639_3::BUL,
 
-            #[cfg(feature = "catalan")]
+            #[cfg(any(feature = "catalan", feature = "external-models"))]
             Language::Catalan => IsoCode639_3::CAT,
 
-            #[cfg(feature = "chinese")]
+            #[cfg(any(feature = "chinese", feature = "external-models"))]
             Language::Chinese => IsoCode639_3::ZHO,
 
-            #[cfg(feature = "croatian")]
+            #[cfg(any(feature = "croatian", feature = "external-models"))]
             Language::Croatian => IsoCode639_3::HRV,
 
-            #[cfg(feature = "czech")]
+            #[cfg(any(feature = "czech", feature = "external-models"))]
             Language::Czech => IsoCode639_3::CES,
 
-            #[cfg(feature = "danish")]
+            #[cfg(any(feature = "danish", feature = "external-models"))]
             Language::Danish => IsoCode639_3::DAN,
 
-            #[cfg(feature = "dutch")]
+            #[cfg(any(feature = "dutch", feature = "external-models"))]
             Language::Dutch => IsoCode639_3::NLD,
 
-            #[cfg(feature = "english")]
+            #[cfg(any(feature = "english", feature = "external-models"))]
             Language::English => IsoCode639_3::ENG,
 
-            #[cfg(feature = "esperanto")]
+            #[cfg(any(feature = "esperanto", feature = "external-models"))]
             Language::Esperanto => IsoCode639_3::EPO,
 
-            #[cfg(feature = "estonian")]
+            #[cfg(any(feature = "estonian", feature = "external-models"))]
             Language::Estonian => IsoCode639_3::EST,
 
-            #[cfg(feature = "finnish")]
+            #[cfg(any(feature = "finnish", feature = "external-models"))]
             Language::Finnish => IsoCode639_3::FIN,
 
-            #[cfg(feature = "french")]
+            #[cfg(any(feature = "french", feature = "external-models"))]
             Language::French => IsoCode639_3::FRA,
 
-            #[cfg(feature = "ganda")]
+            #[cfg(any(feature = "ganda", feature = "external-models"))]
             Language::Ganda => IsoCode639_3::LUG,
 
-            #[cfg(feature = "georgian")]
+            #[cfg(any(feature = "georgian", feature = "external-models"))]
             Language::Georgian => IsoCode639_3::KAT,
 
-            #[cfg(feature = "german")]
+            #[cfg(any(feature = "german", feature = "external-models"))]
             Language::German => IsoCode639_3::DEU,
 
-            #[cfg(feature = "greek")]
+            #[cfg(any(feature = "greek", feature = "external-models"))]
             Language::Greek => IsoCode639_3::ELL,
 
-            #[cfg(feature = "gujarati")]
+            #[cfg(any(feature = "gujarati", feature = "external-models"))]
             Language::Gujarati => IsoCode639_3::GUJ,
 
-            #[cfg(feature = "hebrew")]
+            #[cfg(any(feature = "hebrew", feature = "external-models"))]
             Language::Hebrew => IsoCode639_3::HEB,
 
-            #[cfg(feature = "hindi")]
+            #[cfg(any(feature = "hindi", feature = "external-models"))]
             Language::Hindi => IsoCode639_3::HIN,
 
-            #[cfg(feature = "hungarian")]
+            #[cfg(any(feature = "hungarian", feature = "external-models"))]
             Language::Hungarian => IsoCode639_3::HUN,
 
-            #[cfg(feature = "icelandic")]
+            #[cfg(any(feature = "icelandic", feature = "external-models"))]
             Language::Icelandic => IsoCode639_3::ISL,
 
-            #[cfg(feature = "indonesian")]
+            #[cfg(any(feature = "indonesian", feature = "external-models"))]
             Language::Indonesian => IsoCode639_3::IND,
 
-            #[cfg(feature = "irish")]
+            #[cfg(any(feature = "irish", feature = "external-models"))]
             Language::Irish => IsoCode639_3::GLE,
 
-            #[cfg(feature = "italian")]
+            #[cfg(any(feature = "italian", feature = "external-models"))]
             Language::Italian => IsoCode639_3::ITA,
 
-            #[cfg(feature = "japanese")]
+            #[cfg(any(feature = "japanese", feature = "external-models"))]
             Language::Japanese => IsoCode639_3::JPN,
 
-            #[cfg(feature = "kazakh")]
+            #[cfg(any(feature = "kazakh", feature = "external-models"))]
             Language::Kazakh => IsoCode639_3::KAZ,
 
-            #[cfg(feature = "korean")]
+            #[cfg(any(feature = "korean", feature = "external-models"))]
             Language::Korean => IsoCode639_3::KOR,
 
-            #[cfg(feature = "latin")]
+            #[cfg(any(feature = "latin", feature = "external-models"))]
             Language::Latin => IsoCode639_3::LAT,
 
-            #[cfg(feature = "latvian")]
+            #[cfg(any(feature = "latvian", feature = "external-models"))]
             Language::Latvian => IsoCode639_3::LAV,
 
-            #[cfg(feature = "lithuanian")]
+            #[cfg(any(feature = "lithuanian", feature = "external-models"))]
             Language::Lithuanian => IsoCode639_3::LIT,
 
-            #[cfg(feature = "luxembourgish")]
+            #[cfg(any(feature = "luxembourgish", feature = "external-models"))]
             Language::Luxembourgish => IsoCode639_3::LTZ,
 
-            #[cfg(feature = "macedonian")]
+            #[cfg(any(feature = "macedonian", feature = "external-models"))]
             Language::Macedonian => IsoCode639_3::MKD,
 
-            #[cfg(feature = "malay")]
+            #[cfg(any(feature = "malay", feature = "external-models"))]
             Language::Malay => IsoCode639_3::MSA,
 
-            #[cfg(feature = "maori")]
+            #[cfg(any(feature = "maori", feature = "external-models"))]
             Language::Maori => IsoCode639_3::MRI,
 
-            #[cfg(feature = "marathi")]
+            #[cfg(any(feature = "marathi", feature = "external-models"))]
             Language::Marathi => IsoCode639_3::MAR,
 
-            #[cfg(feature = "mongolian")]
+            #[cfg(any(feature = "mongolian", feature = "external-models"))]
             Language::Mongolian => IsoCode639_3::MON,
 
-            #[cfg(feature = "nynorsk")]
+            #[cfg(any(feature = "nynorsk", feature = "external-models"))]
             Language::Nynorsk => IsoCode639_3::NNO,
 
-            #[cfg(feature = "persian")]
+            #[cfg(any(feature = "persian", feature = "external-models"))]
             Language::Persian => IsoCode639_3::FAS,
 
-            #[cfg(feature = "polish")]
+            #[cfg(any(feature = "polish", feature = "external-models"))]
             Language::Polish => IsoCode639_3::POL,
 
-            #[cfg(feature = "portuguese")]
+            #[cfg(any(feature = "portuguese", feature = "external-models"))]
             Language::Portuguese => IsoCode639_3::POR,
 
-            #[cfg(feature = "punjabi")]
+            #[cfg(any(feature = "punjabi", feature = "external-models"))]
             Language::Punjabi => IsoCode639_3::PAN,
 
-            #[cfg(feature = "romanian")]
+            #[cfg(any(feature = "romanian", feature = "external-models"))]
             Language::Romanian => IsoCode639_3::RON,
 
-            #[cfg(feature = "russian")]
+            #[cfg(any(feature = "russian", feature = "external-models"))]
             Language::Russian => IsoCode639_3::RUS,
 
-            #[cfg(feature = "serbian")]
+            #[cfg(any(feature = "serbian", feature = "external-models"))]
             Language::Serbian => IsoCode639_3::SRP,
 
-            #[cfg(feature = "shona")]
+            #[cfg(any(feature = "shona", feature = "external-models"))]
             Language::Shona => IsoCode639_3::SNA,
 
-            #[cfg(feature = "slovak")]
+            #[cfg(any(feature = "slovak", feature = "external-models"))]
             Language::Slovak => IsoCode639_3::SLK,
 
-            #[cfg(feature = "slovene")]
+            #[cfg(any(feature = "slovene", feature = "external-models"))]
             Language::Slovene => IsoCode639_3::SLV,
 
-            #[cfg(feature = "somali")]
+            #[cfg(any(feature = "somali", feature = "external-models"))]
             Language::Somali => IsoCode639_3::SOM,
 
-            #[cfg(feature = "sotho")]
+            #[cfg(any(feature = "sotho", feature = "external-models"))]
             Language::Sotho => IsoCode639_3::SOT,
 
-            #[cfg(feature = "spanish")]
+            #[cfg(any(feature = "spanish", feature = "external-models"))]
             Language::Spanish => IsoCode639_3::SPA,
 
-            #[cfg(feature = "swahili")]
+            #[cfg(any(feature = "swahili", feature = "external-models"))]
             Language::Swahili => IsoCode639_3::SWA,
 
-            #[cfg(feature = "swedish")]
+            #[cfg(any(feature = "swedish", feature = "external-models"))]
             Language::Swedish => IsoCode639_3::SWE,
 
-            #[cfg(feature = "tagalog")]
+            #[cfg(any(feature = "tagalog", feature = "external-models"))]
             Language::Tagalog => IsoCode639_3::TGL,
 
-            #[cfg(feature = "tamil")]
+            #[cfg(any(feature = "tamil", feature = "external-models"))]
             Language::Tamil => IsoCode639_3::TAM,
 
-            #[cfg(feature = "telugu")]
+            #[cfg(any(feature = "telugu", feature = "external-models"))]
             Language::Telugu => IsoCode639_3::TEL,
 
-            #[cfg(feature = "thai")]
+            #[cfg(any(feature = "thai", feature = "external-models"))]
             Language::Thai => IsoCode639_3::THA,
 
-            #[cfg(feature = "tsonga")]
+            #[cfg(any(feature = "tsonga", feature = "external-models"))]
             Language::Tsonga => IsoCode639_3::TSO,
 
-            #[cfg(feature = "tswana")]
+            #[cfg(any(feature = "tswana", feature = "external-models"))]
             Language::Tswana => IsoCode639_3::TSN,
 
-            #[cfg(feature = "turkish")]
+            #[cfg(any(feature = "turkish", feature = "external-models"))]
             Language::Turkish => IsoCode639_3::TUR,
 
-            #[cfg(feature = "ukrainian")]
+            #[cfg(any(feature = "ukrainian", feature = "external-models"))]
             Language::Ukrainian => IsoCode639_3::UKR,
 
-            #[cfg(feature = "urdu")]
+            #[cfg(any(feature = "urdu", feature = "external-models"))]
             Language::Urdu => IsoCode639_3::URD,
 
-            #[cfg(feature = "vietnamese")]
+            #[cfg(any(feature = "vietnamese", feature = "external-models"))]
             Language::Vietnamese => IsoCode639_3::VIE,
 
-            #[cfg(feature = "welsh")]
+            #[cfg(any(feature = "welsh", feature = "external-models"))]
             Language::Welsh => IsoCode639_3::CYM,
 
-            #[cfg(feature = "xhosa")]
+            #[cfg(any(feature = "xhosa", feature = "external-models"))]
             Language::Xhosa => IsoCode639_3::XHO,
 
-            #[cfg(feature = "yoruba")]
+            #[cfg(any(feature = "yoruba", feature = "external-models"))]
             Language::Yoruba => IsoCode639_3::YOR,
 
-            #[cfg(feature = "zulu")]
+            #[cfg(any(feature = "zulu", feature = "external-models"))]
             Language::Zulu => IsoCode639_3::ZUL,
         }
     }
 
     pub(crate) fn alphabets(&self) -> HashSet<Alphabet> {
         match self {
-            #[cfg(feature = "afrikaans")]
+            #[cfg(any(feature = "afrikaans", feature = "external-models"))]
             Language::Afrikaans => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "albanian")]
+            #[cfg(any(feature = "albanian", feature = "external-models"))]
             Language::Albanian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "azerbaijani")]
+            #[cfg(any(feature = "azerbaijani", feature = "external-models"))]
             Language::Azerbaijani => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "basque")]
+            #[cfg(any(feature = "basque", feature = "external-models"))]
             Language::Basque => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "bokmal")]
+            #[cfg(any(feature = "bokmal", feature = "external-models"))]
             Language::Bokmal => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "bosnian")]
+            #[cfg(any(feature = "bosnian", feature = "external-models"))]
             Language::Bosnian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "catalan")]
+            #[cfg(any(feature = "catalan", feature = "external-models"))]
             Language::Catalan => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "croatian")]
+            #[cfg(any(feature = "croatian", feature = "external-models"))]
             Language::Croatian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "czech")]
+            #[cfg(any(feature = "czech", feature = "external-models"))]
             Language::Czech => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "danish")]
+            #[cfg(any(feature = "danish", feature = "external-models"))]
             Language::Danish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "dutch")]
+            #[cfg(any(feature = "dutch", feature = "external-models"))]
             Language::Dutch => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "english")]
+            #[cfg(any(feature = "english", feature = "external-models"))]
             Language::English => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "esperanto")]
+            #[cfg(any(feature = "esperanto", feature = "external-models"))]
             Language::Esperanto => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "estonian")]
+            #[cfg(any(feature = "estonian", feature = "external-models"))]
             Language::Estonian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "finnish")]
+            #[cfg(any(feature = "finnish", feature = "external-models"))]
             Language::Finnish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "french")]
+            #[cfg(any(feature = "french", feature = "external-models"))]
             Language::French => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "ganda")]
+            #[cfg(any(feature = "ganda", feature = "external-models"))]
             Language::Ganda => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "german")]
+            #[cfg(any(feature = "german", feature = "external-models"))]
             Language::German => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "hungarian")]
+            #[cfg(any(feature = "hungarian", feature = "external-models"))]
             Language::Hungarian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "icelandic")]
+            #[cfg(any(feature = "icelandic", feature = "external-models"))]
             Language::Icelandic => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "indonesian")]
+            #[cfg(any(feature = "indonesian", feature = "external-models"))]
             Language::Indonesian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "irish")]
+            #[cfg(any(feature = "irish", feature = "external-models"))]
             Language::Irish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "italian")]
+            #[cfg(any(feature = "italian", feature = "external-models"))]
             Language::Italian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "latin")]
+            #[cfg(any(feature = "latin", feature = "external-models"))]
             Language::Latin => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "latvian")]
+            #[cfg(any(feature = "latvian", feature = "external-models"))]
             Language::Latvian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "lithuanian")]
+            #[cfg(any(feature = "lithuanian", feature = "external-models"))]
             Language::Lithuanian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "luxembourgish")]
+            #[cfg(any(feature = "luxembourgish", feature = "external-models"))]
             Language::Luxembourgish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "malay")]
+            #[cfg(any(feature = "malay", feature = "external-models"))]
             Language::Malay => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "maori")]
+            #[cfg(any(feature = "maori", feature = "external-models"))]
             Language::Maori => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "nynorsk")]
+            #[cfg(any(feature = "nynorsk", feature = "external-models"))]
             Language::Nynorsk => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "polish")]
+            #[cfg(any(feature = "polish", feature = "external-models"))]
             Language::Polish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "portuguese")]
+            #[cfg(any(feature = "portuguese", feature = "external-models"))]
             Language::Portuguese => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "romanian")]
+            #[cfg(any(feature = "romanian", feature = "external-models"))]
             Language::Romanian => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "shona")]
+            #[cfg(any(feature = "shona", feature = "external-models"))]
             Language::Shona => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "slovak")]
+            #[cfg(any(feature = "slovak", feature = "external-models"))]
             Language::Slovak => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "slovene")]
+            #[cfg(any(feature = "slovene", feature = "external-models"))]
             Language::Slovene => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "somali")]
+            #[cfg(any(feature = "somali", feature = "external-models"))]
             Language::Somali => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "sotho")]
+            #[cfg(any(feature = "sotho", feature = "external-models"))]
             Language::Sotho => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "spanish")]
+            #[cfg(any(feature = "spanish", feature = "external-models"))]
             Language::Spanish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "swahili")]
+            #[cfg(any(feature = "swahili", feature = "external-models"))]
             Language::Swahili => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "swedish")]
+            #[cfg(any(feature = "swedish", feature = "external-models"))]
             Language::Swedish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "tagalog")]
+            #[cfg(any(feature = "tagalog", feature = "external-models"))]
             Language::Tagalog => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "tsonga")]
+            #[cfg(any(feature = "tsonga", feature = "external-models"))]
             Language::Tsonga => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "tswana")]
+            #[cfg(any(feature = "tswana", feature = "external-models"))]
             Language::Tswana => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "turkish")]
+            #[cfg(any(feature = "turkish", feature = "external-models"))]
             Language::Turkish => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "vietnamese")]
+            #[cfg(any(feature = "vietnamese", feature = "external-models"))]
             Language::Vietnamese => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "welsh")]
+            #[cfg(any(feature = "welsh", feature = "external-models"))]
             Language::Welsh => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "xhosa")]
+            #[cfg(any(feature = "xhosa", feature = "external-models"))]
             Language::Xhosa => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "yoruba")]
+            #[cfg(any(feature = "yoruba", feature = "external-models"))]
             Language::Yoruba => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "zulu")]
+            #[cfg(any(feature = "zulu", feature = "external-models"))]
             Language::Zulu => hashset!(Alphabet::Latin),
 
-            #[cfg(feature = "belarusian")]
+            #[cfg(any(feature = "belarusian", feature = "external-models"))]
             Language::Belarusian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "bulgarian")]
+            #[cfg(any(feature = "bulgarian", feature = "external-models"))]
             Language::Bulgarian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "kazakh")]
+            #[cfg(any(feature = "kazakh", feature = "external-models"))]
             Language::Kazakh => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "macedonian")]
+            #[cfg(any(feature = "macedonian", feature = "external-models"))]
             Language::Macedonian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "mongolian")]
+            #[cfg(any(feature = "mongolian", feature = "external-models"))]
             Language::Mongolian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "russian")]
+            #[cfg(any(feature = "russian", feature = "external-models"))]
             Language::Russian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "serbian")]
+            #[cfg(any(feature = "serbian", feature = "external-models"))]
             Language::Serbian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "ukrainian")]
+            #[cfg(any(feature = "ukrainian", feature = "external-models"))]
             Language::Ukrainian => hashset!(Alphabet::Cyrillic),
 
-            #[cfg(feature = "arabic")]
+            #[cfg(any(feature = "arabic", feature = "external-models"))]
             Language::Arabic => hashset!(Alphabet::Arabic),
 
-            #[cfg(feature = "persian")]
+            #[cfg(any(feature = "persian", feature = "external-models"))]
             Language::Persian => hashset!(Alphabet::Arabic),
 
-            #[cfg(feature = "urdu")]
+            #[cfg(any(feature = "urdu", feature = "external-models"))]
             Language::Urdu => hashset!(Alphabet::Arabic),
 
-            #[cfg(feature = "hindi")]
+            #[cfg(any(feature = "hindi", feature = "external-models"))]
             Language::Hindi => hashset!(Alphabet::Devanagari),
 
-            #[cfg(feature = "marathi")]
+            #[cfg(any(feature = "marathi", feature = "external-models"))]
             Language::Marathi => hashset!(Alphabet::Devanagari),
 
-            #[cfg(feature = "armenian")]
+            #[cfg(any(feature = "armenian", feature = "external-models"))]
             Language::Armenian => hashset!(Alphabet::Armenian),
 
-            #[cfg(feature = "bengali")]
+            #[cfg(any(feature = "bengali", feature = "external-models"))]
             Language::Bengali => hashset!(Alphabet::Bengali),
 
-            #[cfg(feature = "chinese")]
+            #[cfg(any(feature = "chinese", feature = "external-models"))]
             Language::Chinese => hashset!(Alphabet::Han),
 
-            #[cfg(feature = "georgian")]
+            #[cfg(any(feature = "georgian", feature = "external-models"))]
             Language::Georgian => hashset!(Alphabet::Georgian),
 
-            #[cfg(feature = "greek")]
+            #[cfg(any(feature = "greek", feature = "external-models"))]
             Language::Greek => hashset!(Alphabet::Greek),
 
-            #[cfg(feature = "gujarati")]
+            #[cfg(any(feature = "gujarati", feature = "external-models"))]
             Language::Gujarati => hashset!(Alphabet::Gujarati),
 
-            #[cfg(feature = "hebrew")]
+            #[cfg(any(feature = "hebrew", feature = "external-models"))]
             Language::Hebrew => hashset!(Alphabet::Hebrew),
 
-            #[cfg(feature = "japanese")]
+            #[cfg(any(feature = "japanese", feature = "external-models"))]
             Language::Japanese => hashset!(Alphabet::Hiragana, Alphabet::Katakana, Alphabet::Han),
 
-            #[cfg(feature = "korean")]
+            #[cfg(any(feature = "korean", feature = "external-models"))]
             Language::Korean => hashset!(Alphabet::Hangul),
 
-            #[cfg(feature = "punjabi")]
+            #[cfg(any(feature = "punjabi", feature = "external-models"))]
             Language::Punjabi => hashset!(Alphabet::Gurmukhi),
 
-            #[cfg(feature = "tamil")]
+            #[cfg(any(feature = "tamil", feature = "external-models"))]
             Language::Tamil => hashset!(Alphabet::Tamil),
 
-            #[cfg(feature = "telugu")]
+            #[cfg(any(feature = "telugu", feature = "external-models"))]
             Language::Telugu => hashset!(Alphabet::Telugu),
 
-            #[cfg(feature = "thai")]
+            #[cfg(any(feature = "thai", feature = "external-models"))]
             Language::Thai => hashset!(Alphabet::Thai),
         }
     }
@@ -1066,63 +1066,63 @@ impl Language {
     #[allow(unreachable_patterns)]
     pub(crate) fn unique_characters(&self) -> Option<&str> {
         match self {
-            #[cfg(feature = "azerbaijani")]
+            #[cfg(any(feature = "azerbaijani", feature = "external-models"))]
             Language::Azerbaijani => Some("Əə"),
 
-            #[cfg(feature = "catalan")]
+            #[cfg(any(feature = "catalan", feature = "external-models"))]
             Language::Catalan => Some("Ïï"),
 
-            #[cfg(feature = "czech")]
+            #[cfg(any(feature = "czech", feature = "external-models"))]
             Language::Czech => Some("ĚěŘřŮů"),
 
-            #[cfg(feature = "esperanto")]
+            #[cfg(any(feature = "esperanto", feature = "external-models"))]
             Language::Esperanto => Some("ĈĉĜĝĤĥĴĵŜŝŬŭ"),
 
-            #[cfg(feature = "german")]
+            #[cfg(any(feature = "german", feature = "external-models"))]
             Language::German => Some("ß"),
 
-            #[cfg(feature = "hungarian")]
+            #[cfg(any(feature = "hungarian", feature = "external-models"))]
             Language::Hungarian => Some("ŐőŰű"),
 
-            #[cfg(feature = "kazakh")]
+            #[cfg(any(feature = "kazakh", feature = "external-models"))]
             Language::Kazakh => Some("ӘәҒғҚқҢңҰұ"),
 
-            #[cfg(feature = "latvian")]
+            #[cfg(any(feature = "latvian", feature = "external-models"))]
             Language::Latvian => Some("ĢģĶķĻļŅņ"),
 
-            #[cfg(feature = "lithuanian")]
+            #[cfg(any(feature = "lithuanian", feature = "external-models"))]
             Language::Lithuanian => Some("ĖėĮįŲų"),
 
-            #[cfg(feature = "macedonian")]
+            #[cfg(any(feature = "macedonian", feature = "external-models"))]
             Language::Macedonian => Some("ЃѓЅѕЌќЏџ"),
 
-            #[cfg(feature = "marathi")]
+            #[cfg(any(feature = "marathi", feature = "external-models"))]
             Language::Marathi => Some("ळ"),
 
-            #[cfg(feature = "polish")]
+            #[cfg(any(feature = "polish", feature = "external-models"))]
             Language::Polish => Some("ŁłŃńŚśŹź"),
 
-            #[cfg(feature = "romanian")]
+            #[cfg(any(feature = "romanian", feature = "external-models"))]
             Language::Romanian => Some("Țţ"),
 
-            #[cfg(feature = "serbian")]
+            #[cfg(any(feature = "serbian", feature = "external-models"))]
             Language::Serbian => Some("ЂђЋћ"),
 
-            #[cfg(feature = "slovak")]
+            #[cfg(any(feature = "slovak", feature = "external-models"))]
             Language::Slovak => Some("ĹĺĽľŔŕ"),
 
-            #[cfg(feature = "spanish")]
+            #[cfg(any(feature = "spanish", feature = "external-models"))]
             Language::Spanish => Some("¿¡"),
 
-            #[cfg(feature = "ukrainian")]
+            #[cfg(any(feature = "ukrainian", feature = "external-models"))]
             Language::Ukrainian => Some("ҐґЄєЇї"),
 
-            #[cfg(feature = "vietnamese")]
+            #[cfg(any(feature = "vietnamese", feature = "external-models"))]
             Language::Vietnamese => Some(
                 "ẰằẦầẲẳẨẩẴẵẪẫẮắẤấẠạẶặẬậỀềẺẻỂểẼẽỄễẾếỆệỈỉĨĩỊịƠơỒồỜờỎỏỔổỞởỖỗỠỡỐốỚớỘộỢợƯưỪừỦủỬửŨũỮữỨứỤụỰựỲỳỶỷỸỹỴỵ",
             ),
 
-            #[cfg(feature = "yoruba")]
+            #[cfg(any(feature = "yoruba", feature = "external-models"))]
             Language::Yoruba => Some("Ṣṣ"),
 
             _ => None,
