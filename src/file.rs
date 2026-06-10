@@ -16,174 +16,176 @@
 
 use crate::Language;
 use crate::detector::{CountModelFst, LanguageModelFst};
+#[cfg(not(feature = "external-models"))]
 use include_dir::Dir;
-#[cfg(feature = "afrikaans")]
+#[cfg(all(feature = "afrikaans", not(feature = "external-models")))]
 use lingua_afrikaans_language_model::{AFRIKAANS_MODELS_DIRECTORY, AFRIKAANS_TESTDATA_DIRECTORY};
-#[cfg(feature = "albanian")]
+#[cfg(all(feature = "albanian", not(feature = "external-models")))]
 use lingua_albanian_language_model::{ALBANIAN_MODELS_DIRECTORY, ALBANIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "arabic")]
+#[cfg(all(feature = "arabic", not(feature = "external-models")))]
 use lingua_arabic_language_model::{ARABIC_MODELS_DIRECTORY, ARABIC_TESTDATA_DIRECTORY};
-#[cfg(feature = "armenian")]
+#[cfg(all(feature = "armenian", not(feature = "external-models")))]
 use lingua_armenian_language_model::{ARMENIAN_MODELS_DIRECTORY, ARMENIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "azerbaijani")]
+#[cfg(all(feature = "azerbaijani", not(feature = "external-models")))]
 use lingua_azerbaijani_language_model::{
     AZERBAIJANI_MODELS_DIRECTORY, AZERBAIJANI_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "basque")]
+#[cfg(all(feature = "basque", not(feature = "external-models")))]
 use lingua_basque_language_model::{BASQUE_MODELS_DIRECTORY, BASQUE_TESTDATA_DIRECTORY};
-#[cfg(feature = "belarusian")]
+#[cfg(all(feature = "belarusian", not(feature = "external-models")))]
 use lingua_belarusian_language_model::{
     BELARUSIAN_MODELS_DIRECTORY, BELARUSIAN_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "bengali")]
+#[cfg(all(feature = "bengali", not(feature = "external-models")))]
 use lingua_bengali_language_model::{BENGALI_MODELS_DIRECTORY, BENGALI_TESTDATA_DIRECTORY};
-#[cfg(feature = "bokmal")]
+#[cfg(all(feature = "bokmal", not(feature = "external-models")))]
 use lingua_bokmal_language_model::{BOKMAL_MODELS_DIRECTORY, BOKMAL_TESTDATA_DIRECTORY};
-#[cfg(feature = "bosnian")]
+#[cfg(all(feature = "bosnian", not(feature = "external-models")))]
 use lingua_bosnian_language_model::{BOSNIAN_MODELS_DIRECTORY, BOSNIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "bulgarian")]
+#[cfg(all(feature = "bulgarian", not(feature = "external-models")))]
 use lingua_bulgarian_language_model::{BULGARIAN_MODELS_DIRECTORY, BULGARIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "catalan")]
+#[cfg(all(feature = "catalan", not(feature = "external-models")))]
 use lingua_catalan_language_model::{CATALAN_MODELS_DIRECTORY, CATALAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "chinese")]
+#[cfg(all(feature = "chinese", not(feature = "external-models")))]
 use lingua_chinese_language_model::{CHINESE_MODELS_DIRECTORY, CHINESE_TESTDATA_DIRECTORY};
-#[cfg(feature = "croatian")]
+#[cfg(all(feature = "croatian", not(feature = "external-models")))]
 use lingua_croatian_language_model::{CROATIAN_MODELS_DIRECTORY, CROATIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "czech")]
+#[cfg(all(feature = "czech", not(feature = "external-models")))]
 use lingua_czech_language_model::{CZECH_MODELS_DIRECTORY, CZECH_TESTDATA_DIRECTORY};
-#[cfg(feature = "danish")]
+#[cfg(all(feature = "danish", not(feature = "external-models")))]
 use lingua_danish_language_model::{DANISH_MODELS_DIRECTORY, DANISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "dutch")]
+#[cfg(all(feature = "dutch", not(feature = "external-models")))]
 use lingua_dutch_language_model::{DUTCH_MODELS_DIRECTORY, DUTCH_TESTDATA_DIRECTORY};
-#[cfg(feature = "english")]
+#[cfg(all(feature = "english", not(feature = "external-models")))]
 use lingua_english_language_model::{ENGLISH_MODELS_DIRECTORY, ENGLISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "esperanto")]
+#[cfg(all(feature = "esperanto", not(feature = "external-models")))]
 use lingua_esperanto_language_model::{ESPERANTO_MODELS_DIRECTORY, ESPERANTO_TESTDATA_DIRECTORY};
-#[cfg(feature = "estonian")]
+#[cfg(all(feature = "estonian", not(feature = "external-models")))]
 use lingua_estonian_language_model::{ESTONIAN_MODELS_DIRECTORY, ESTONIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "finnish")]
+#[cfg(all(feature = "finnish", not(feature = "external-models")))]
 use lingua_finnish_language_model::{FINNISH_MODELS_DIRECTORY, FINNISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "french")]
+#[cfg(all(feature = "french", not(feature = "external-models")))]
 use lingua_french_language_model::{FRENCH_MODELS_DIRECTORY, FRENCH_TESTDATA_DIRECTORY};
-#[cfg(feature = "ganda")]
+#[cfg(all(feature = "ganda", not(feature = "external-models")))]
 use lingua_ganda_language_model::{GANDA_MODELS_DIRECTORY, GANDA_TESTDATA_DIRECTORY};
-#[cfg(feature = "georgian")]
+#[cfg(all(feature = "georgian", not(feature = "external-models")))]
 use lingua_georgian_language_model::{GEORGIAN_MODELS_DIRECTORY, GEORGIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "german")]
+#[cfg(all(feature = "german", not(feature = "external-models")))]
 use lingua_german_language_model::{GERMAN_MODELS_DIRECTORY, GERMAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "greek")]
+#[cfg(all(feature = "greek", not(feature = "external-models")))]
 use lingua_greek_language_model::{GREEK_MODELS_DIRECTORY, GREEK_TESTDATA_DIRECTORY};
-#[cfg(feature = "gujarati")]
+#[cfg(all(feature = "gujarati", not(feature = "external-models")))]
 use lingua_gujarati_language_model::{GUJARATI_MODELS_DIRECTORY, GUJARATI_TESTDATA_DIRECTORY};
-#[cfg(feature = "hebrew")]
+#[cfg(all(feature = "hebrew", not(feature = "external-models")))]
 use lingua_hebrew_language_model::{HEBREW_MODELS_DIRECTORY, HEBREW_TESTDATA_DIRECTORY};
-#[cfg(feature = "hindi")]
+#[cfg(all(feature = "hindi", not(feature = "external-models")))]
 use lingua_hindi_language_model::{HINDI_MODELS_DIRECTORY, HINDI_TESTDATA_DIRECTORY};
-#[cfg(feature = "hungarian")]
+#[cfg(all(feature = "hungarian", not(feature = "external-models")))]
 use lingua_hungarian_language_model::{HUNGARIAN_MODELS_DIRECTORY, HUNGARIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "icelandic")]
+#[cfg(all(feature = "icelandic", not(feature = "external-models")))]
 use lingua_icelandic_language_model::{ICELANDIC_MODELS_DIRECTORY, ICELANDIC_TESTDATA_DIRECTORY};
-#[cfg(feature = "indonesian")]
+#[cfg(all(feature = "indonesian", not(feature = "external-models")))]
 use lingua_indonesian_language_model::{
     INDONESIAN_MODELS_DIRECTORY, INDONESIAN_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "irish")]
+#[cfg(all(feature = "irish", not(feature = "external-models")))]
 use lingua_irish_language_model::{IRISH_MODELS_DIRECTORY, IRISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "italian")]
+#[cfg(all(feature = "italian", not(feature = "external-models")))]
 use lingua_italian_language_model::{ITALIAN_MODELS_DIRECTORY, ITALIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "japanese")]
+#[cfg(all(feature = "japanese", not(feature = "external-models")))]
 use lingua_japanese_language_model::{JAPANESE_MODELS_DIRECTORY, JAPANESE_TESTDATA_DIRECTORY};
-#[cfg(feature = "kazakh")]
+#[cfg(all(feature = "kazakh", not(feature = "external-models")))]
 use lingua_kazakh_language_model::{KAZAKH_MODELS_DIRECTORY, KAZAKH_TESTDATA_DIRECTORY};
-#[cfg(feature = "korean")]
+#[cfg(all(feature = "korean", not(feature = "external-models")))]
 use lingua_korean_language_model::{KOREAN_MODELS_DIRECTORY, KOREAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "latin")]
+#[cfg(all(feature = "latin", not(feature = "external-models")))]
 use lingua_latin_language_model::{LATIN_MODELS_DIRECTORY, LATIN_TESTDATA_DIRECTORY};
-#[cfg(feature = "latvian")]
+#[cfg(all(feature = "latvian", not(feature = "external-models")))]
 use lingua_latvian_language_model::{LATVIAN_MODELS_DIRECTORY, LATVIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "lithuanian")]
+#[cfg(all(feature = "lithuanian", not(feature = "external-models")))]
 use lingua_lithuanian_language_model::{
     LITHUANIAN_MODELS_DIRECTORY, LITHUANIAN_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "macedonian")]
+#[cfg(all(feature = "macedonian", not(feature = "external-models")))]
 use lingua_macedonian_language_model::{
     MACEDONIAN_MODELS_DIRECTORY, MACEDONIAN_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "malay")]
+#[cfg(all(feature = "malay", not(feature = "external-models")))]
 use lingua_malay_language_model::{MALAY_MODELS_DIRECTORY, MALAY_TESTDATA_DIRECTORY};
-#[cfg(feature = "maori")]
+#[cfg(all(feature = "maori", not(feature = "external-models")))]
 use lingua_maori_language_model::{MAORI_MODELS_DIRECTORY, MAORI_TESTDATA_DIRECTORY};
-#[cfg(feature = "marathi")]
+#[cfg(all(feature = "marathi", not(feature = "external-models")))]
 use lingua_marathi_language_model::{MARATHI_MODELS_DIRECTORY, MARATHI_TESTDATA_DIRECTORY};
-#[cfg(feature = "mongolian")]
+#[cfg(all(feature = "mongolian", not(feature = "external-models")))]
 use lingua_mongolian_language_model::{MONGOLIAN_MODELS_DIRECTORY, MONGOLIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "nynorsk")]
+#[cfg(all(feature = "nynorsk", not(feature = "external-models")))]
 use lingua_nynorsk_language_model::{NYNORSK_MODELS_DIRECTORY, NYNORSK_TESTDATA_DIRECTORY};
-#[cfg(feature = "persian")]
+#[cfg(all(feature = "persian", not(feature = "external-models")))]
 use lingua_persian_language_model::{PERSIAN_MODELS_DIRECTORY, PERSIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "polish")]
+#[cfg(all(feature = "polish", not(feature = "external-models")))]
 use lingua_polish_language_model::{POLISH_MODELS_DIRECTORY, POLISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "portuguese")]
+#[cfg(all(feature = "portuguese", not(feature = "external-models")))]
 use lingua_portuguese_language_model::{
     PORTUGUESE_MODELS_DIRECTORY, PORTUGUESE_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "punjabi")]
+#[cfg(all(feature = "punjabi", not(feature = "external-models")))]
 use lingua_punjabi_language_model::{PUNJABI_MODELS_DIRECTORY, PUNJABI_TESTDATA_DIRECTORY};
-#[cfg(feature = "romanian")]
+#[cfg(all(feature = "romanian", not(feature = "external-models")))]
 use lingua_romanian_language_model::{ROMANIAN_MODELS_DIRECTORY, ROMANIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "russian")]
+#[cfg(all(feature = "russian", not(feature = "external-models")))]
 use lingua_russian_language_model::{RUSSIAN_MODELS_DIRECTORY, RUSSIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "serbian")]
+#[cfg(all(feature = "serbian", not(feature = "external-models")))]
 use lingua_serbian_language_model::{SERBIAN_MODELS_DIRECTORY, SERBIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "shona")]
+#[cfg(all(feature = "shona", not(feature = "external-models")))]
 use lingua_shona_language_model::{SHONA_MODELS_DIRECTORY, SHONA_TESTDATA_DIRECTORY};
-#[cfg(feature = "slovak")]
+#[cfg(all(feature = "slovak", not(feature = "external-models")))]
 use lingua_slovak_language_model::{SLOVAK_MODELS_DIRECTORY, SLOVAK_TESTDATA_DIRECTORY};
-#[cfg(feature = "slovene")]
+#[cfg(all(feature = "slovene", not(feature = "external-models")))]
 use lingua_slovene_language_model::{SLOVENE_MODELS_DIRECTORY, SLOVENE_TESTDATA_DIRECTORY};
-#[cfg(feature = "somali")]
+#[cfg(all(feature = "somali", not(feature = "external-models")))]
 use lingua_somali_language_model::{SOMALI_MODELS_DIRECTORY, SOMALI_TESTDATA_DIRECTORY};
-#[cfg(feature = "sotho")]
+#[cfg(all(feature = "sotho", not(feature = "external-models")))]
 use lingua_sotho_language_model::{SOTHO_MODELS_DIRECTORY, SOTHO_TESTDATA_DIRECTORY};
-#[cfg(feature = "spanish")]
+#[cfg(all(feature = "spanish", not(feature = "external-models")))]
 use lingua_spanish_language_model::{SPANISH_MODELS_DIRECTORY, SPANISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "swahili")]
+#[cfg(all(feature = "swahili", not(feature = "external-models")))]
 use lingua_swahili_language_model::{SWAHILI_MODELS_DIRECTORY, SWAHILI_TESTDATA_DIRECTORY};
-#[cfg(feature = "swedish")]
+#[cfg(all(feature = "swedish", not(feature = "external-models")))]
 use lingua_swedish_language_model::{SWEDISH_MODELS_DIRECTORY, SWEDISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "tagalog")]
+#[cfg(all(feature = "tagalog", not(feature = "external-models")))]
 use lingua_tagalog_language_model::{TAGALOG_MODELS_DIRECTORY, TAGALOG_TESTDATA_DIRECTORY};
-#[cfg(feature = "tamil")]
+#[cfg(all(feature = "tamil", not(feature = "external-models")))]
 use lingua_tamil_language_model::{TAMIL_MODELS_DIRECTORY, TAMIL_TESTDATA_DIRECTORY};
-#[cfg(feature = "telugu")]
+#[cfg(all(feature = "telugu", not(feature = "external-models")))]
 use lingua_telugu_language_model::{TELUGU_MODELS_DIRECTORY, TELUGU_TESTDATA_DIRECTORY};
-#[cfg(feature = "thai")]
+#[cfg(all(feature = "thai", not(feature = "external-models")))]
 use lingua_thai_language_model::{THAI_MODELS_DIRECTORY, THAI_TESTDATA_DIRECTORY};
-#[cfg(feature = "tsonga")]
+#[cfg(all(feature = "tsonga", not(feature = "external-models")))]
 use lingua_tsonga_language_model::{TSONGA_MODELS_DIRECTORY, TSONGA_TESTDATA_DIRECTORY};
-#[cfg(feature = "tswana")]
+#[cfg(all(feature = "tswana", not(feature = "external-models")))]
 use lingua_tswana_language_model::{TSWANA_MODELS_DIRECTORY, TSWANA_TESTDATA_DIRECTORY};
-#[cfg(feature = "turkish")]
+#[cfg(all(feature = "turkish", not(feature = "external-models")))]
 use lingua_turkish_language_model::{TURKISH_MODELS_DIRECTORY, TURKISH_TESTDATA_DIRECTORY};
-#[cfg(feature = "ukrainian")]
+#[cfg(all(feature = "ukrainian", not(feature = "external-models")))]
 use lingua_ukrainian_language_model::{UKRAINIAN_MODELS_DIRECTORY, UKRAINIAN_TESTDATA_DIRECTORY};
-#[cfg(feature = "urdu")]
+#[cfg(all(feature = "urdu", not(feature = "external-models")))]
 use lingua_urdu_language_model::{URDU_MODELS_DIRECTORY, URDU_TESTDATA_DIRECTORY};
-#[cfg(feature = "vietnamese")]
+#[cfg(all(feature = "vietnamese", not(feature = "external-models")))]
 use lingua_vietnamese_language_model::{
     VIETNAMESE_MODELS_DIRECTORY, VIETNAMESE_TESTDATA_DIRECTORY,
 };
-#[cfg(feature = "welsh")]
+#[cfg(all(feature = "welsh", not(feature = "external-models")))]
 use lingua_welsh_language_model::{WELSH_MODELS_DIRECTORY, WELSH_TESTDATA_DIRECTORY};
-#[cfg(feature = "xhosa")]
+#[cfg(all(feature = "xhosa", not(feature = "external-models")))]
 use lingua_xhosa_language_model::{XHOSA_MODELS_DIRECTORY, XHOSA_TESTDATA_DIRECTORY};
-#[cfg(feature = "yoruba")]
+#[cfg(all(feature = "yoruba", not(feature = "external-models")))]
 use lingua_yoruba_language_model::{YORUBA_MODELS_DIRECTORY, YORUBA_TESTDATA_DIRECTORY};
-#[cfg(feature = "zulu")]
+#[cfg(all(feature = "zulu", not(feature = "external-models")))]
 use lingua_zulu_language_model::{ZULU_MODELS_DIRECTORY, ZULU_TESTDATA_DIRECTORY};
 use std::borrow::Cow;
 use std::io::ErrorKind;
 
+#[cfg(not(feature = "external-models"))]
 pub(crate) fn read_probability_model_data_file(
     language: Language,
     file_name: &str,
@@ -194,6 +196,7 @@ pub(crate) fn read_probability_model_data_file(
     Ok(LanguageModelFst::from_fst_map(fst_map))
 }
 
+#[cfg(not(feature = "external-models"))]
 pub(crate) fn read_count_model_data_file(
     language: Language,
     file_name: &str,
@@ -204,466 +207,685 @@ pub(crate) fn read_count_model_data_file(
     Ok(fst_set)
 }
 
+#[cfg(not(feature = "external-models"))]
 pub(crate) fn read_test_data_file(language: Language, file_name: &str) -> std::io::Result<&str> {
     let directory = get_test_data_directory(language);
     let test_data_file = directory.get_file(file_name).ok_or(ErrorKind::NotFound)?;
     Ok(test_data_file.contents_utf8().unwrap())
 }
 
+#[cfg(feature = "external-models")]
+pub(crate) fn read_probability_model_data_file(
+    language: Language,
+    file_name: &str,
+) -> std::io::Result<LanguageModelFst> {
+    let bytes = external::model_bytes(language, file_name)?;
+    let fst_map = fst::Map::new(Cow::Borrowed(bytes)).unwrap();
+    Ok(LanguageModelFst::from_fst_map(fst_map))
+}
+
+#[cfg(feature = "external-models")]
+pub(crate) fn read_count_model_data_file(
+    language: Language,
+    file_name: &str,
+) -> std::io::Result<CountModelFst> {
+    let bytes = external::model_bytes(language, file_name)?;
+    let fst_set = fst::Set::new(Cow::Borrowed(bytes)).unwrap();
+    Ok(fst_set)
+}
+
+#[cfg(feature = "external-models")]
+pub(crate) fn read_test_data_file(_language: Language, _file_name: &str) -> std::io::Result<&str> {
+    Err(std::io::Error::new(
+        ErrorKind::NotFound,
+        "test data files are not part of external model blobs",
+    ))
+}
+
+#[cfg(feature = "external-models")]
+pub use external::load_models_from_blob;
+
+/// Runtime loading of language models from a single blob file via mmap.
+///
+/// Blob layout (all integers little-endian):
+/// - 8 bytes magic: `LINGUA\0\x01`
+/// - u32 entry count
+/// - per entry: u8 ISO 639-1 code length, code bytes, u8 file name length,
+///   file name bytes, u64 payload offset, u64 payload length
+/// - payloads (each aligned to 16 bytes)
+#[cfg(feature = "external-models")]
+mod external {
+    use crate::Language;
+    use crate::isocode::IsoCode639_1;
+    use memmap2::Mmap;
+    use std::collections::HashMap;
+    use std::fs::File;
+    use std::io::{Error, ErrorKind, Result};
+    use std::path::Path;
+    use std::str::FromStr;
+    use std::sync::OnceLock;
+
+    pub(crate) const BLOB_MAGIC: &[u8; 8] = b"LINGUA\0\x01";
+
+    struct ModelsBlob {
+        mmap: Mmap,
+        index: HashMap<(Language, &'static str), (usize, usize)>,
+    }
+
+    static MODELS_BLOB: OnceLock<ModelsBlob> = OnceLock::new();
+
+    /// Memory-maps the given language models blob file and uses it as the
+    /// source of all language models for the rest of the program.
+    ///
+    /// Must be called before the first language detection. Alternatively,
+    /// the path can be provided in the `LINGUA_MODELS_BLOB` environment
+    /// variable. Returns an error if the file cannot be opened, is not a
+    /// valid models blob, or if a blob has already been loaded.
+    pub fn load_models_from_blob(path: impl AsRef<Path>) -> Result<()> {
+        let file = File::open(path.as_ref())?;
+        let mmap = unsafe { Mmap::map(&file)? };
+        let index = parse_index(&mmap)?;
+        MODELS_BLOB
+            .set(ModelsBlob { mmap, index })
+            .map_err(|_| Error::new(ErrorKind::AlreadyExists, "a models blob is already loaded"))
+    }
+
+    fn blob() -> Result<&'static ModelsBlob> {
+        if MODELS_BLOB.get().is_none()
+            && let Ok(path) = std::env::var("LINGUA_MODELS_BLOB")
+        {
+            // A concurrent load_models_from_blob may win the race; both
+            // outcomes leave a valid blob in place, so the error is ignored.
+            let _ = load_models_from_blob(path);
+        }
+        MODELS_BLOB.get().ok_or_else(|| {
+            Error::new(
+                ErrorKind::NotFound,
+                "no language models loaded; call lingua::load_models_from_blob() \
+                 or set the LINGUA_MODELS_BLOB environment variable",
+            )
+        })
+    }
+
+    pub(super) fn model_bytes(language: Language, file_name: &str) -> Result<&'static [u8]> {
+        let blob = blob()?;
+        let (offset, length) = *blob
+            .index
+            .get(&(language, file_name))
+            .ok_or(ErrorKind::NotFound)?;
+        let bytes = &blob.mmap[offset..offset + length];
+        // The blob lives in a static OnceLock and is never dropped or
+        // replaced, so the mapped memory stays valid for the rest of
+        // the program.
+        Ok(unsafe { std::mem::transmute::<&[u8], &'static [u8]>(bytes) })
+    }
+
+    /// File names are interned to canonical static strings so the index
+    /// can be keyed without allocating on lookup.
+    fn intern_file_name(name: &str) -> Option<&'static str> {
+        ["ngrams.fst", "unique-ngrams.fst", "mostcommon-ngrams.fst"]
+            .into_iter()
+            .find(|known| *known == name)
+    }
+
+    fn parse_index(data: &[u8]) -> Result<HashMap<(Language, &'static str), (usize, usize)>> {
+        let invalid = |message: &str| Error::new(ErrorKind::InvalidData, message.to_string());
+        if data.len() < 12 || &data[0..8] != BLOB_MAGIC {
+            return Err(invalid("not a lingua models blob"));
+        }
+        let entry_count = u32::from_le_bytes(data[8..12].try_into().unwrap()) as usize;
+        let mut index = HashMap::with_capacity(entry_count);
+        let mut pos = 12;
+
+        let mut take = |len: usize| -> Result<&[u8]> {
+            let slice = data
+                .get(pos..pos + len)
+                .ok_or_else(|| invalid("truncated models blob"))?;
+            pos += len;
+            Ok(slice)
+        };
+
+        for _ in 0..entry_count {
+            let code_len = take(1)?[0] as usize;
+            let code = std::str::from_utf8(take(code_len)?)
+                .map_err(|_| invalid("invalid language code in models blob"))?
+                .to_string();
+            let name_len = take(1)?[0] as usize;
+            let name = std::str::from_utf8(take(name_len)?)
+                .map_err(|_| invalid("invalid file name in models blob"))?
+                .to_string();
+            let offset = u64::from_le_bytes(take(8)?.try_into().unwrap()) as usize;
+            let length = u64::from_le_bytes(take(8)?.try_into().unwrap()) as usize;
+
+            if offset + length > data.len() {
+                return Err(invalid("models blob entry out of bounds"));
+            }
+            let iso_code = IsoCode639_1::from_str(&code)
+                .map_err(|_| invalid("unsupported language code in models blob"))?;
+            let language = Language::from_iso_code_639_1(&iso_code);
+            let file_name = intern_file_name(&name)
+                .ok_or_else(|| invalid("unsupported file name in models blob"))?;
+            index.insert((language, file_name), (offset, length));
+        }
+        Ok(index)
+    }
+}
+
+/// Writes the language models of all languages enabled at compile time
+/// into a single blob file for use with the `external-models` feature.
+#[cfg(all(feature = "pack-models", not(feature = "external-models")))]
+pub fn write_models_blob(output_path: impl AsRef<std::path::Path>) -> std::io::Result<()> {
+    use std::io::Write;
+    use strum::IntoEnumIterator;
+
+    const BLOB_MAGIC: &[u8; 8] = b"LINGUA\0\x01";
+    const FILE_NAMES: [&str; 3] = ["ngrams.fst", "unique-ngrams.fst", "mostcommon-ngrams.fst"];
+
+    let mut entries: Vec<(String, &str, &[u8])> = vec![];
+    for language in Language::iter() {
+        let directory = get_language_models_directory(language);
+        for file_name in FILE_NAMES {
+            let file = directory.get_file(file_name).ok_or(ErrorKind::NotFound)?;
+            entries.push((
+                language.iso_code_639_1().to_string(),
+                file_name,
+                file.contents(),
+            ));
+        }
+    }
+
+    let header_size: usize = 12
+        + entries
+            .iter()
+            .map(|(code, name, _)| 1 + code.len() + 1 + name.len() + 16)
+            .sum::<usize>();
+    let align = |offset: usize| offset.div_ceil(16) * 16;
+
+    let mut header = Vec::with_capacity(header_size);
+    header.extend_from_slice(BLOB_MAGIC);
+    header.extend_from_slice(&(entries.len() as u32).to_le_bytes());
+
+    let mut offset = align(header_size);
+    for (code, name, contents) in &entries {
+        header.push(code.len() as u8);
+        header.extend_from_slice(code.as_bytes());
+        header.push(name.len() as u8);
+        header.extend_from_slice(name.as_bytes());
+        header.extend_from_slice(&(offset as u64).to_le_bytes());
+        header.extend_from_slice(&(contents.len() as u64).to_le_bytes());
+        offset = align(offset + contents.len());
+    }
+    assert_eq!(header.len(), header_size);
+
+    let file = std::fs::File::create(output_path)?;
+    let mut writer = std::io::BufWriter::new(file);
+    writer.write_all(&header)?;
+    let mut written = header_size;
+    for (_, _, contents) in &entries {
+        let padding = align(written) - written;
+        writer.write_all(&vec![0; padding])?;
+        writer.write_all(contents)?;
+        written = align(written) + contents.len();
+    }
+    writer.flush()
+}
+
+#[cfg(not(feature = "external-models"))]
 fn get_language_models_directory(language: Language) -> Dir<'static> {
     match language {
-        #[cfg(feature = "afrikaans")]
+        #[cfg(all(feature = "afrikaans", not(feature = "external-models")))]
         Language::Afrikaans => AFRIKAANS_MODELS_DIRECTORY,
 
-        #[cfg(feature = "albanian")]
+        #[cfg(all(feature = "albanian", not(feature = "external-models")))]
         Language::Albanian => ALBANIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "arabic")]
+        #[cfg(all(feature = "arabic", not(feature = "external-models")))]
         Language::Arabic => ARABIC_MODELS_DIRECTORY,
 
-        #[cfg(feature = "armenian")]
+        #[cfg(all(feature = "armenian", not(feature = "external-models")))]
         Language::Armenian => ARMENIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "azerbaijani")]
+        #[cfg(all(feature = "azerbaijani", not(feature = "external-models")))]
         Language::Azerbaijani => AZERBAIJANI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "basque")]
+        #[cfg(all(feature = "basque", not(feature = "external-models")))]
         Language::Basque => BASQUE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "belarusian")]
+        #[cfg(all(feature = "belarusian", not(feature = "external-models")))]
         Language::Belarusian => BELARUSIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "bengali")]
+        #[cfg(all(feature = "bengali", not(feature = "external-models")))]
         Language::Bengali => BENGALI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "bokmal")]
+        #[cfg(all(feature = "bokmal", not(feature = "external-models")))]
         Language::Bokmal => BOKMAL_MODELS_DIRECTORY,
 
-        #[cfg(feature = "bosnian")]
+        #[cfg(all(feature = "bosnian", not(feature = "external-models")))]
         Language::Bosnian => BOSNIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "bulgarian")]
+        #[cfg(all(feature = "bulgarian", not(feature = "external-models")))]
         Language::Bulgarian => BULGARIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "catalan")]
+        #[cfg(all(feature = "catalan", not(feature = "external-models")))]
         Language::Catalan => CATALAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "chinese")]
+        #[cfg(all(feature = "chinese", not(feature = "external-models")))]
         Language::Chinese => CHINESE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "croatian")]
+        #[cfg(all(feature = "croatian", not(feature = "external-models")))]
         Language::Croatian => CROATIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "czech")]
+        #[cfg(all(feature = "czech", not(feature = "external-models")))]
         Language::Czech => CZECH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "danish")]
+        #[cfg(all(feature = "danish", not(feature = "external-models")))]
         Language::Danish => DANISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "dutch")]
+        #[cfg(all(feature = "dutch", not(feature = "external-models")))]
         Language::Dutch => DUTCH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "english")]
+        #[cfg(all(feature = "english", not(feature = "external-models")))]
         Language::English => ENGLISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "esperanto")]
+        #[cfg(all(feature = "esperanto", not(feature = "external-models")))]
         Language::Esperanto => ESPERANTO_MODELS_DIRECTORY,
 
-        #[cfg(feature = "estonian")]
+        #[cfg(all(feature = "estonian", not(feature = "external-models")))]
         Language::Estonian => ESTONIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "finnish")]
+        #[cfg(all(feature = "finnish", not(feature = "external-models")))]
         Language::Finnish => FINNISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "french")]
+        #[cfg(all(feature = "french", not(feature = "external-models")))]
         Language::French => FRENCH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "ganda")]
+        #[cfg(all(feature = "ganda", not(feature = "external-models")))]
         Language::Ganda => GANDA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "georgian")]
+        #[cfg(all(feature = "georgian", not(feature = "external-models")))]
         Language::Georgian => GEORGIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "german")]
+        #[cfg(all(feature = "german", not(feature = "external-models")))]
         Language::German => GERMAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "greek")]
+        #[cfg(all(feature = "greek", not(feature = "external-models")))]
         Language::Greek => GREEK_MODELS_DIRECTORY,
 
-        #[cfg(feature = "gujarati")]
+        #[cfg(all(feature = "gujarati", not(feature = "external-models")))]
         Language::Gujarati => GUJARATI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "hebrew")]
+        #[cfg(all(feature = "hebrew", not(feature = "external-models")))]
         Language::Hebrew => HEBREW_MODELS_DIRECTORY,
 
-        #[cfg(feature = "hindi")]
+        #[cfg(all(feature = "hindi", not(feature = "external-models")))]
         Language::Hindi => HINDI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "hungarian")]
+        #[cfg(all(feature = "hungarian", not(feature = "external-models")))]
         Language::Hungarian => HUNGARIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "icelandic")]
+        #[cfg(all(feature = "icelandic", not(feature = "external-models")))]
         Language::Icelandic => ICELANDIC_MODELS_DIRECTORY,
 
-        #[cfg(feature = "indonesian")]
+        #[cfg(all(feature = "indonesian", not(feature = "external-models")))]
         Language::Indonesian => INDONESIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "irish")]
+        #[cfg(all(feature = "irish", not(feature = "external-models")))]
         Language::Irish => IRISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "italian")]
+        #[cfg(all(feature = "italian", not(feature = "external-models")))]
         Language::Italian => ITALIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "japanese")]
+        #[cfg(all(feature = "japanese", not(feature = "external-models")))]
         Language::Japanese => JAPANESE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "kazakh")]
+        #[cfg(all(feature = "kazakh", not(feature = "external-models")))]
         Language::Kazakh => KAZAKH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "korean")]
+        #[cfg(all(feature = "korean", not(feature = "external-models")))]
         Language::Korean => KOREAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "latin")]
+        #[cfg(all(feature = "latin", not(feature = "external-models")))]
         Language::Latin => LATIN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "latvian")]
+        #[cfg(all(feature = "latvian", not(feature = "external-models")))]
         Language::Latvian => LATVIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "lithuanian")]
+        #[cfg(all(feature = "lithuanian", not(feature = "external-models")))]
         Language::Lithuanian => LITHUANIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "macedonian")]
+        #[cfg(all(feature = "macedonian", not(feature = "external-models")))]
         Language::Macedonian => MACEDONIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "malay")]
+        #[cfg(all(feature = "malay", not(feature = "external-models")))]
         Language::Malay => MALAY_MODELS_DIRECTORY,
 
-        #[cfg(feature = "maori")]
+        #[cfg(all(feature = "maori", not(feature = "external-models")))]
         Language::Maori => MAORI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "marathi")]
+        #[cfg(all(feature = "marathi", not(feature = "external-models")))]
         Language::Marathi => MARATHI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "mongolian")]
+        #[cfg(all(feature = "mongolian", not(feature = "external-models")))]
         Language::Mongolian => MONGOLIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "nynorsk")]
+        #[cfg(all(feature = "nynorsk", not(feature = "external-models")))]
         Language::Nynorsk => NYNORSK_MODELS_DIRECTORY,
 
-        #[cfg(feature = "persian")]
+        #[cfg(all(feature = "persian", not(feature = "external-models")))]
         Language::Persian => PERSIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "polish")]
+        #[cfg(all(feature = "polish", not(feature = "external-models")))]
         Language::Polish => POLISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "portuguese")]
+        #[cfg(all(feature = "portuguese", not(feature = "external-models")))]
         Language::Portuguese => PORTUGUESE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "punjabi")]
+        #[cfg(all(feature = "punjabi", not(feature = "external-models")))]
         Language::Punjabi => PUNJABI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "romanian")]
+        #[cfg(all(feature = "romanian", not(feature = "external-models")))]
         Language::Romanian => ROMANIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "russian")]
+        #[cfg(all(feature = "russian", not(feature = "external-models")))]
         Language::Russian => RUSSIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "serbian")]
+        #[cfg(all(feature = "serbian", not(feature = "external-models")))]
         Language::Serbian => SERBIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "shona")]
+        #[cfg(all(feature = "shona", not(feature = "external-models")))]
         Language::Shona => SHONA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "slovak")]
+        #[cfg(all(feature = "slovak", not(feature = "external-models")))]
         Language::Slovak => SLOVAK_MODELS_DIRECTORY,
 
-        #[cfg(feature = "slovene")]
+        #[cfg(all(feature = "slovene", not(feature = "external-models")))]
         Language::Slovene => SLOVENE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "somali")]
+        #[cfg(all(feature = "somali", not(feature = "external-models")))]
         Language::Somali => SOMALI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "sotho")]
+        #[cfg(all(feature = "sotho", not(feature = "external-models")))]
         Language::Sotho => SOTHO_MODELS_DIRECTORY,
 
-        #[cfg(feature = "spanish")]
+        #[cfg(all(feature = "spanish", not(feature = "external-models")))]
         Language::Spanish => SPANISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "swahili")]
+        #[cfg(all(feature = "swahili", not(feature = "external-models")))]
         Language::Swahili => SWAHILI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "swedish")]
+        #[cfg(all(feature = "swedish", not(feature = "external-models")))]
         Language::Swedish => SWEDISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "tagalog")]
+        #[cfg(all(feature = "tagalog", not(feature = "external-models")))]
         Language::Tagalog => TAGALOG_MODELS_DIRECTORY,
 
-        #[cfg(feature = "tamil")]
+        #[cfg(all(feature = "tamil", not(feature = "external-models")))]
         Language::Tamil => TAMIL_MODELS_DIRECTORY,
 
-        #[cfg(feature = "telugu")]
+        #[cfg(all(feature = "telugu", not(feature = "external-models")))]
         Language::Telugu => TELUGU_MODELS_DIRECTORY,
 
-        #[cfg(feature = "thai")]
+        #[cfg(all(feature = "thai", not(feature = "external-models")))]
         Language::Thai => THAI_MODELS_DIRECTORY,
 
-        #[cfg(feature = "tsonga")]
+        #[cfg(all(feature = "tsonga", not(feature = "external-models")))]
         Language::Tsonga => TSONGA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "tswana")]
+        #[cfg(all(feature = "tswana", not(feature = "external-models")))]
         Language::Tswana => TSWANA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "turkish")]
+        #[cfg(all(feature = "turkish", not(feature = "external-models")))]
         Language::Turkish => TURKISH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "ukrainian")]
+        #[cfg(all(feature = "ukrainian", not(feature = "external-models")))]
         Language::Ukrainian => UKRAINIAN_MODELS_DIRECTORY,
 
-        #[cfg(feature = "urdu")]
+        #[cfg(all(feature = "urdu", not(feature = "external-models")))]
         Language::Urdu => URDU_MODELS_DIRECTORY,
 
-        #[cfg(feature = "vietnamese")]
+        #[cfg(all(feature = "vietnamese", not(feature = "external-models")))]
         Language::Vietnamese => VIETNAMESE_MODELS_DIRECTORY,
 
-        #[cfg(feature = "welsh")]
+        #[cfg(all(feature = "welsh", not(feature = "external-models")))]
         Language::Welsh => WELSH_MODELS_DIRECTORY,
 
-        #[cfg(feature = "xhosa")]
+        #[cfg(all(feature = "xhosa", not(feature = "external-models")))]
         Language::Xhosa => XHOSA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "yoruba")]
+        #[cfg(all(feature = "yoruba", not(feature = "external-models")))]
         Language::Yoruba => YORUBA_MODELS_DIRECTORY,
 
-        #[cfg(feature = "zulu")]
+        #[cfg(all(feature = "zulu", not(feature = "external-models")))]
         Language::Zulu => ZULU_MODELS_DIRECTORY,
     }
 }
 
+#[cfg(not(feature = "external-models"))]
 fn get_test_data_directory(language: Language) -> Dir<'static> {
     match language {
-        #[cfg(feature = "afrikaans")]
+        #[cfg(all(feature = "afrikaans", not(feature = "external-models")))]
         Language::Afrikaans => AFRIKAANS_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "albanian")]
+        #[cfg(all(feature = "albanian", not(feature = "external-models")))]
         Language::Albanian => ALBANIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "arabic")]
+        #[cfg(all(feature = "arabic", not(feature = "external-models")))]
         Language::Arabic => ARABIC_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "armenian")]
+        #[cfg(all(feature = "armenian", not(feature = "external-models")))]
         Language::Armenian => ARMENIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "azerbaijani")]
+        #[cfg(all(feature = "azerbaijani", not(feature = "external-models")))]
         Language::Azerbaijani => AZERBAIJANI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "basque")]
+        #[cfg(all(feature = "basque", not(feature = "external-models")))]
         Language::Basque => BASQUE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "belarusian")]
+        #[cfg(all(feature = "belarusian", not(feature = "external-models")))]
         Language::Belarusian => BELARUSIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "bengali")]
+        #[cfg(all(feature = "bengali", not(feature = "external-models")))]
         Language::Bengali => BENGALI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "bokmal")]
+        #[cfg(all(feature = "bokmal", not(feature = "external-models")))]
         Language::Bokmal => BOKMAL_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "bosnian")]
+        #[cfg(all(feature = "bosnian", not(feature = "external-models")))]
         Language::Bosnian => BOSNIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "bulgarian")]
+        #[cfg(all(feature = "bulgarian", not(feature = "external-models")))]
         Language::Bulgarian => BULGARIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "catalan")]
+        #[cfg(all(feature = "catalan", not(feature = "external-models")))]
         Language::Catalan => CATALAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "chinese")]
+        #[cfg(all(feature = "chinese", not(feature = "external-models")))]
         Language::Chinese => CHINESE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "croatian")]
+        #[cfg(all(feature = "croatian", not(feature = "external-models")))]
         Language::Croatian => CROATIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "czech")]
+        #[cfg(all(feature = "czech", not(feature = "external-models")))]
         Language::Czech => CZECH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "danish")]
+        #[cfg(all(feature = "danish", not(feature = "external-models")))]
         Language::Danish => DANISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "dutch")]
+        #[cfg(all(feature = "dutch", not(feature = "external-models")))]
         Language::Dutch => DUTCH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "english")]
+        #[cfg(all(feature = "english", not(feature = "external-models")))]
         Language::English => ENGLISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "esperanto")]
+        #[cfg(all(feature = "esperanto", not(feature = "external-models")))]
         Language::Esperanto => ESPERANTO_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "estonian")]
+        #[cfg(all(feature = "estonian", not(feature = "external-models")))]
         Language::Estonian => ESTONIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "finnish")]
+        #[cfg(all(feature = "finnish", not(feature = "external-models")))]
         Language::Finnish => FINNISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "french")]
+        #[cfg(all(feature = "french", not(feature = "external-models")))]
         Language::French => FRENCH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "ganda")]
+        #[cfg(all(feature = "ganda", not(feature = "external-models")))]
         Language::Ganda => GANDA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "georgian")]
+        #[cfg(all(feature = "georgian", not(feature = "external-models")))]
         Language::Georgian => GEORGIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "german")]
+        #[cfg(all(feature = "german", not(feature = "external-models")))]
         Language::German => GERMAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "greek")]
+        #[cfg(all(feature = "greek", not(feature = "external-models")))]
         Language::Greek => GREEK_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "gujarati")]
+        #[cfg(all(feature = "gujarati", not(feature = "external-models")))]
         Language::Gujarati => GUJARATI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "hebrew")]
+        #[cfg(all(feature = "hebrew", not(feature = "external-models")))]
         Language::Hebrew => HEBREW_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "hindi")]
+        #[cfg(all(feature = "hindi", not(feature = "external-models")))]
         Language::Hindi => HINDI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "hungarian")]
+        #[cfg(all(feature = "hungarian", not(feature = "external-models")))]
         Language::Hungarian => HUNGARIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "icelandic")]
+        #[cfg(all(feature = "icelandic", not(feature = "external-models")))]
         Language::Icelandic => ICELANDIC_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "indonesian")]
+        #[cfg(all(feature = "indonesian", not(feature = "external-models")))]
         Language::Indonesian => INDONESIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "irish")]
+        #[cfg(all(feature = "irish", not(feature = "external-models")))]
         Language::Irish => IRISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "italian")]
+        #[cfg(all(feature = "italian", not(feature = "external-models")))]
         Language::Italian => ITALIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "japanese")]
+        #[cfg(all(feature = "japanese", not(feature = "external-models")))]
         Language::Japanese => JAPANESE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "kazakh")]
+        #[cfg(all(feature = "kazakh", not(feature = "external-models")))]
         Language::Kazakh => KAZAKH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "korean")]
+        #[cfg(all(feature = "korean", not(feature = "external-models")))]
         Language::Korean => KOREAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "latin")]
+        #[cfg(all(feature = "latin", not(feature = "external-models")))]
         Language::Latin => LATIN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "latvian")]
+        #[cfg(all(feature = "latvian", not(feature = "external-models")))]
         Language::Latvian => LATVIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "lithuanian")]
+        #[cfg(all(feature = "lithuanian", not(feature = "external-models")))]
         Language::Lithuanian => LITHUANIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "macedonian")]
+        #[cfg(all(feature = "macedonian", not(feature = "external-models")))]
         Language::Macedonian => MACEDONIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "malay")]
+        #[cfg(all(feature = "malay", not(feature = "external-models")))]
         Language::Malay => MALAY_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "maori")]
+        #[cfg(all(feature = "maori", not(feature = "external-models")))]
         Language::Maori => MAORI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "marathi")]
+        #[cfg(all(feature = "marathi", not(feature = "external-models")))]
         Language::Marathi => MARATHI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "mongolian")]
+        #[cfg(all(feature = "mongolian", not(feature = "external-models")))]
         Language::Mongolian => MONGOLIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "nynorsk")]
+        #[cfg(all(feature = "nynorsk", not(feature = "external-models")))]
         Language::Nynorsk => NYNORSK_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "persian")]
+        #[cfg(all(feature = "persian", not(feature = "external-models")))]
         Language::Persian => PERSIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "polish")]
+        #[cfg(all(feature = "polish", not(feature = "external-models")))]
         Language::Polish => POLISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "portuguese")]
+        #[cfg(all(feature = "portuguese", not(feature = "external-models")))]
         Language::Portuguese => PORTUGUESE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "punjabi")]
+        #[cfg(all(feature = "punjabi", not(feature = "external-models")))]
         Language::Punjabi => PUNJABI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "romanian")]
+        #[cfg(all(feature = "romanian", not(feature = "external-models")))]
         Language::Romanian => ROMANIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "russian")]
+        #[cfg(all(feature = "russian", not(feature = "external-models")))]
         Language::Russian => RUSSIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "serbian")]
+        #[cfg(all(feature = "serbian", not(feature = "external-models")))]
         Language::Serbian => SERBIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "shona")]
+        #[cfg(all(feature = "shona", not(feature = "external-models")))]
         Language::Shona => SHONA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "slovak")]
+        #[cfg(all(feature = "slovak", not(feature = "external-models")))]
         Language::Slovak => SLOVAK_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "slovene")]
+        #[cfg(all(feature = "slovene", not(feature = "external-models")))]
         Language::Slovene => SLOVENE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "somali")]
+        #[cfg(all(feature = "somali", not(feature = "external-models")))]
         Language::Somali => SOMALI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "sotho")]
+        #[cfg(all(feature = "sotho", not(feature = "external-models")))]
         Language::Sotho => SOTHO_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "spanish")]
+        #[cfg(all(feature = "spanish", not(feature = "external-models")))]
         Language::Spanish => SPANISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "swahili")]
+        #[cfg(all(feature = "swahili", not(feature = "external-models")))]
         Language::Swahili => SWAHILI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "swedish")]
+        #[cfg(all(feature = "swedish", not(feature = "external-models")))]
         Language::Swedish => SWEDISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "tagalog")]
+        #[cfg(all(feature = "tagalog", not(feature = "external-models")))]
         Language::Tagalog => TAGALOG_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "tamil")]
+        #[cfg(all(feature = "tamil", not(feature = "external-models")))]
         Language::Tamil => TAMIL_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "telugu")]
+        #[cfg(all(feature = "telugu", not(feature = "external-models")))]
         Language::Telugu => TELUGU_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "thai")]
+        #[cfg(all(feature = "thai", not(feature = "external-models")))]
         Language::Thai => THAI_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "tsonga")]
+        #[cfg(all(feature = "tsonga", not(feature = "external-models")))]
         Language::Tsonga => TSONGA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "tswana")]
+        #[cfg(all(feature = "tswana", not(feature = "external-models")))]
         Language::Tswana => TSWANA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "turkish")]
+        #[cfg(all(feature = "turkish", not(feature = "external-models")))]
         Language::Turkish => TURKISH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "ukrainian")]
+        #[cfg(all(feature = "ukrainian", not(feature = "external-models")))]
         Language::Ukrainian => UKRAINIAN_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "urdu")]
+        #[cfg(all(feature = "urdu", not(feature = "external-models")))]
         Language::Urdu => URDU_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "vietnamese")]
+        #[cfg(all(feature = "vietnamese", not(feature = "external-models")))]
         Language::Vietnamese => VIETNAMESE_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "welsh")]
+        #[cfg(all(feature = "welsh", not(feature = "external-models")))]
         Language::Welsh => WELSH_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "xhosa")]
+        #[cfg(all(feature = "xhosa", not(feature = "external-models")))]
         Language::Xhosa => XHOSA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "yoruba")]
+        #[cfg(all(feature = "yoruba", not(feature = "external-models")))]
         Language::Yoruba => YORUBA_TESTDATA_DIRECTORY,
 
-        #[cfg(feature = "zulu")]
+        #[cfg(all(feature = "zulu", not(feature = "external-models")))]
         Language::Zulu => ZULU_TESTDATA_DIRECTORY,
     }
 }

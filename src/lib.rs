@@ -406,6 +406,10 @@ extern crate maplit;
 
 pub use builder::LanguageDetectorBuilder;
 pub use detector::LanguageDetector;
+#[cfg(feature = "external-models")]
+pub use file::load_models_from_blob;
+#[cfg(all(feature = "pack-models", not(feature = "external-models")))]
+pub use file::write_models_blob;
 pub use isocode::{IsoCode639_1, IsoCode639_3};
 pub use language::Language;
 pub use result::DetectionResult;

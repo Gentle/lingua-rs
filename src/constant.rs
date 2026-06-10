@@ -47,964 +47,964 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
     LazyLock::new(|| {
         let mut mapping = hashmap!();
 
-        if cfg!(feature = "portuguese") || cfg!(feature = "vietnamese") {
+        if cfg!(any(feature = "portuguese", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
             mapping.insert("Ãã", {
                 let mut languages = hashset!();
-                if cfg!(feature = "portuguese") {
+                if cfg!(any(feature = "portuguese", feature = "external-models")) {
                     languages.insert(Language::from_str("Portuguese").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "lithuanian") || cfg!(feature = "polish") {
+        if cfg!(any(feature = "lithuanian", feature = "external-models")) || cfg!(any(feature = "polish", feature = "external-models")) {
             mapping.insert("ĄąĘę", {
                 let mut languages = hashset!();
-                if cfg!(feature = "lithuanian") {
+                if cfg!(any(feature = "lithuanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Lithuanian").unwrap());
                 }
-                if cfg!(feature = "polish") {
+                if cfg!(any(feature = "polish", feature = "external-models")) {
                     languages.insert(Language::from_str("Polish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "polish") || cfg!(feature = "romanian") {
+        if cfg!(any(feature = "polish", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) {
             mapping.insert("Żż", {
                 let mut languages = hashset!();
-                if cfg!(feature = "polish") {
+                if cfg!(any(feature = "polish", feature = "external-models")) {
                     languages.insert(Language::from_str("Polish").unwrap());
                 }
-                if cfg!(feature = "romanian") {
+                if cfg!(any(feature = "romanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Romanian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "french") || cfg!(feature = "romanian") {
+        if cfg!(any(feature = "french", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) {
             mapping.insert("Îî", {
                 let mut languages = hashset!();
-                if cfg!(feature = "french") {
+                if cfg!(any(feature = "french", feature = "external-models")) {
                     languages.insert(Language::from_str("French").unwrap());
                 }
-                if cfg!(feature = "romanian") {
+                if cfg!(any(feature = "romanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Romanian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "basque") || cfg!(feature = "spanish") {
+        if cfg!(any(feature = "basque", feature = "external-models")) || cfg!(any(feature = "spanish", feature = "external-models")) {
             mapping.insert("Ññ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "basque") {
+                if cfg!(any(feature = "basque", feature = "external-models")) {
                     languages.insert(Language::from_str("Basque").unwrap());
                 }
-                if cfg!(feature = "spanish") {
+                if cfg!(any(feature = "spanish", feature = "external-models")) {
                     languages.insert(Language::from_str("Spanish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "czech") || cfg!(feature = "slovak") {
+        if cfg!(any(feature = "czech", feature = "external-models")) || cfg!(any(feature = "slovak", feature = "external-models")) {
             mapping.insert("ŇňŤť", {
                 let mut languages = hashset!();
-                if cfg!(feature = "czech") {
+                if cfg!(any(feature = "czech", feature = "external-models")) {
                     languages.insert(Language::from_str("Czech").unwrap());
                 }
-                if cfg!(feature = "slovak") {
+                if cfg!(any(feature = "slovak", feature = "external-models")) {
                     languages.insert(Language::from_str("Slovak").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "romanian") || cfg!(feature = "vietnamese") {
+        if cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
             mapping.insert("Ăă", {
                 let mut languages = hashset!();
-                if cfg!(feature = "romanian") {
+                if cfg!(any(feature = "romanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Romanian").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "azerbaijani") || cfg!(feature = "turkish") {
+        if cfg!(any(feature = "azerbaijani", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models")) {
             mapping.insert("İıĞğ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "azerbaijani") {
+                if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
                     languages.insert(Language::from_str("Azerbaijani").unwrap());
                 }
-                if cfg!(feature = "turkish") {
+                if cfg!(any(feature = "turkish", feature = "external-models")) {
                     languages.insert(Language::from_str("Turkish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "macedonian") || cfg!(feature = "serbian") {
+        if cfg!(any(feature = "macedonian", feature = "external-models")) || cfg!(any(feature = "serbian", feature = "external-models")) {
             mapping.insert("ЈјЉљЊњ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "macedonian") {
+                if cfg!(any(feature = "macedonian", feature = "external-models")) {
                     languages.insert(Language::from_str("Macedonian").unwrap());
                 }
-                if cfg!(feature = "serbian") {
+                if cfg!(any(feature = "serbian", feature = "external-models")) {
                     languages.insert(Language::from_str("Serbian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "vietnamese") || cfg!(feature = "yoruba") {
+        if cfg!(any(feature = "vietnamese", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
             mapping.insert("ẸẹỌọ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "icelandic") || cfg!(feature = "turkish") {
+        if cfg!(any(feature = "icelandic", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models")) {
             mapping.insert("ÐðÞþ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "icelandic") {
+                if cfg!(any(feature = "icelandic", feature = "external-models")) {
                     languages.insert(Language::from_str("Icelandic").unwrap());
                 }
-                if cfg!(feature = "turkish") {
+                if cfg!(any(feature = "turkish", feature = "external-models")) {
                     languages.insert(Language::from_str("Turkish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "french") || cfg!(feature = "hungarian") {
+        if cfg!(any(feature = "french", feature = "external-models")) || cfg!(any(feature = "hungarian", feature = "external-models")) {
             mapping.insert("Ûû", {
                 let mut languages = hashset!();
-                if cfg!(feature = "french") {
+                if cfg!(any(feature = "french", feature = "external-models")) {
                     languages.insert(Language::from_str("French").unwrap());
                 }
-                if cfg!(feature = "hungarian") {
+                if cfg!(any(feature = "hungarian", feature = "external-models")) {
                     languages.insert(Language::from_str("Hungarian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "maori") || cfg!(feature = "yoruba") {
+        if cfg!(any(feature = "maori", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
             mapping.insert("Ōō", {
                 let mut languages = hashset!();
-                if cfg!(feature = "maori") {
+                if cfg!(any(feature = "maori", feature = "external-models")) {
                     languages.insert(Language::from_str("Maori").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "kazakh") || cfg!(feature = "mongolian") {
+        if cfg!(any(feature = "kazakh", feature = "external-models")) || cfg!(any(feature = "mongolian", feature = "external-models")) {
             mapping.insert("ӨөҮү", {
                 let mut languages = hashset!();
-                if cfg!(feature = "kazakh") {
+                if cfg!(any(feature = "kazakh", feature = "external-models")) {
                     languages.insert(Language::from_str("Kazakh").unwrap());
                 }
-                if cfg!(feature = "mongolian") {
+                if cfg!(any(feature = "mongolian", feature = "external-models")) {
                     languages.insert(Language::from_str("Mongolian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "latvian") || cfg!(feature = "maori") || cfg!(feature = "yoruba") {
+        if cfg!(any(feature = "latvian", feature = "external-models")) || cfg!(any(feature = "maori", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
             mapping.insert("ĀāĒēĪī", {
                 let mut languages = hashset!();
-                if cfg!(feature = "latvian") {
+                if cfg!(any(feature = "latvian", feature = "external-models")) {
                     languages.insert(Language::from_str("Latvian").unwrap());
                 }
-                if cfg!(feature = "maori") {
+                if cfg!(any(feature = "maori", feature = "external-models")) {
                     languages.insert(Language::from_str("Maori").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "azerbaijani") || cfg!(feature = "romanian") || cfg!(feature = "turkish")
+        if cfg!(any(feature = "azerbaijani", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models"))
         {
             mapping.insert("Şş", {
                 let mut languages = hashset!();
-                if cfg!(feature = "azerbaijani") {
+                if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
                     languages.insert(Language::from_str("Azerbaijani").unwrap());
                 }
-                if cfg!(feature = "romanian") {
+                if cfg!(any(feature = "romanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Romanian").unwrap());
                 }
-                if cfg!(feature = "turkish") {
+                if cfg!(any(feature = "turkish", feature = "external-models")) {
                     languages.insert(Language::from_str("Turkish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "czech") || cfg!(feature = "romanian") || cfg!(feature = "slovak") {
+        if cfg!(any(feature = "czech", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "slovak", feature = "external-models")) {
             mapping.insert("Ďď", {
                 let mut languages = hashset!();
-                if cfg!(feature = "czech") {
+                if cfg!(any(feature = "czech", feature = "external-models")) {
                     languages.insert(Language::from_str("Czech").unwrap());
                 }
-                if cfg!(feature = "romanian") {
+                if cfg!(any(feature = "romanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Romanian").unwrap());
                 }
-                if cfg!(feature = "slovak") {
+                if cfg!(any(feature = "slovak", feature = "external-models")) {
                     languages.insert(Language::from_str("Slovak").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "bosnian") || cfg!(feature = "croatian") || cfg!(feature = "polish") {
+        if cfg!(any(feature = "bosnian", feature = "external-models")) || cfg!(any(feature = "croatian", feature = "external-models")) || cfg!(any(feature = "polish", feature = "external-models")) {
             mapping.insert("Ćć", {
                 let mut languages = hashset!();
-                if cfg!(feature = "bosnian") {
+                if cfg!(any(feature = "bosnian", feature = "external-models")) {
                     languages.insert(Language::from_str("Bosnian").unwrap());
                 }
-                if cfg!(feature = "croatian") {
+                if cfg!(any(feature = "croatian", feature = "external-models")) {
                     languages.insert(Language::from_str("Croatian").unwrap());
                 }
-                if cfg!(feature = "polish") {
+                if cfg!(any(feature = "polish", feature = "external-models")) {
                     languages.insert(Language::from_str("Polish").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "bosnian") || cfg!(feature = "croatian") || cfg!(feature = "vietnamese") {
+        if cfg!(any(feature = "bosnian", feature = "external-models")) || cfg!(any(feature = "croatian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
             mapping.insert("Đđ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "bosnian") {
+                if cfg!(any(feature = "bosnian", feature = "external-models")) {
                     languages.insert(Language::from_str("Bosnian").unwrap());
                 }
-                if cfg!(feature = "croatian") {
+                if cfg!(any(feature = "croatian", feature = "external-models")) {
                     languages.insert(Language::from_str("Croatian").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "belarusian") || cfg!(feature = "kazakh") || cfg!(feature = "ukrainian") {
+        if cfg!(any(feature = "belarusian", feature = "external-models")) || cfg!(any(feature = "kazakh", feature = "external-models")) || cfg!(any(feature = "ukrainian", feature = "external-models")) {
             mapping.insert("Іі", {
                 let mut languages = hashset!();
-                if cfg!(feature = "belarusian") {
+                if cfg!(any(feature = "belarusian", feature = "external-models")) {
                     languages.insert(Language::from_str("Belarusian").unwrap());
                 }
-                if cfg!(feature = "kazakh") {
+                if cfg!(any(feature = "kazakh", feature = "external-models")) {
                     languages.insert(Language::from_str("Kazakh").unwrap());
                 }
-                if cfg!(feature = "ukrainian") {
+                if cfg!(any(feature = "ukrainian", feature = "external-models")) {
                     languages.insert(Language::from_str("Ukrainian").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "italian") || cfg!(feature = "vietnamese") || cfg!(feature = "yoruba") {
+        if cfg!(any(feature = "italian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
             mapping.insert("Ìì", {
                 let mut languages = hashset!();
-                if cfg!(feature = "italian") {
+                if cfg!(any(feature = "italian", feature = "external-models")) {
                     languages.insert(Language::from_str("Italian").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "bokmal") || cfg!(feature = "danish") || cfg!(feature = "nynorsk") {
+        if cfg!(any(feature = "bokmal", feature = "external-models")) || cfg!(any(feature = "danish", feature = "external-models")) || cfg!(any(feature = "nynorsk", feature = "external-models")) {
             mapping.insert("Øø", {
                 let mut languages = hashset!();
-                if cfg!(feature = "bokmal") {
+                if cfg!(any(feature = "bokmal", feature = "external-models")) {
                     languages.insert(Language::from_str("Bokmal").unwrap());
                 }
-                if cfg!(feature = "danish") {
+                if cfg!(any(feature = "danish", feature = "external-models")) {
                     languages.insert(Language::from_str("Danish").unwrap());
                 }
-                if cfg!(feature = "nynorsk") {
+                if cfg!(any(feature = "nynorsk", feature = "external-models")) {
                     languages.insert(Language::from_str("Nynorsk").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "latvian")
-            || cfg!(feature = "lithuanian")
-            || cfg!(feature = "maori")
-            || cfg!(feature = "yoruba")
+        if cfg!(any(feature = "latvian", feature = "external-models"))
+            || cfg!(any(feature = "lithuanian", feature = "external-models"))
+            || cfg!(any(feature = "maori", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
         {
             mapping.insert("Ūū", {
                 let mut languages = hashset!();
-                if cfg!(feature = "latvian") {
+                if cfg!(any(feature = "latvian", feature = "external-models")) {
                     languages.insert(Language::from_str("Latvian").unwrap());
                 }
-                if cfg!(feature = "lithuanian") {
+                if cfg!(any(feature = "lithuanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Lithuanian").unwrap());
                 }
-                if cfg!(feature = "maori") {
+                if cfg!(any(feature = "maori", feature = "external-models")) {
                     languages.insert(Language::from_str("Maori").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "afrikaans")
-            || cfg!(feature = "albanian")
-            || cfg!(feature = "dutch")
-            || cfg!(feature = "french")
+        if cfg!(any(feature = "afrikaans", feature = "external-models"))
+            || cfg!(any(feature = "albanian", feature = "external-models"))
+            || cfg!(any(feature = "dutch", feature = "external-models"))
+            || cfg!(any(feature = "french", feature = "external-models"))
         {
             mapping.insert("Ëë", {
                 let mut languages = hashset!();
-                if cfg!(feature = "afrikaans") {
+                if cfg!(any(feature = "afrikaans", feature = "external-models")) {
                     languages.insert(Language::from_str("Afrikaans").unwrap());
                 }
-                if cfg!(feature = "albanian") {
+                if cfg!(any(feature = "albanian", feature = "external-models")) {
                     languages.insert(Language::from_str("Albanian").unwrap());
                 }
-                if cfg!(feature = "dutch") {
+                if cfg!(any(feature = "dutch", feature = "external-models")) {
                     languages.insert(Language::from_str("Dutch").unwrap());
                 }
-                if cfg!(feature = "french") {
+                if cfg!(any(feature = "french", feature = "external-models")) {
                     languages.insert(Language::from_str("French").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "french")
-            || cfg!(feature = "italian")
-            || cfg!(feature = "vietnamese")
-            || cfg!(feature = "yoruba")
+        if cfg!(any(feature = "french", feature = "external-models"))
+            || cfg!(any(feature = "italian", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
         {
             mapping.insert("ÈèÙù", {
                 let mut languages = hashset!();
-                if cfg!(feature = "french") {
+                if cfg!(any(feature = "french", feature = "external-models")) {
                     languages.insert(Language::from_str("French").unwrap());
                 }
-                if cfg!(feature = "italian") {
+                if cfg!(any(feature = "italian", feature = "external-models")) {
                     languages.insert(Language::from_str("Italian").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
-                if cfg!(feature = "yoruba") {
+                if cfg!(any(feature = "yoruba", feature = "external-models")) {
                     languages.insert(Language::from_str("Yoruba").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "afrikaans")
-            || cfg!(feature = "french")
-            || cfg!(feature = "portuguese")
-            || cfg!(feature = "vietnamese")
+        if cfg!(any(feature = "afrikaans", feature = "external-models"))
+            || cfg!(any(feature = "french", feature = "external-models"))
+            || cfg!(any(feature = "portuguese", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
         {
             mapping.insert("Êê", {
                 let mut languages = hashset!();
-                if cfg!(feature = "afrikaans") {
+                if cfg!(any(feature = "afrikaans", feature = "external-models")) {
                     languages.insert(Language::from_str("Afrikaans").unwrap());
                 }
-                if cfg!(feature = "french") {
+                if cfg!(any(feature = "french", feature = "external-models")) {
                     languages.insert(Language::from_str("French").unwrap());
                 }
-                if cfg!(feature = "portuguese") {
+                if cfg!(any(feature = "portuguese", feature = "external-models")) {
                     languages.insert(Language::from_str("Portuguese").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
                 languages
             });
         }
 
-        if cfg!(feature = "estonian")
-            || cfg!(feature = "hungarian")
-            || cfg!(feature = "portuguese")
-            || cfg!(feature = "vietnamese")
+        if cfg!(any(feature = "estonian", feature = "external-models"))
+            || cfg!(any(feature = "hungarian", feature = "external-models"))
+            || cfg!(any(feature = "portuguese", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
         {
             mapping.insert("Õõ", {
                 let mut languages = hashset!();
-                if cfg!(feature = "estonian") {
+                if cfg!(any(feature = "estonian", feature = "external-models")) {
                     languages.insert(Language::from_str("Estonian").unwrap());
                 }
-                if cfg!(feature = "hungarian") {
+                if cfg!(any(feature = "hungarian", feature = "external-models")) {
                     languages.insert(Language::from_str("Hungarian").unwrap());
                 }
-                if cfg!(feature = "portuguese") {
+                if cfg!(any(feature = "portuguese", feature = "external-models")) {
                     languages.insert(Language::from_str("Portuguese").unwrap());
                 }
-                if cfg!(feature = "vietnamese") {
+                if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                     languages.insert(Language::from_str("Vietnamese").unwrap());
                 }
                 languages
             });
 
-            if cfg!(feature = "french")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "vietnamese")
+            if cfg!(any(feature = "french", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
             {
                 mapping.insert("Ôô", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "french") {
+                    if cfg!(any(feature = "french", feature = "external-models")) {
                         languages.insert(Language::from_str("French").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "belarusian")
-                || cfg!(feature = "kazakh")
-                || cfg!(feature = "mongolian")
-                || cfg!(feature = "russian")
+            if cfg!(any(feature = "belarusian", feature = "external-models"))
+                || cfg!(any(feature = "kazakh", feature = "external-models"))
+                || cfg!(any(feature = "mongolian", feature = "external-models"))
+                || cfg!(any(feature = "russian", feature = "external-models"))
             {
                 mapping.insert("ЁёЫыЭэ", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "belarusian") {
+                    if cfg!(any(feature = "belarusian", feature = "external-models")) {
                         languages.insert(Language::from_str("Belarusian").unwrap());
                     }
-                    if cfg!(feature = "kazakh") {
+                    if cfg!(any(feature = "kazakh", feature = "external-models")) {
                         languages.insert(Language::from_str("Kazakh").unwrap());
                     }
-                    if cfg!(feature = "mongolian") {
+                    if cfg!(any(feature = "mongolian", feature = "external-models")) {
                         languages.insert(Language::from_str("Mongolian").unwrap());
                     }
-                    if cfg!(feature = "russian") {
+                    if cfg!(any(feature = "russian", feature = "external-models")) {
                         languages.insert(Language::from_str("Russian").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "bulgarian")
-                || cfg!(feature = "kazakh")
-                || cfg!(feature = "mongolian")
-                || cfg!(feature = "russian")
+            if cfg!(any(feature = "bulgarian", feature = "external-models"))
+                || cfg!(any(feature = "kazakh", feature = "external-models"))
+                || cfg!(any(feature = "mongolian", feature = "external-models"))
+                || cfg!(any(feature = "russian", feature = "external-models"))
             {
                 mapping.insert("ЩщЪъ", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "bulgarian") {
+                    if cfg!(any(feature = "bulgarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Bulgarian").unwrap());
                     }
-                    if cfg!(feature = "kazakh") {
+                    if cfg!(any(feature = "kazakh", feature = "external-models")) {
                         languages.insert(Language::from_str("Kazakh").unwrap());
                     }
-                    if cfg!(feature = "mongolian") {
+                    if cfg!(any(feature = "mongolian", feature = "external-models")) {
                         languages.insert(Language::from_str("Mongolian").unwrap());
                     }
-                    if cfg!(feature = "russian") {
+                    if cfg!(any(feature = "russian", feature = "external-models")) {
                         languages.insert(Language::from_str("Russian").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "catalan")
-                || cfg!(feature = "italian")
-                || cfg!(feature = "vietnamese")
-                || cfg!(feature = "yoruba")
+            if cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "italian", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
+                || cfg!(any(feature = "yoruba", feature = "external-models"))
             {
                 mapping.insert("Òò", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "italian") {
+                    if cfg!(any(feature = "italian", feature = "external-models")) {
                         languages.insert(Language::from_str("Italian").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
-                    if cfg!(feature = "yoruba") {
+                    if cfg!(any(feature = "yoruba", feature = "external-models")) {
                         languages.insert(Language::from_str("Yoruba").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "french")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "romanian")
-                || cfg!(feature = "turkish")
-                || cfg!(feature = "vietnamese")
+            if cfg!(any(feature = "french", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "romanian", feature = "external-models"))
+                || cfg!(any(feature = "turkish", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
             {
                 mapping.insert("Ââ", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "french") {
+                    if cfg!(any(feature = "french", feature = "external-models")) {
                         languages.insert(Language::from_str("French").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "romanian") {
+                    if cfg!(any(feature = "romanian", feature = "external-models")) {
                         languages.insert(Language::from_str("Romanian").unwrap());
                     }
-                    if cfg!(feature = "turkish") {
+                    if cfg!(any(feature = "turkish", feature = "external-models")) {
                         languages.insert(Language::from_str("Turkish").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "bokmal")
-                || cfg!(feature = "danish")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "nynorsk")
+            if cfg!(any(feature = "bokmal", feature = "external-models"))
+                || cfg!(any(feature = "danish", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "nynorsk", feature = "external-models"))
             {
                 mapping.insert("Ææ", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "bokmal") {
+                    if cfg!(any(feature = "bokmal", feature = "external-models")) {
                         languages.insert(Language::from_str("Bokmal").unwrap());
                     }
-                    if cfg!(feature = "danish") {
+                    if cfg!(any(feature = "danish", feature = "external-models")) {
                         languages.insert(Language::from_str("Danish").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "nynorsk") {
+                    if cfg!(any(feature = "nynorsk", feature = "external-models")) {
                         languages.insert(Language::from_str("Nynorsk").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "bokmal")
-                || cfg!(feature = "danish")
-                || cfg!(feature = "nynorsk")
-                || cfg!(feature = "swedish")
+            if cfg!(any(feature = "bokmal", feature = "external-models"))
+                || cfg!(any(feature = "danish", feature = "external-models"))
+                || cfg!(any(feature = "nynorsk", feature = "external-models"))
+                || cfg!(any(feature = "swedish", feature = "external-models"))
             {
                 mapping.insert("Åå", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "bokmal") {
+                    if cfg!(any(feature = "bokmal", feature = "external-models")) {
                         languages.insert(Language::from_str("Bokmal").unwrap());
                     }
-                    if cfg!(feature = "danish") {
+                    if cfg!(any(feature = "danish", feature = "external-models")) {
                         languages.insert(Language::from_str("Danish").unwrap());
                     }
-                    if cfg!(feature = "nynorsk") {
+                    if cfg!(any(feature = "nynorsk", feature = "external-models")) {
                         languages.insert(Language::from_str("Nynorsk").unwrap());
                     }
-                    if cfg!(feature = "swedish") {
+                    if cfg!(any(feature = "swedish", feature = "external-models")) {
                         languages.insert(Language::from_str("Swedish").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "czech")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "turkish")
-                || cfg!(feature = "vietnamese")
+            if cfg!(any(feature = "czech", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "turkish", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
             {
                 mapping.insert("Ýý", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "czech") {
+                    if cfg!(any(feature = "czech", feature = "external-models")) {
                         languages.insert(Language::from_str("Czech").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "turkish") {
+                    if cfg!(any(feature = "turkish", feature = "external-models")) {
                         languages.insert(Language::from_str("Turkish").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "estonian")
-                || cfg!(feature = "finnish")
-                || cfg!(feature = "german")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "swedish")
+            if cfg!(any(feature = "estonian", feature = "external-models"))
+                || cfg!(any(feature = "finnish", feature = "external-models"))
+                || cfg!(any(feature = "german", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "swedish", feature = "external-models"))
             {
                 mapping.insert("Ää", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "estonian") {
+                    if cfg!(any(feature = "estonian", feature = "external-models")) {
                         languages.insert(Language::from_str("Estonian").unwrap());
                     }
-                    if cfg!(feature = "finnish") {
+                    if cfg!(any(feature = "finnish", feature = "external-models")) {
                         languages.insert(Language::from_str("Finnish").unwrap());
                     }
-                    if cfg!(feature = "german") {
+                    if cfg!(any(feature = "german", feature = "external-models")) {
                         languages.insert(Language::from_str("German").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "swedish") {
+                    if cfg!(any(feature = "swedish", feature = "external-models")) {
                         languages.insert(Language::from_str("Swedish").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "catalan")
-                || cfg!(feature = "french")
-                || cfg!(feature = "italian")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "vietnamese")
+            if cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "french", feature = "external-models"))
+                || cfg!(any(feature = "italian", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
             {
                 mapping.insert("Àà", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "french") {
+                    if cfg!(any(feature = "french", feature = "external-models")) {
                         languages.insert(Language::from_str("French").unwrap());
                     }
-                    if cfg!(feature = "italian") {
+                    if cfg!(any(feature = "italian", feature = "external-models")) {
                         languages.insert(Language::from_str("Italian").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "azerbaijani")
-                || cfg!(feature = "catalan")
-                || cfg!(feature = "estonian")
-                || cfg!(feature = "german")
-                || cfg!(feature = "hungarian")
-                || cfg!(feature = "spanish")
-                || cfg!(feature = "turkish")
+            if cfg!(any(feature = "azerbaijani", feature = "external-models"))
+                || cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "estonian", feature = "external-models"))
+                || cfg!(any(feature = "german", feature = "external-models"))
+                || cfg!(any(feature = "hungarian", feature = "external-models"))
+                || cfg!(any(feature = "spanish", feature = "external-models"))
+                || cfg!(any(feature = "turkish", feature = "external-models"))
             {
                 mapping.insert("Üü", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "azerbaijani") {
+                    if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
                         languages.insert(Language::from_str("Azerbaijani").unwrap());
                     }
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "estonian") {
+                    if cfg!(any(feature = "estonian", feature = "external-models")) {
                         languages.insert(Language::from_str("Estonian").unwrap());
                     }
-                    if cfg!(feature = "german") {
+                    if cfg!(any(feature = "german", feature = "external-models")) {
                         languages.insert(Language::from_str("German").unwrap());
                     }
-                    if cfg!(feature = "hungarian") {
+                    if cfg!(any(feature = "hungarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Hungarian").unwrap());
                     }
-                    if cfg!(feature = "spanish") {
+                    if cfg!(any(feature = "spanish", feature = "external-models")) {
                         languages.insert(Language::from_str("Spanish").unwrap());
                     }
-                    if cfg!(feature = "turkish") {
+                    if cfg!(any(feature = "turkish", feature = "external-models")) {
                         languages.insert(Language::from_str("Turkish").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "bosnian")
-                || cfg!(feature = "czech")
-                || cfg!(feature = "croatian")
-                || cfg!(feature = "latvian")
-                || cfg!(feature = "lithuanian")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "slovene")
+            if cfg!(any(feature = "bosnian", feature = "external-models"))
+                || cfg!(any(feature = "czech", feature = "external-models"))
+                || cfg!(any(feature = "croatian", feature = "external-models"))
+                || cfg!(any(feature = "latvian", feature = "external-models"))
+                || cfg!(any(feature = "lithuanian", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "slovene", feature = "external-models"))
             {
                 mapping.insert("ČčŠšŽž", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "bosnian") {
+                    if cfg!(any(feature = "bosnian", feature = "external-models")) {
                         languages.insert(Language::from_str("Bosnian").unwrap());
                     }
-                    if cfg!(feature = "czech") {
+                    if cfg!(any(feature = "czech", feature = "external-models")) {
                         languages.insert(Language::from_str("Czech").unwrap());
                     }
-                    if cfg!(feature = "croatian") {
+                    if cfg!(any(feature = "croatian", feature = "external-models")) {
                         languages.insert(Language::from_str("Croatian").unwrap());
                     }
-                    if cfg!(feature = "latvian") {
+                    if cfg!(any(feature = "latvian", feature = "external-models")) {
                         languages.insert(Language::from_str("Latvian").unwrap());
                     }
-                    if cfg!(feature = "lithuanian") {
+                    if cfg!(any(feature = "lithuanian", feature = "external-models")) {
                         languages.insert(Language::from_str("Lithuanian").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "slovene") {
+                    if cfg!(any(feature = "slovene", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovene").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "albanian")
-                || cfg!(feature = "azerbaijani")
-                || cfg!(feature = "basque")
-                || cfg!(feature = "catalan")
-                || cfg!(feature = "french")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "turkish")
+            if cfg!(any(feature = "albanian", feature = "external-models"))
+                || cfg!(any(feature = "azerbaijani", feature = "external-models"))
+                || cfg!(any(feature = "basque", feature = "external-models"))
+                || cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "french", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "turkish", feature = "external-models"))
             {
                 mapping.insert("Çç", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "albanian") {
+                    if cfg!(any(feature = "albanian", feature = "external-models")) {
                         languages.insert(Language::from_str("Albanian").unwrap());
                     }
-                    if cfg!(feature = "azerbaijani") {
+                    if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
                         languages.insert(Language::from_str("Azerbaijani").unwrap());
                     }
-                    if cfg!(feature = "basque") {
+                    if cfg!(any(feature = "basque", feature = "external-models")) {
                         languages.insert(Language::from_str("Basque").unwrap());
                     }
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "french") {
+                    if cfg!(any(feature = "french", feature = "external-models")) {
                         languages.insert(Language::from_str("French").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "turkish") {
+                    if cfg!(any(feature = "turkish", feature = "external-models")) {
                         languages.insert(Language::from_str("Turkish").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "azerbaijani")
-                || cfg!(feature = "estonian")
-                || cfg!(feature = "finnish")
-                || cfg!(feature = "german")
-                || cfg!(feature = "hungarian")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "swedish")
-                || cfg!(feature = "turkish")
+            if cfg!(any(feature = "azerbaijani", feature = "external-models"))
+                || cfg!(any(feature = "estonian", feature = "external-models"))
+                || cfg!(any(feature = "finnish", feature = "external-models"))
+                || cfg!(any(feature = "german", feature = "external-models"))
+                || cfg!(any(feature = "hungarian", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "swedish", feature = "external-models"))
+                || cfg!(any(feature = "turkish", feature = "external-models"))
             {
                 mapping.insert("Öö", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "azerbaijani") {
+                    if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
                         languages.insert(Language::from_str("Azerbaijani").unwrap());
                     }
-                    if cfg!(feature = "estonian") {
+                    if cfg!(any(feature = "estonian", feature = "external-models")) {
                         languages.insert(Language::from_str("Estonian").unwrap());
                     }
-                    if cfg!(feature = "finnish") {
+                    if cfg!(any(feature = "finnish", feature = "external-models")) {
                         languages.insert(Language::from_str("Finnish").unwrap());
                     }
-                    if cfg!(feature = "german") {
+                    if cfg!(any(feature = "german", feature = "external-models")) {
                         languages.insert(Language::from_str("German").unwrap());
                     }
-                    if cfg!(feature = "hungarian") {
+                    if cfg!(any(feature = "hungarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Hungarian").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "swedish") {
+                    if cfg!(any(feature = "swedish", feature = "external-models")) {
                         languages.insert(Language::from_str("Swedish").unwrap());
                     }
-                    if cfg!(feature = "turkish") {
+                    if cfg!(any(feature = "turkish", feature = "external-models")) {
                         languages.insert(Language::from_str("Turkish").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "catalan")
-                || cfg!(feature = "hungarian")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "irish")
-                || cfg!(feature = "polish")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "spanish")
-                || cfg!(feature = "vietnamese")
-                || cfg!(feature = "yoruba")
+            if cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "hungarian", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "irish", feature = "external-models"))
+                || cfg!(any(feature = "polish", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "spanish", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
+                || cfg!(any(feature = "yoruba", feature = "external-models"))
             {
                 mapping.insert("Óó", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "hungarian") {
+                    if cfg!(any(feature = "hungarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Hungarian").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "irish") {
+                    if cfg!(any(feature = "irish", feature = "external-models")) {
                         languages.insert(Language::from_str("Irish").unwrap());
                     }
-                    if cfg!(feature = "polish") {
+                    if cfg!(any(feature = "polish", feature = "external-models")) {
                         languages.insert(Language::from_str("Polish").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "spanish") {
+                    if cfg!(any(feature = "spanish", feature = "external-models")) {
                         languages.insert(Language::from_str("Spanish").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
-                    if cfg!(feature = "yoruba") {
+                    if cfg!(any(feature = "yoruba", feature = "external-models")) {
                         languages.insert(Language::from_str("Yoruba").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "catalan")
-                || cfg!(feature = "czech")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "irish")
-                || cfg!(feature = "hungarian")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "spanish")
-                || cfg!(feature = "vietnamese")
-                || cfg!(feature = "yoruba")
+            if cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "czech", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "irish", feature = "external-models"))
+                || cfg!(any(feature = "hungarian", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "spanish", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
+                || cfg!(any(feature = "yoruba", feature = "external-models"))
             {
                 mapping.insert("ÁáÍíÚú", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "czech") {
+                    if cfg!(any(feature = "czech", feature = "external-models")) {
                         languages.insert(Language::from_str("Czech").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "irish") {
+                    if cfg!(any(feature = "irish", feature = "external-models")) {
                         languages.insert(Language::from_str("Irish").unwrap());
                     }
-                    if cfg!(feature = "hungarian") {
+                    if cfg!(any(feature = "hungarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Hungarian").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "spanish") {
+                    if cfg!(any(feature = "spanish", feature = "external-models")) {
                         languages.insert(Language::from_str("Spanish").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
-                    if cfg!(feature = "yoruba") {
+                    if cfg!(any(feature = "yoruba", feature = "external-models")) {
                         languages.insert(Language::from_str("Yoruba").unwrap());
                     }
                     languages
                 });
             }
 
-            if cfg!(feature = "catalan")
-                || cfg!(feature = "czech")
-                || cfg!(feature = "french")
-                || cfg!(feature = "hungarian")
-                || cfg!(feature = "icelandic")
-                || cfg!(feature = "irish")
-                || cfg!(feature = "italian")
-                || cfg!(feature = "portuguese")
-                || cfg!(feature = "slovak")
-                || cfg!(feature = "spanish")
-                || cfg!(feature = "vietnamese")
-                || cfg!(feature = "yoruba")
+            if cfg!(any(feature = "catalan", feature = "external-models"))
+                || cfg!(any(feature = "czech", feature = "external-models"))
+                || cfg!(any(feature = "french", feature = "external-models"))
+                || cfg!(any(feature = "hungarian", feature = "external-models"))
+                || cfg!(any(feature = "icelandic", feature = "external-models"))
+                || cfg!(any(feature = "irish", feature = "external-models"))
+                || cfg!(any(feature = "italian", feature = "external-models"))
+                || cfg!(any(feature = "portuguese", feature = "external-models"))
+                || cfg!(any(feature = "slovak", feature = "external-models"))
+                || cfg!(any(feature = "spanish", feature = "external-models"))
+                || cfg!(any(feature = "vietnamese", feature = "external-models"))
+                || cfg!(any(feature = "yoruba", feature = "external-models"))
             {
                 mapping.insert("Éé", {
                     let mut languages = hashset!();
-                    if cfg!(feature = "catalan") {
+                    if cfg!(any(feature = "catalan", feature = "external-models")) {
                         languages.insert(Language::from_str("Catalan").unwrap());
                     }
-                    if cfg!(feature = "czech") {
+                    if cfg!(any(feature = "czech", feature = "external-models")) {
                         languages.insert(Language::from_str("Czech").unwrap());
                     }
-                    if cfg!(feature = "french") {
+                    if cfg!(any(feature = "french", feature = "external-models")) {
                         languages.insert(Language::from_str("French").unwrap());
                     }
-                    if cfg!(feature = "hungarian") {
+                    if cfg!(any(feature = "hungarian", feature = "external-models")) {
                         languages.insert(Language::from_str("Hungarian").unwrap());
                     }
-                    if cfg!(feature = "icelandic") {
+                    if cfg!(any(feature = "icelandic", feature = "external-models")) {
                         languages.insert(Language::from_str("Icelandic").unwrap());
                     }
-                    if cfg!(feature = "irish") {
+                    if cfg!(any(feature = "irish", feature = "external-models")) {
                         languages.insert(Language::from_str("Irish").unwrap());
                     }
-                    if cfg!(feature = "italian") {
+                    if cfg!(any(feature = "italian", feature = "external-models")) {
                         languages.insert(Language::from_str("Italian").unwrap());
                     }
-                    if cfg!(feature = "portuguese") {
+                    if cfg!(any(feature = "portuguese", feature = "external-models")) {
                         languages.insert(Language::from_str("Portuguese").unwrap());
                     }
-                    if cfg!(feature = "slovak") {
+                    if cfg!(any(feature = "slovak", feature = "external-models")) {
                         languages.insert(Language::from_str("Slovak").unwrap());
                     }
-                    if cfg!(feature = "spanish") {
+                    if cfg!(any(feature = "spanish", feature = "external-models")) {
                         languages.insert(Language::from_str("Spanish").unwrap());
                     }
-                    if cfg!(feature = "vietnamese") {
+                    if cfg!(any(feature = "vietnamese", feature = "external-models")) {
                         languages.insert(Language::from_str("Vietnamese").unwrap());
                     }
-                    if cfg!(feature = "yoruba") {
+                    if cfg!(any(feature = "yoruba", feature = "external-models")) {
                         languages.insert(Language::from_str("Yoruba").unwrap());
                     }
                     languages
