@@ -30,7 +30,6 @@ use crate::model::{
 };
 use crate::ngram::Ngram;
 use counter::Counter;
-use fst::Streamer;
 use itertools::Itertools;
 use regex::Regex;
 use strum::IntoEnumIterator;
@@ -170,16 +169,13 @@ impl LanguageModelFilesWriter {
         let mut kvs = vec![];
 
         for model in models {
-            let mut stream = model.ngram_probability_model.ngrams.stream();
-            while let Some((key, value)) = stream.next() {
-                kvs.push((key.to_vec(), value));
-            }
+            kvs.extend(model.ngram_probability_model.ngrams.dequantized_entries());
         }
 
         let fst_map = create_fst_map(kvs);
         let file_path = output_directory_path.join(file_name);
 
-        fs::write(file_path, fst_map.as_fst().as_bytes())?;
+        fs::write(file_path, fst_map.as_fst_bytes())?;
 
         Ok(())
     }
@@ -387,11 +383,12 @@ impl UniqueNgramsWriter {
         let mut result = HashMap::new();
         for language in Language::iter() {
             if let Some(model) = load_ngram_probability_model(language) {
-                let mut stream = model.ngrams.keys();
-                let mut ngrams = HashSet::new();
-                while let Some(key) = stream.next() {
-                    ngrams.insert(key.to_vec());
-                }
+                let ngrams = model
+                    .ngrams
+                    .dequantized_entries()
+                    .into_iter()
+                    .map(|(key, _)| key)
+                    .collect::<HashSet<_>>();
                 result.insert(language, ngrams);
             }
         }
@@ -587,6 +584,8 @@ fn check_output_directory_path(output_directory_path: &Path) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use fst::Streamer;
+    use std::borrow::Cow;
     use crate::detector::CountModelFst;
     use fst::IntoStreamer;
     use std::fs;
@@ -637,17 +636,27 @@ mod tests {
         assert_eq!(file_name, expected_file_name);
 
         let bytes = fs::read(file_path).unwrap();
-        let fst_map = fst::Map::new(bytes).unwrap();
+        let fst_map = crate::detector::LanguageModelFst::from_fst_map(
+            fst::Map::new(Cow::Owned(bytes)).unwrap(),
+        );
 
         let mut actual_file_content = hashmap!();
-        let mut stream = fst_map.into_stream();
-        while let Some((key, value)) = stream.next() {
-            actual_file_content.insert(
-                String::from_utf8(key.to_vec()).unwrap(),
-                f64::from_bits(value),
+        for (key, value) in fst_map.dequantized_entries() {
+            actual_file_content.insert(String::from_utf8(key).unwrap(), value);
+        }
+
+        let actual_keys = actual_file_content.keys().collect::<HashSet<_>>();
+        let expected_keys = expected_file_content.keys().collect::<HashSet<_>>();
+        assert_eq!(actual_keys, expected_keys);
+
+        for (key, expected_value) in &expected_file_content {
+            let actual_value = actual_file_content[key];
+            assert!(
+                (actual_value - expected_value).abs() < 1e-3,
+                "expected value {expected_value} within quantization tolerance \
+                 for key '{key}', got {actual_value}"
             );
         }
-        assert_eq!(actual_file_content, expected_file_content);
     }
 
     fn check_fst_set_file(
