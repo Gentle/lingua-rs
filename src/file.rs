@@ -261,63 +261,120 @@ mod external {
     use std::collections::HashMap;
     use std::fs::File;
     use std::io::{Error, ErrorKind, Result};
-    use std::path::Path;
+    use std::path::{Path, PathBuf};
     use std::str::FromStr;
-    use std::sync::OnceLock;
+    use std::sync::{Mutex, OnceLock};
 
     pub(crate) const BLOB_MAGIC: &[u8; 8] = b"LINGUA\0\x01";
 
-    struct ModelsBlob {
-        mmap: Mmap,
-        index: HashMap<(Language, &'static str), (usize, usize)>,
+    /// Every loaded blob's models, merged.
+    ///
+    /// Several blobs rather than one, because the natural unit is one file per
+    /// language: the full 75-language blob is 136.8 MB while a single language
+    /// is ~2 MB, and a deployment that detects among six has no use for the
+    /// other 69. Per-language files also match how every other model format
+    /// here is distributed, so they bind through an asset set keyed by language
+    /// and the deployment picks languages by picking keys — instead of baking a
+    /// language choice into a filtered artifact.
+    ///
+    /// Each blob keeps its own mapping; nothing is concatenated or copied.
+    #[derive(Default)]
+    struct Registry {
+        models: HashMap<(Language, &'static str), &'static [u8]>,
+        /// Canonicalized paths already loaded, so loading the same file twice
+        /// is a no-op instead of a duplicate-entry error.
+        loaded: Vec<PathBuf>,
     }
 
-    static MODELS_BLOB: OnceLock<ModelsBlob> = OnceLock::new();
+    static REGISTRY: OnceLock<Mutex<Registry>> = OnceLock::new();
 
-    /// Memory-maps the given language models blob file and uses it as the
-    /// source of all language models for the rest of the program.
+    fn registry() -> &'static Mutex<Registry> {
+        REGISTRY.get_or_init(|| Mutex::new(Registry::default()))
+    }
+
+    /// Memory-maps a language models blob and adds its models to the set
+    /// available for the rest of the program.
     ///
-    /// Must be called before the first language detection. Alternatively,
-    /// the path can be provided in the `LINGUA_MODELS_BLOB` environment
-    /// variable. Returns an error if the file cannot be opened, is not a
-    /// valid models blob, or if a blob has already been loaded.
+    /// May be called more than once, with different blobs — that is the point,
+    /// since the intended layout is one blob per language. Loading the same
+    /// path twice is a no-op. Two blobs claiming the same language is an error:
+    /// it means a deployment bound overlapping sets, and silently preferring
+    /// one would make which models are in use depend on load order.
+    ///
+    /// Must be called before the first language detection. Alternatively, the
+    /// path can be provided in the `LINGUA_MODELS_BLOB` environment variable,
+    /// which accepts several paths separated by the platform path separator.
     pub fn load_models_from_blob(path: impl AsRef<Path>) -> Result<()> {
-        let file = File::open(path.as_ref())?;
+        let path = path.as_ref();
+        let canonical = std::fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
+        let mut reg = registry()
+            .lock()
+            .map_err(|_| Error::new(ErrorKind::Other, "models registry poisoned"))?;
+        if reg.loaded.contains(&canonical) {
+            return Ok(());
+        }
+
+        let file = File::open(path)?;
         let mmap = unsafe { Mmap::map(&file)? };
         let index = parse_index(&mmap)?;
-        MODELS_BLOB
-            .set(ModelsBlob { mmap, index })
-            .map_err(|_| Error::new(ErrorKind::AlreadyExists, "a models blob is already loaded"))
+
+        // Leaked deliberately: the models are borrowed as `&'static [u8]` for
+        // the process lifetime, which the previous `OnceLock` guaranteed
+        // implicitly. Leaking makes that lifetime true rather than assumed, and
+        // a blob is never unloaded anyway.
+        let mmap: &'static Mmap = Box::leak(Box::new(mmap));
+
+        for (key, (offset, length)) in &index {
+            if reg.models.contains_key(key) {
+                return Err(Error::new(
+                    ErrorKind::AlreadyExists,
+                    format!(
+                        "{}: models for {:?} are already loaded from another blob",
+                        path.display(),
+                        key.0
+                    ),
+                ));
+            }
+            reg.models.insert(*key, &mmap[*offset..*offset + *length]);
+        }
+        reg.loaded.push(canonical);
+        Ok(())
     }
 
-    fn blob() -> Result<&'static ModelsBlob> {
-        if MODELS_BLOB.get().is_none()
-            && let Ok(path) = std::env::var("LINGUA_MODELS_BLOB")
-        {
-            // A concurrent load_models_from_blob may win the race; both
-            // outcomes leave a valid blob in place, so the error is ignored.
-            let _ = load_models_from_blob(path);
-        }
-        MODELS_BLOB.get().ok_or_else(|| {
-            Error::new(
-                ErrorKind::NotFound,
-                "no language models loaded; call lingua::load_models_from_blob() \
-                 or set the LINGUA_MODELS_BLOB environment variable",
-            )
-        })
+    /// Load whatever `LINGUA_MODELS_BLOB` names, once.
+    fn load_from_env() {
+        static DONE: OnceLock<()> = OnceLock::new();
+        DONE.get_or_init(|| {
+            if let Ok(paths) = std::env::var("LINGUA_MODELS_BLOB") {
+                for path in std::env::split_paths(&paths) {
+                    // Best effort: a bad entry surfaces as a NotFound for the
+                    // language that needed it, naming the language rather than
+                    // the path — the same as any other missing model.
+                    let _ = load_models_from_blob(path);
+                }
+            }
+        });
     }
 
     pub(super) fn model_bytes(language: Language, file_name: &str) -> Result<&'static [u8]> {
-        let blob = blob()?;
-        let (offset, length) = *blob
-            .index
+        load_from_env();
+        let reg = registry()
+            .lock()
+            .map_err(|_| Error::new(ErrorKind::Other, "models registry poisoned"))?;
+        if reg.models.is_empty() {
+            return Err(Error::new(
+                ErrorKind::NotFound,
+                "no language models loaded; call lingua::load_models_from_blob() \
+                 or set the LINGUA_MODELS_BLOB environment variable",
+            ));
+        }
+        // Copying the slice reference out is what lets the lock drop here: the
+        // bytes are `&'static`, so they outlive the guard. Called once per
+        // (language, file) while building models, not per detection.
+        reg.models
             .get(&(language, file_name))
-            .ok_or(ErrorKind::NotFound)?;
-        let bytes = &blob.mmap[offset..offset + length];
-        // The blob lives in a static OnceLock and is never dropped or
-        // replaced, so the mapped memory stays valid for the rest of
-        // the program.
-        Ok(unsafe { std::mem::transmute::<&[u8], &'static [u8]>(bytes) })
+            .copied()
+            .ok_or_else(|| ErrorKind::NotFound.into())
     }
 
     /// File names are interned to canonical static strings so the index
