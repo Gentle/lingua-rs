@@ -25,8 +25,8 @@ use wasm_bindgen::prelude::*;
 
 use crate::builder::{MINIMUM_RELATIVE_DISTANCE_MESSAGE, MISSING_LANGUAGE_MESSAGE};
 use crate::{
-    convert_byte_indices_to_char_indices, IsoCode639_1, IsoCode639_3, Language,
-    LanguageDetector as Detector, LanguageDetectorBuilder as Builder,
+    IsoCode639_1, IsoCode639_3, Language, LanguageDetector as Detector,
+    LanguageDetectorBuilder as Builder, convert_byte_indices_to_char_indices,
 };
 
 /// This class configures and creates an instance of `LanguageDetector`.

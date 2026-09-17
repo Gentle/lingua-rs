@@ -47,7 +47,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
     LazyLock::new(|| {
         let mut mapping = hashmap!();
 
-        if cfg!(any(feature = "portuguese", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
+        if cfg!(any(feature = "portuguese", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
+        {
             mapping.insert("Ãã", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "portuguese", feature = "external-models")) {
@@ -60,7 +62,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "lithuanian", feature = "external-models")) || cfg!(any(feature = "polish", feature = "external-models")) {
+        if cfg!(any(feature = "lithuanian", feature = "external-models"))
+            || cfg!(any(feature = "polish", feature = "external-models"))
+        {
             mapping.insert("ĄąĘę", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "lithuanian", feature = "external-models")) {
@@ -73,7 +77,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "polish", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) {
+        if cfg!(any(feature = "polish", feature = "external-models"))
+            || cfg!(any(feature = "romanian", feature = "external-models"))
+        {
             mapping.insert("Żż", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "polish", feature = "external-models")) {
@@ -86,7 +92,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "french", feature = "external-models")) || cfg!(any(feature = "luxembourgish", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models"))
+        if cfg!(any(feature = "french", feature = "external-models"))
+            || cfg!(any(feature = "luxembourgish", feature = "external-models"))
+            || cfg!(any(feature = "romanian", feature = "external-models"))
         {
             mapping.insert("Îî", {
                 let mut languages = hashset!();
@@ -103,7 +111,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "basque", feature = "external-models")) || cfg!(any(feature = "spanish", feature = "external-models")) {
+        if cfg!(any(feature = "basque", feature = "external-models"))
+            || cfg!(any(feature = "spanish", feature = "external-models"))
+        {
             mapping.insert("Ññ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "basque", feature = "external-models")) {
@@ -116,7 +126,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "czech", feature = "external-models")) || cfg!(any(feature = "slovak", feature = "external-models")) {
+        if cfg!(any(feature = "czech", feature = "external-models"))
+            || cfg!(any(feature = "slovak", feature = "external-models"))
+        {
             mapping.insert("ŇňŤť", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "czech", feature = "external-models")) {
@@ -129,7 +141,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
+        if cfg!(any(feature = "romanian", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
+        {
             mapping.insert("Ăă", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "romanian", feature = "external-models")) {
@@ -142,7 +156,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "azerbaijani", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models")) {
+        if cfg!(any(feature = "azerbaijani", feature = "external-models"))
+            || cfg!(any(feature = "turkish", feature = "external-models"))
+        {
             mapping.insert("İıĞğ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "azerbaijani", feature = "external-models")) {
@@ -155,7 +171,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "macedonian", feature = "external-models")) || cfg!(any(feature = "serbian", feature = "external-models")) {
+        if cfg!(any(feature = "macedonian", feature = "external-models"))
+            || cfg!(any(feature = "serbian", feature = "external-models"))
+        {
             mapping.insert("ЈјЉљЊњ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "macedonian", feature = "external-models")) {
@@ -168,7 +186,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "vietnamese", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
+        if cfg!(any(feature = "vietnamese", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
+        {
             mapping.insert("ẸẹỌọ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "vietnamese", feature = "external-models")) {
@@ -181,7 +201,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "icelandic", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models")) {
+        if cfg!(any(feature = "icelandic", feature = "external-models"))
+            || cfg!(any(feature = "turkish", feature = "external-models"))
+        {
             mapping.insert("ÐðÞþ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "icelandic", feature = "external-models")) {
@@ -213,7 +235,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "maori", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
+        if cfg!(any(feature = "maori", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
+        {
             mapping.insert("Ōō", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "maori", feature = "external-models")) {
@@ -226,7 +250,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "kazakh", feature = "external-models")) || cfg!(any(feature = "mongolian", feature = "external-models")) {
+        if cfg!(any(feature = "kazakh", feature = "external-models"))
+            || cfg!(any(feature = "mongolian", feature = "external-models"))
+        {
             mapping.insert("ӨөҮү", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "kazakh", feature = "external-models")) {
@@ -239,7 +265,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "latvian", feature = "external-models")) || cfg!(any(feature = "maori", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
+        if cfg!(any(feature = "latvian", feature = "external-models"))
+            || cfg!(any(feature = "maori", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
+        {
             mapping.insert("ĀāĒēĪī", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "latvian", feature = "external-models")) {
@@ -255,7 +284,9 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "azerbaijani", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "turkish", feature = "external-models"))
+        if cfg!(any(feature = "azerbaijani", feature = "external-models"))
+            || cfg!(any(feature = "romanian", feature = "external-models"))
+            || cfg!(any(feature = "turkish", feature = "external-models"))
         {
             mapping.insert("Şş", {
                 let mut languages = hashset!();
@@ -272,7 +303,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "czech", feature = "external-models")) || cfg!(any(feature = "romanian", feature = "external-models")) || cfg!(any(feature = "slovak", feature = "external-models")) {
+        if cfg!(any(feature = "czech", feature = "external-models"))
+            || cfg!(any(feature = "romanian", feature = "external-models"))
+            || cfg!(any(feature = "slovak", feature = "external-models"))
+        {
             mapping.insert("Ďď", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "czech", feature = "external-models")) {
@@ -288,7 +322,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "bosnian", feature = "external-models")) || cfg!(any(feature = "croatian", feature = "external-models")) || cfg!(any(feature = "polish", feature = "external-models")) {
+        if cfg!(any(feature = "bosnian", feature = "external-models"))
+            || cfg!(any(feature = "croatian", feature = "external-models"))
+            || cfg!(any(feature = "polish", feature = "external-models"))
+        {
             mapping.insert("Ćć", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "bosnian", feature = "external-models")) {
@@ -304,7 +341,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "bosnian", feature = "external-models")) || cfg!(any(feature = "croatian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) {
+        if cfg!(any(feature = "bosnian", feature = "external-models"))
+            || cfg!(any(feature = "croatian", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
+        {
             mapping.insert("Đđ", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "bosnian", feature = "external-models")) {
@@ -320,7 +360,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "belarusian", feature = "external-models")) || cfg!(any(feature = "kazakh", feature = "external-models")) || cfg!(any(feature = "ukrainian", feature = "external-models")) {
+        if cfg!(any(feature = "belarusian", feature = "external-models"))
+            || cfg!(any(feature = "kazakh", feature = "external-models"))
+            || cfg!(any(feature = "ukrainian", feature = "external-models"))
+        {
             mapping.insert("Іі", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "belarusian", feature = "external-models")) {
@@ -336,7 +379,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "italian", feature = "external-models")) || cfg!(any(feature = "vietnamese", feature = "external-models")) || cfg!(any(feature = "yoruba", feature = "external-models")) {
+        if cfg!(any(feature = "italian", feature = "external-models"))
+            || cfg!(any(feature = "vietnamese", feature = "external-models"))
+            || cfg!(any(feature = "yoruba", feature = "external-models"))
+        {
             mapping.insert("Ìì", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "italian", feature = "external-models")) {
@@ -352,7 +398,10 @@ pub(crate) static CHARS_TO_LANGUAGES_MAPPING: LazyLock<HashMap<&'static str, Has
             });
         }
 
-        if cfg!(any(feature = "bokmal", feature = "external-models")) || cfg!(any(feature = "danish", feature = "external-models")) || cfg!(any(feature = "nynorsk", feature = "external-models")) {
+        if cfg!(any(feature = "bokmal", feature = "external-models"))
+            || cfg!(any(feature = "danish", feature = "external-models"))
+            || cfg!(any(feature = "nynorsk", feature = "external-models"))
+        {
             mapping.insert("Øø", {
                 let mut languages = hashset!();
                 if cfg!(any(feature = "bokmal", feature = "external-models")) {

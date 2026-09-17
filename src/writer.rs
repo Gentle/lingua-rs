@@ -587,10 +587,10 @@ fn check_output_directory_path(output_directory_path: &Path) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use fst::Streamer;
-    use std::borrow::Cow;
     use crate::detector::CountModelFst;
     use fst::IntoStreamer;
+    use fst::Streamer;
+    use std::borrow::Cow;
     use std::fs;
     use std::path::PathBuf;
     use tempfile::{NamedTempFile, tempdir};
@@ -664,10 +664,11 @@ mod tests {
         // shipped models are requantized from their predecessors in one step.
         // Taken from `quantization::LEVELS` so a change of resolution moves the
         // assertion with it.
-        let (min, max) = expected_file_content.values().fold(
-            (f64::INFINITY, f64::NEG_INFINITY),
-            |(low, high), value| (low.min(*value), high.max(*value)),
-        );
+        let (min, max) = expected_file_content
+            .values()
+            .fold((f64::INFINITY, f64::NEG_INFINITY), |(low, high), value| {
+                (low.min(*value), high.max(*value))
+            });
         let tolerance = (max - min) / crate::quantization::LEVELS as f64 + 1e-12;
 
         for (key, expected_value) in &expected_file_content {

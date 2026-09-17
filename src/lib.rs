@@ -410,10 +410,10 @@ pub use detector::LanguageDetector;
 pub use file::load_models_from_blob;
 #[cfg(all(feature = "pack-models", not(feature = "external-models")))]
 pub use file::write_models_blob;
-#[cfg(feature = "pack-models")]
-pub use quantization::{DEFAULT_QUANTIZATION_LEVELS, requantize_model_files};
 pub use isocode::{IsoCode639_1, IsoCode639_3};
 pub use language::Language;
+#[cfg(feature = "pack-models")]
+pub use quantization::{DEFAULT_QUANTIZATION_LEVELS, requantize_model_files};
 pub use result::DetectionResult;
 #[cfg(target_family = "wasm")]
 pub use wasm::{
