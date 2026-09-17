@@ -281,9 +281,10 @@ mod external {
     #[derive(Default)]
     struct Registry {
         models: HashMap<(Language, &'static str), &'static [u8]>,
-        /// Canonicalized paths already loaded, so loading the same file twice
-        /// is a no-op instead of a duplicate-entry error.
-        loaded: Vec<PathBuf>,
+        /// Canonicalized paths already loaded, with the languages each carries,
+        /// so loading the same file twice is a no-op instead of a
+        /// duplicate-entry error — and still answers what it holds.
+        loaded: Vec<(PathBuf, Vec<IsoCode639_1>)>,
     }
 
     static REGISTRY: OnceLock<Mutex<Registry>> = OnceLock::new();
@@ -304,14 +305,19 @@ mod external {
     /// Must be called before the first language detection. Alternatively, the
     /// path can be provided in the `LINGUA_MODELS_BLOB` environment variable,
     /// which accepts several paths separated by the platform path separator.
-    pub fn load_models_from_blob(path: impl AsRef<Path>) -> Result<()> {
+    ///
+    /// Returns the languages this blob carries, sorted. A caller needs that to
+    /// know what it may build a detector over, and the blob is the only honest
+    /// source: a file name says whatever someone called it, and a blob holding
+    /// 75 languages is as likely to be called `models.lingua` as anything else.
+    pub fn load_models_from_blob(path: impl AsRef<Path>) -> Result<Vec<IsoCode639_1>> {
         let path = path.as_ref();
         let canonical = std::fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
         let mut reg = registry()
             .lock()
             .map_err(|_| Error::new(ErrorKind::Other, "models registry poisoned"))?;
-        if reg.loaded.contains(&canonical) {
-            return Ok(());
+        if let Some((_, codes)) = reg.loaded.iter().find(|(p, _)| p == &canonical) {
+            return Ok(codes.clone());
         }
 
         let file = File::open(path)?;
@@ -337,8 +343,14 @@ mod external {
             }
             reg.models.insert(*key, &mmap[*offset..*offset + *length]);
         }
-        reg.loaded.push(canonical);
-        Ok(())
+        let mut codes: Vec<IsoCode639_1> = index
+            .keys()
+            .map(|(language, _)| language.iso_code_639_1())
+            .collect();
+        codes.sort_by_key(|c| c.to_string());
+        codes.dedup();
+        reg.loaded.push((canonical, codes.clone()));
+        Ok(codes)
     }
 
     /// Load whatever `LINGUA_MODELS_BLOB` names, once.

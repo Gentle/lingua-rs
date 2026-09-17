@@ -605,10 +605,7 @@ impl LanguageDetector {
     ///     ]
     /// );
     /// ```
-    pub fn compute_language_confidence_values(
-        &self,
-        text: &str,
-    ) -> Vec<(Language, f64)> {
+    pub fn compute_language_confidence_values(&self, text: &str) -> Vec<(Language, f64)> {
         self.compute_language_confidence_values_for_languages(text, &self.languages)
     }
 
@@ -951,7 +948,9 @@ impl LanguageDetector {
                 }
 
                 if !is_match {
-                    if cfg!(any(feature = "chinese", feature = "external-models")) && Alphabet::Han.matches_char(character) {
+                    if cfg!(any(feature = "chinese", feature = "external-models"))
+                        && Alphabet::Han.matches_char(character)
+                    {
                         word_language_counter[&Language::from_str("Chinese").unwrap()] += 1;
                     } else if cfg!(any(feature = "japanese", feature = "external-models"))
                         && JAPANESE_CHARACTER_SET.is_char_match(character)
@@ -2332,10 +2331,8 @@ mod tests {
         word: &str,
         expected_languages: HashSet<Language>,
     ) {
-        let filtered_languages = detector_for_all_languages.filter_languages_by_rules(
-            &[word],
-            &detector_for_all_languages.languages,
-        );
+        let filtered_languages = detector_for_all_languages
+            .filter_languages_by_rules(&[word], &detector_for_all_languages.languages);
         assert_eq!(
             filtered_languages, expected_languages,
             "expected {:?} for word '{}', got {:?}",
