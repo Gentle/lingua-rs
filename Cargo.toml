@@ -66,6 +66,25 @@ required-features = ["accuracy-reports"]
 name = "pack_models"
 required-features = ["pack-models"]
 
+[[bin]]
+name = "requantize_models"
+required-features = ["pack-models"]
+
+# The blob examples call `load_models_from_blob`, which only exists under
+# `external-models`. Auto-discovery would build them with default features, so
+# `cargo test` failed to compile them rather than skipping them.
+[[example]]
+name = "external_blob"
+required-features = ["external-models"]
+
+[[example]]
+name = "split_blobs"
+required-features = ["external-models"]
+
+[[example]]
+name = "subset_selection"
+required-features = ["external-models"]
+
 [[bench]]
 name = "benchmark"
 harness = false
@@ -213,8 +232,11 @@ benchmark = ["cld2", "whatlang", "whichlang"]
 # embedding them into the binary. Enables all Language variants without
 # pulling in any model crate. Create the blob with the `pack_models` binary.
 external-models = ["dep:memmap2"]
-# Enables the `pack_models` binary which writes all embedded language models
-# into a single blob file for use with the `external-models` feature.
+# Enables the model-artifact tools, neither of which is needed to *use* the
+# library: `pack_models`, which writes all embedded language models into a
+# single blob file for use with the `external-models` feature, and
+# `requantize_models`, which rewrites the shipped ngram models onto a different
+# quantization grid.
 pack-models = []
 python = ["pyo3", "serde-pickle"]
 afrikaans = ["lingua-afrikaans-language-model"]

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-use crate::detector::{
-    CountModelFst, LanguageModelFst, QUANTIZATION_LEVELS, QUANTIZATION_MAX_KEY,
-    QUANTIZATION_MIN_KEY,
-};
+use crate::detector::{CountModelFst, LanguageModelFst};
 use crate::file::{read_count_model_data_file, read_probability_model_data_file};
 use crate::language::Language;
 use crate::ngram::{Ngram, NgramRef};
+use crate::quantization;
 use itertools::Itertools;
 use regex::Regex;
 use std::borrow::Cow;
@@ -95,36 +93,7 @@ pub(crate) fn load_ngram_count_model(
 }
 
 pub(crate) fn create_fst_map(data: Vec<(Vec<u8>, f64)>) -> LanguageModelFst {
-    let (mut min, mut max) = (0.0_f64, 0.0_f64);
-    for (i, (_, value)) in data.iter().enumerate() {
-        if i == 0 {
-            (min, max) = (*value, *value);
-        } else {
-            min = min.min(*value);
-            max = max.max(*value);
-        }
-    }
-    let range = max - min;
-
-    let mut fst_data = data
-        .into_iter()
-        .map(|(key, value)| {
-            let quantized = if range > 0.0 {
-                ((value - min) / range * QUANTIZATION_LEVELS).round() as u64
-            } else {
-                0
-            };
-            (key, quantized)
-        })
-        .collect_vec();
-    fst_data.push((QUANTIZATION_MIN_KEY.to_vec(), min.to_bits()));
-    fst_data.push((QUANTIZATION_MAX_KEY.to_vec(), max.to_bits()));
-    fst_data.sort_unstable_by(|(first, _), (second, _)| first.cmp(second));
-
-    let mut fst_builder = fst::MapBuilder::memory();
-    fst_builder.extend_iter(fst_data).unwrap();
-
-    let bytes = fst_builder.into_inner().unwrap();
+    let bytes = quantization::build(data, quantization::LEVELS);
     LanguageModelFst::from_fst_map(fst::Map::new(Cow::Owned(bytes)).unwrap())
 }
 
@@ -231,12 +200,15 @@ impl TrainingDataLanguageModel {
     }
 }
 
-pub(crate) fn create_ngrams(words: &[String], ngram_length: usize) -> HashSet<NgramRef<'_>> {
+/// The ngrams borrow the TEXT, not the word slice that located them: `'a` is
+/// the lifetime of the lowercased buffer the words point into, so the returned
+/// refs outlive the `Vec` of words.
+pub(crate) fn create_ngrams<'a>(words: &[&'a str], ngram_length: usize) -> HashSet<NgramRef<'a>> {
     if !(1..6).contains(&ngram_length) {
         panic!("ngram length {ngram_length} is not in range 1..6");
     }
     let mut ngrams = hashset!();
-    for word in words.iter() {
+    for word in words.iter().copied() {
         let chars_count = word.chars().count();
         if chars_count >= ngram_length {
             for i in 0..=chars_count - ngram_length {
@@ -248,10 +220,10 @@ pub(crate) fn create_ngrams(words: &[String], ngram_length: usize) -> HashSet<Ng
     ngrams
 }
 
-pub(crate) fn create_lower_order_ngrams(
-    words: &[String],
+pub(crate) fn create_lower_order_ngrams<'a>(
+    words: &[&'a str],
     ngram_length: usize,
-) -> Vec<Vec<NgramRef<'_>>> {
+) -> Vec<Vec<NgramRef<'a>>> {
     let ngrams = create_ngrams(words, ngram_length);
     let mut lower_order_ngrams = Vec::with_capacity(ngrams.len());
     for ngram in ngrams {
@@ -300,9 +272,14 @@ mod tests {
 
         let expected_value = (7915445f64 / 93616591f64).ln();
         let actual_value = ngram_model.ngrams.get(b"a".to_vec()).unwrap();
+        // Half of this model's own grid step: the shipped models span a much
+        // wider log-probability range than the synthetic fixtures, so the
+        // absolute error the same resolution allows is larger here.
+        let tolerance = ngram_model.ngrams.step() / 2.0 + 1e-12;
         assert!(
-            (actual_value - expected_value).abs() < 1e-3,
-            "expected {expected_value} within quantization tolerance, got {actual_value}"
+            (actual_value - expected_value).abs() <= tolerance,
+            "expected {expected_value} within quantization tolerance ({tolerance}), \
+             got {actual_value}"
         );
     }
 
@@ -860,7 +837,8 @@ mod tests {
             case::fivegram_model(5, expected_fivegrams())
         )]
         fn test_ngram_model_creation(ngram_length: usize, expected_ngrams: Vec<Vec<NgramRef>>) {
-            let words = split_text_into_words(TEXT);
+            let lowercased = crate::detector::lowercase_for_search(TEXT);
+            let words = split_text_into_words(&lowercased);
             let mut model = create_lower_order_ngrams(&words, ngram_length);
             model.sort_by(|first, second| first[0].value.cmp(&second[0].value));
             assert_eq!(model, expected_ngrams);
