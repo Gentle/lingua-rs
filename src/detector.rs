@@ -22,7 +22,6 @@ use std::sync::LazyLock;
 
 use counter::Counter;
 use dashmap::DashMap;
-use fst::Streamer;
 use itertools::Itertools;
 #[cfg(not(target_family = "wasm"))]
 use rayon::prelude::*;
@@ -39,17 +38,14 @@ use crate::model::{
     load_ngram_probability_model,
 };
 use crate::ngram::NgramRef;
+use crate::quantization;
 use crate::result::DetectionResult;
 
-/// Reserved fst keys storing the quantization grid bounds as f64 bit patterns.
-/// Single non-letter bytes cannot collide with real ngram keys because ngrams
-/// consist of letters only.
-pub(crate) const QUANTIZATION_MIN_KEY: &[u8] = &[0x00];
-pub(crate) const QUANTIZATION_MAX_KEY: &[u8] = &[0x01];
-pub(crate) const QUANTIZATION_LEVELS: f64 = 65535.0;
-
-/// An fst map storing ngram log-probabilities quantized to a 16-bit grid
+/// An fst map storing ngram log-probabilities as indices into a uniform grid
 /// between the minimum and maximum log-probability of the model.
+///
+/// The grid — bounds and resolution both — is read out of the map itself; see
+/// [`crate::quantization`] for what is stored and why.
 #[derive(Debug)]
 pub(crate) struct LanguageModelFst {
     map: fst::Map<Cow<'static, [u8]>>,
@@ -59,15 +55,7 @@ pub(crate) struct LanguageModelFst {
 
 impl LanguageModelFst {
     pub(crate) fn from_fst_map(map: fst::Map<Cow<'static, [u8]>>) -> Self {
-        let min = f64::from_bits(
-            map.get(QUANTIZATION_MIN_KEY)
-                .expect("language model misses quantization min key"),
-        );
-        let max = f64::from_bits(
-            map.get(QUANTIZATION_MAX_KEY)
-                .expect("language model misses quantization max key"),
-        );
-        let step = (max - min) / QUANTIZATION_LEVELS;
+        let (min, step) = quantization::grid(&map);
         Self { map, min, step }
     }
 
@@ -82,19 +70,23 @@ impl LanguageModelFst {
         self.map.contains_key(key)
     }
 
+    /// The spacing of this model's grid. A value read back through [`get`] is
+    /// within half of it of the probability that was written; tests assert
+    /// against the model's own step rather than a literal, because the step
+    /// depends on both the resolution and the model's range.
+    ///
+    /// [`get`]: Self::get
+    #[cfg(test)]
+    pub(crate) fn step(&self) -> f64 {
+        self.step
+    }
+
     pub(crate) fn as_fst_bytes(&self) -> &[u8] {
         self.map.as_fst().as_bytes()
     }
 
     pub(crate) fn dequantized_entries(&self) -> Vec<(Vec<u8>, f64)> {
-        let mut entries = vec![];
-        let mut stream = self.map.stream();
-        while let Some((key, quantized)) = stream.next() {
-            if key != QUANTIZATION_MIN_KEY && key != QUANTIZATION_MAX_KEY {
-                entries.push((key.to_vec(), self.min + quantized as f64 * self.step));
-            }
-        }
-        entries
+        quantization::dequantize(&self.map)
     }
 }
 
@@ -256,7 +248,26 @@ impl LanguageDetector {
     ///
     /// assert_eq!(detected_language, Some(English));
     /// ```
-    pub fn detect_language_of<T: Into<String>>(&self, text: T) -> Option<Language> {
+    pub fn detect_language_of(&self, text: &str) -> Option<Language> {
+        self.detect_language_from_languages(text, &self.languages)
+            .map(|(language, _)| language)
+    }
+
+    /// The most likely language *and* its confidence, in one pass.
+    ///
+    /// [`detect_language_of`] already computes every language's confidence and
+    /// then discards them, so asking for the winner's confidence afterwards
+    /// with [`compute_language_confidence`] ranks the whole set a second time —
+    /// exactly twice the work for the pair of calls almost every caller makes.
+    /// This returns both from the one ranking.
+    ///
+    /// The "don't know" rule is the same one `detect_language_of` applies, and
+    /// deliberately lives here rather than at the call site: reimplementing the
+    /// minimum-relative-distance test outside would let the two answers drift.
+    ///
+    /// [`detect_language_of`]: Self::detect_language_of
+    /// [`compute_language_confidence`]: Self::compute_language_confidence
+    pub fn detect_language_with_confidence_of(&self, text: &str) -> Option<(Language, f64)> {
         self.detect_language_from_languages(text, &self.languages)
     }
 
@@ -301,21 +312,21 @@ impl LanguageDetector {
     /// );
     /// ```
     #[cfg(not(target_family = "wasm"))]
-    pub fn detect_languages_in_parallel_of<T: Into<String> + Clone + Send + Sync>(
+    pub fn detect_languages_in_parallel_of<T: AsRef<str> + Sync>(
         &self,
         texts: &[T],
     ) -> Vec<Option<Language>> {
         texts
             .into_par_iter()
-            .map(|text| self.detect_language_of(text.clone()))
+            .map(|text| self.detect_language_of(text.as_ref()))
             .collect()
     }
 
-    fn detect_language_from_languages<T: Into<String>>(
+    fn detect_language_from_languages(
         &self,
-        text: T,
+        text: &str,
         languages: &HashSet<Language>,
-    ) -> Option<Language> {
+    ) -> Option<(Language, f64)> {
         let confidence_values =
             self.compute_language_confidence_values_for_languages(text, languages);
 
@@ -330,7 +341,7 @@ impl LanguageDetector {
             if most_likely_language_probability == &0.0 {
                 return None;
             }
-            return Some(*most_likely_language);
+            return Some((*most_likely_language, *most_likely_language_probability));
         }
 
         let (_, second_most_likely_language_probability) = &confidence_values.get(1).unwrap();
@@ -347,7 +358,7 @@ impl LanguageDetector {
             return None;
         }
 
-        Some(*most_likely_language)
+        Some((*most_likely_language, *most_likely_language_probability))
     }
 
     /// Attempts to detect multiple languages in mixed-language text.
@@ -400,8 +411,8 @@ impl LanguageDetector {
     ///     );
     /// }
     /// ```
-    pub fn detect_multiple_languages_of<T: Into<String>>(&self, text: T) -> Vec<DetectionResult> {
-        let text_str = text.into();
+    pub fn detect_multiple_languages_of(&self, text: &str) -> Vec<DetectionResult> {
+        let text_str = text;
 
         if text_str.is_empty() {
             return vec![];
@@ -453,7 +464,9 @@ impl LanguageDetector {
 
             for (i, token_match) in token_matches.enumerate() {
                 let word = token_match.as_str();
-                let language = self.detect_language_from_languages(word, &languages);
+                let language = self
+                    .detect_language_from_languages(word, &languages)
+                    .map(|(language, _)| language);
 
                 if i == 0 || (current_language.is_none() && language.is_some()) {
                     current_language = language;
@@ -537,13 +550,13 @@ impl LanguageDetector {
     /// [`detect_multiple_languages_of`](#method.detect_multiple_languages_of)
     /// instead.
     #[cfg(not(target_family = "wasm"))]
-    pub fn detect_multiple_languages_in_parallel_of<T: Into<String> + Clone + Send + Sync>(
+    pub fn detect_multiple_languages_in_parallel_of<T: AsRef<str> + Sync>(
         &self,
         texts: &[T],
     ) -> Vec<Vec<DetectionResult>> {
         texts
             .into_par_iter()
-            .map(|text| self.detect_multiple_languages_of(text.clone()))
+            .map(|text| self.detect_multiple_languages_of(text.as_ref()))
             .collect()
     }
 
@@ -592,9 +605,9 @@ impl LanguageDetector {
     ///     ]
     /// );
     /// ```
-    pub fn compute_language_confidence_values<T: Into<String>>(
+    pub fn compute_language_confidence_values(
         &self,
-        text: T,
+        text: &str,
     ) -> Vec<(Language, f64)> {
         self.compute_language_confidence_values_for_languages(text, &self.languages)
     }
@@ -657,19 +670,19 @@ impl LanguageDetector {
     ///     ]
     /// );
     #[cfg(not(target_family = "wasm"))]
-    pub fn compute_language_confidence_values_in_parallel<T: Into<String> + Clone + Send + Sync>(
+    pub fn compute_language_confidence_values_in_parallel<T: AsRef<str> + Sync>(
         &self,
         texts: &[T],
     ) -> Vec<Vec<(Language, f64)>> {
         texts
             .into_par_iter()
-            .map(|text| self.compute_language_confidence_values(text.clone()))
+            .map(|text| self.compute_language_confidence_values(text.as_ref()))
             .collect()
     }
 
-    fn compute_language_confidence_values_for_languages<T: Into<String>>(
+    fn compute_language_confidence_values_for_languages(
         &self,
-        text: T,
+        text: &str,
         languages: &HashSet<Language>,
     ) -> Vec<(Language, f64)> {
         let mut values = Vec::with_capacity(languages.len());
@@ -678,8 +691,12 @@ impl LanguageDetector {
             values.push((*language, 0.0));
         }
 
-        let text_str = text.into();
-        let words = split_text_into_words(&text_str);
+        // One buffer for the lowercased text, and the words borrow slices of it.
+        // `split_text_into_words` used to allocate a `String` per word on top of
+        // this, which for a sentence is dozens of allocations that never
+        // outlive the call.
+        let lowercased = lowercase_for_search(text);
+        let words = split_text_into_words(&lowercased);
 
         if words.is_empty() {
             return values;
@@ -783,7 +800,7 @@ impl LanguageDetector {
     ///
     /// assert_eq!(rounded_confidence, 0.04);
     /// ```
-    pub fn compute_language_confidence<T: Into<String>>(&self, text: T, language: Language) -> f64 {
+    pub fn compute_language_confidence(&self, text: &str, language: Language) -> f64 {
         self.compute_language_confidence_values(text)
             .iter()
             .find(|(lang, _)| *lang == language)
@@ -844,18 +861,18 @@ impl LanguageDetector {
     /// );
     /// ```
     #[cfg(not(target_family = "wasm"))]
-    pub fn compute_language_confidence_in_parallel<T: Into<String> + Clone + Send + Sync>(
+    pub fn compute_language_confidence_in_parallel<T: AsRef<str> + Sync>(
         &self,
         texts: &[T],
         language: Language,
     ) -> Vec<f64> {
         texts
             .into_par_iter()
-            .map(|text| self.compute_language_confidence(text.clone(), language))
+            .map(|text| self.compute_language_confidence(text.as_ref(), language))
             .collect()
     }
 
-    fn detect_language_with_unique_and_common_ngrams(&self, words: &[String]) -> Option<Language> {
+    fn detect_language_with_unique_and_common_ngrams(&self, words: &[&str]) -> Option<Language> {
         let mut filtered_languages = hashset!();
         for ngram_length in (1..6usize).rev() {
             let ngrams = create_ngrams(words, ngram_length);
@@ -913,7 +930,7 @@ impl LanguageDetector {
 
     fn detect_language_with_rules(
         &self,
-        words: &[String],
+        words: &[&str],
         languages: &HashSet<Language>,
     ) -> Option<Language> {
         let mut total_language_counter = Counter::<Option<Language>>::new();
@@ -1018,7 +1035,7 @@ impl LanguageDetector {
 
     fn filter_languages_by_rules(
         &self,
-        words: &[String],
+        words: &[&str],
         languages: &HashSet<Language>,
     ) -> HashSet<Language> {
         let mut alphabet_counter = Counter::<Alphabet>::new();
@@ -1147,10 +1164,27 @@ impl LanguageDetector {
     }
 }
 
-pub(crate) fn split_text_into_words(text: &str) -> Vec<String> {
+/// The lowercased form the tokenizer and the ngram lookups work on.
+///
+/// `Cow`, because text that is already lowercase — which a lot of input is —
+/// needs no buffer at all, and this is on the per-call path.
+pub(crate) fn lowercase_for_search(text: &str) -> Cow<'_, str> {
+    let trimmed = text.trim();
+    if trimmed.chars().any(char::is_uppercase) {
+        Cow::Owned(trimmed.to_lowercase())
+    } else {
+        Cow::Borrowed(trimmed)
+    }
+}
+
+/// Word slices of an already-lowercased, already-trimmed buffer.
+///
+/// Borrows rather than owns: the words live exactly as long as the call that
+/// tokenized them, and `NgramRef` borrows from them in turn.
+pub(crate) fn split_text_into_words(text: &str) -> Vec<&str> {
     TOKENS_WITHOUT_WHITESPACE
-        .find_iter(&text.trim().to_lowercase())
-        .map(|mat| mat.as_str().to_string())
+        .find_iter(text)
+        .map(|mat| mat.as_str())
         .collect()
 }
 
@@ -1385,6 +1419,19 @@ mod tests {
 
     fn round_to_two_decimal_places(value: f64) -> f64 {
         (value * 100.0).round() / 100.0
+    }
+
+    /// Half a grid step over the synthetic fixtures below — the error
+    /// `quantization::build` is allowed on a single looked-up probability.
+    ///
+    /// Derived from `quantization::LEVELS` rather than written as a literal, so
+    /// a change of resolution moves these assertions with it. A literal would
+    /// go stale in the direction that still passes.
+    fn quantization_tolerance() -> f64 {
+        // The widest range either fixture spans: English "a" (0.01) to German
+        // "alter" (0.3). An upper bound over both models is what a tolerance
+        // wants.
+        (0.3_f64.ln() - 0.01_f64.ln()) / (2.0 * quantization::LEVELS as f64) + 1e-12
     }
 
     #[fixture]
@@ -1622,7 +1669,11 @@ mod tests {
         )
     )]
     fn test_split_text_into_words(text: &str, expected_words: Vec<&str>) {
-        assert_eq!(split_text_into_words(text), expected_words);
+        // Composed the way the detector composes them: lowercasing is its own
+        // step now, so the splitter can hand back slices of the buffer rather
+        // than a `String` per word.
+        let lowercased = lowercase_for_search(text);
+        assert_eq!(split_text_into_words(&lowercased), expected_words);
     }
 
     #[rstest(
@@ -1655,7 +1706,7 @@ mod tests {
 
         match (probability, expected_probability) {
             (Some(actual), Some(expected)) => assert!(
-                (actual - expected).abs() < 1e-3,
+                (actual - expected).abs() <= quantization_tolerance(),
                 "expected probability {expected} within quantization tolerance \
                  for language '{language:?}' and ngram '{ngram}', got {actual}"
             ),
@@ -1698,7 +1749,9 @@ mod tests {
                 f64,
                 sum_of_probabilities,
                 expected_sum_of_probabilities,
-                epsilon = 1e-3
+                // One lookup per backoff chain, and the errors can all point
+                // the same way.
+                epsilon = ngram_model.len() as f64 * quantization_tolerance()
             ),
             "expected sum {} for language '{:?}' and ngrams {:?}, got {}",
             expected_sum_of_probabilities,
@@ -1746,7 +1799,12 @@ mod tests {
             let expected_probability = expected_probabilities[&language];
 
             assert!(
-                approx_eq!(f64, probability, expected_probability, epsilon = 1e-3),
+                approx_eq!(
+                    f64,
+                    probability,
+                    expected_probability,
+                    epsilon = ngram_model.len() as f64 * quantization_tolerance()
+                ),
                 "expected probability {} for language '{:?}', got {}",
                 expected_probability,
                 language,
@@ -2275,7 +2333,7 @@ mod tests {
         expected_languages: HashSet<Language>,
     ) {
         let filtered_languages = detector_for_all_languages.filter_languages_by_rules(
-            &vec![word.to_string()],
+            &[word],
             &detector_for_all_languages.languages,
         );
         assert_eq!(
