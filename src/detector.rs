@@ -1119,7 +1119,7 @@ impl LanguageDetector {
         const PARALLEL_FROM: usize = 8;
 
         #[cfg(not(target_family = "wasm"))]
-        if filtered_languages.len() >= PARALLEL_FROM {
+        if filtered_languages.len() >= PARALLEL_FROM && !already_parallel() {
             return filtered_languages
                 .par_iter()
                 .filter_map(|language| {
@@ -1206,7 +1206,8 @@ impl LanguageDetector {
         };
 
         #[cfg(not(target_family = "wasm"))]
-        let counts: Vec<(Language, usize)> = if filtered_languages.len() >= 8 {
+        let counts: Vec<(Language, usize)> = if filtered_languages.len() >= 8 && !already_parallel()
+        {
             filtered_languages
                 .par_iter()
                 .filter_map(count_for)
@@ -1237,6 +1238,17 @@ pub(crate) fn lowercase_for_search(text: &str) -> Cow<'_, str> {
     } else {
         Cow::Borrowed(trimmed)
     }
+}
+
+/// True when the caller is already running on a rayon worker.
+///
+/// The batch APIs parallelise across TEXTS; scoring parallelises across
+/// LANGUAGES. Doing both at once turns one text's work into dozens of tasks
+/// that each do very little, and rayon spends more on scheduling than the
+/// lookups cost. Whichever level got there first keeps the cores.
+#[cfg(not(target_family = "wasm"))]
+fn already_parallel() -> bool {
+    rayon::current_thread_index().is_some()
 }
 
 /// Word slices of an already-lowercased, already-trimmed buffer.
@@ -1366,7 +1378,20 @@ fn compute_confidence_values(
     probability_maps: Vec<HashMap<Language, f64>>,
     probabilities: HashMap<Language, f64>,
 ) {
-    let denominator: f64 = probabilities.values().sum();
+    // Summed in a fixed order, for the same reason `create_lower_order_ngrams`
+    // sorts: float addition is not associative and a HashMap's iteration order
+    // is not fixed. This map is filled by iterating `filtered_languages`, which
+    // `filter_languages_by_rules` collects through `into_par_iter`, so the
+    // insertion order — and with it the layout read back here — varies between
+    // two detections of the same text.
+    //
+    // Ascending also loses less precision than an arbitrary order, since the
+    // small terms accumulate before they meet the large ones.
+    let denominator: f64 = {
+        let mut terms: Vec<f64> = probabilities.values().copied().collect();
+        terms.sort_by(f64::total_cmp);
+        terms.iter().sum()
+    };
 
     // If the denominator is still zero, the exponent of the summed
     // log probabilities is too large to be computed for very long input strings.
@@ -1375,11 +1400,18 @@ fn compute_confidence_values(
     if denominator == 0.0 {
         // For very long inputs, only trigrams are used, so we safely access them at index 0.
         let probability_map = &probability_maps[0];
+        // Ties broken by language rather than by hash order, for the same
+        // reason: `max_by` keeps the last maximum it sees, and which one that
+        // is depended on the map's layout.
         let most_likely_language = *probability_map
             .iter()
-            .max_by(|(_, first_probability), (_, second_probability)| {
-                first_probability.total_cmp(second_probability)
-            })
+            .max_by(
+                |(first_language, first_probability), (second_language, second_probability)| {
+                    first_probability
+                        .total_cmp(second_probability)
+                        .then_with(|| second_language.cmp(first_language))
+                },
+            )
             .unwrap()
             .0;
 

@@ -229,6 +229,17 @@ pub(crate) fn create_lower_order_ngrams<'a>(
     for ngram in ngrams {
         lower_order_ngrams.push(ngram.range_of_lower_order_ngrams().collect_vec());
     }
+    // Sorted, because `create_ngrams` returns a HashSet and the caller adds one
+    // f64 per entry in this order. Floating-point addition is not associative,
+    // so an arbitrary order made the log-probability sum — and therefore the
+    // reported confidence — differ in its last ulp between two detections of
+    // the SAME text in the SAME process. Languages never changed; the numbers
+    // were simply not reproducible, which is enough to make any recorded
+    // confidence value a flaky assertion.
+    //
+    // Once per ngram length per detection, against a per-language fst lookup
+    // for every entry, so it does not show up in a benchmark.
+    lower_order_ngrams.sort_unstable_by(|a, b| a[0].value.cmp(b[0].value));
     lower_order_ngrams
 }
 
@@ -839,8 +850,13 @@ mod tests {
         fn test_ngram_model_creation(ngram_length: usize, expected_ngrams: Vec<Vec<NgramRef>>) {
             let lowercased = crate::detector::lowercase_for_search(TEXT);
             let words = split_text_into_words(&lowercased);
-            let mut model = create_lower_order_ngrams(&words, ngram_length);
-            model.sort_by(|first, second| first[0].value.cmp(&second[0].value));
+            // Compared WITHOUT sorting here, unlike every other reading of a
+            // set-derived list in this crate: `create_lower_order_ngrams` sorts
+            // its own output, and the caller sums one f64 per entry in that
+            // order. This test is the only thing that pins the order down, so
+            // sorting first — as it did while the order was arbitrary — would
+            // let the guarantee lapse without a failure.
+            let model = create_lower_order_ngrams(&words, ngram_length);
             assert_eq!(model, expected_ngrams);
         }
     }
