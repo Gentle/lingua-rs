@@ -1106,6 +1106,29 @@ impl LanguageDetector {
         model: &[Vec<NgramRef>],
         filtered_languages: &HashSet<Language>,
     ) -> HashMap<Language, f64> {
+        // Across languages, in parallel. Each language sums over its own fst and
+        // shares nothing with the others, so this is the one genuinely
+        // embarrassingly parallel step in a detection — and it was the only hot
+        // loop in this file rayon had not been pointed at. The existing
+        // `par_iter` calls parallelise batches of TEXTS and model preloading;
+        // a single `detect` ran all 75 languages on one core.
+        //
+        // Not worth it for a handful of candidates: the join costs more than the
+        // work. Below the threshold this stays sequential, which is also the
+        // common case for a narrowed detector.
+        const PARALLEL_FROM: usize = 8;
+
+        #[cfg(not(target_family = "wasm"))]
+        if filtered_languages.len() >= PARALLEL_FROM {
+            return filtered_languages
+                .par_iter()
+                .filter_map(|language| {
+                    let sum = self.compute_sum_of_ngram_probabilities(*language, model);
+                    (sum < 0.0).then_some((*language, sum))
+                })
+                .collect();
+        }
+
         let mut probabilities = hashmap!();
         for language in filtered_languages.iter() {
             let sum = self.compute_sum_of_ngram_probabilities(*language, model);
@@ -1121,10 +1144,28 @@ impl LanguageDetector {
         language: Language,
         ngram_model: &[Vec<NgramRef>],
     ) -> f64 {
+        // The model is resolved ONCE, not once per ngram.
+        //
+        // `look_up_ngram_probability` does two DashMap operations before it
+        // touches the fst — a `contains_key` to load on demand, then a `get` for
+        // the guard — and both answer the same question for every ngram in this
+        // call. At 75 languages a sentence ran tens of thousands of hash lookups
+        // and shard locks to find 75 models.
+        //
+        // A missing model contributes nothing, which is what the per-ngram
+        // version did too: every lookup returned `None`, the sum stayed 0.0, and
+        // the caller only records a language whose sum is negative.
+        if !load_probability_model(self.ngram_language_models, language) {
+            return 0.0;
+        }
+        let Some(model) = self.ngram_language_models.get(&language) else {
+            return 0.0;
+        };
+
         let mut sum = 0.0;
         for ngrams in ngram_model.iter() {
             for ngram in ngrams {
-                if let Some(probability) = self.look_up_ngram_probability(language, ngram) {
+                if let Some(probability) = model.get(ngram.value) {
                     sum += probability;
                     break;
                 }
@@ -1148,16 +1189,38 @@ impl LanguageDetector {
         unigram_model: &[Vec<NgramRef>],
         filtered_languages: &HashSet<Language>,
     ) -> Counter<Language> {
-        let mut unigram_counter = Counter::<Language>::new();
-        for language in filtered_languages.iter() {
-            for unigrams in unigram_model.iter() {
-                if self
-                    .look_up_ngram_probability(*language, unigrams.first().unwrap())
-                    .is_some()
-                {
-                    unigram_counter[language] += 1;
-                }
+        // Same two fixes as `compute_sum_of_ngram_probabilities`: resolve each
+        // language's model once rather than per unigram, and score the
+        // languages in parallel. A language matching nothing stays absent from
+        // the counter, exactly as it did when the increment never ran.
+        let count_for = |language: &Language| -> Option<(Language, usize)> {
+            if !load_probability_model(self.ngram_language_models, *language) {
+                return None;
             }
+            let model = self.ngram_language_models.get(language)?;
+            let matched = unigram_model
+                .iter()
+                .filter(|unigrams| model.get(unigrams.first().unwrap().value).is_some())
+                .count();
+            (matched > 0).then_some((*language, matched))
+        };
+
+        #[cfg(not(target_family = "wasm"))]
+        let counts: Vec<(Language, usize)> = if filtered_languages.len() >= 8 {
+            filtered_languages
+                .par_iter()
+                .filter_map(count_for)
+                .collect()
+        } else {
+            filtered_languages.iter().filter_map(count_for).collect()
+        };
+        #[cfg(target_family = "wasm")]
+        let counts: Vec<(Language, usize)> =
+            filtered_languages.iter().filter_map(count_for).collect();
+
+        let mut unigram_counter = Counter::<Language>::new();
+        for (language, matched) in counts {
+            unigram_counter[&language] += matched;
         }
         unigram_counter
     }
