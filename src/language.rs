@@ -44,6 +44,7 @@ use crate::isocode::{IsoCode639_1, IsoCode639_3};
 #[cfg_attr(
     feature = "python",
     pyo3::prelude::pyclass(
+        from_py_object,
         eq,
         eq_int,
         frozen,
