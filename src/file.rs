@@ -454,16 +454,24 @@ pub fn write_models_blob(output_path: impl AsRef<std::path::Path>) -> std::io::R
     const BLOB_MAGIC: &[u8; 8] = b"LINGUA\0\x01";
     const FILE_NAMES: [&str; 3] = ["ngrams.fst", "unique-ngrams.fst", "mostcommon-ngrams.fst"];
 
+    // A language may ship without unique ngrams: upstream's Luxembourgish has
+    // no `unique-ngrams.fst`, since none of its ngrams are unique to it. The
+    // embedded reader takes the missing file as "no unique-ngram model", which
+    // matches nothing. An empty set matches nothing too, so the blob carries
+    // one: detection is unchanged, and every language keeps all three entries,
+    // which readers of the format (ours and axite-lingua's tools) rely on.
+    let empty_set: Vec<u8> = fst::SetBuilder::memory().into_inner().unwrap();
+
     let mut entries: Vec<(String, &str, &[u8])> = vec![];
     for language in Language::iter() {
         let directory = get_language_models_directory(language);
         for file_name in FILE_NAMES {
-            let file = directory.get_file(file_name).ok_or(ErrorKind::NotFound)?;
-            entries.push((
-                language.iso_code_639_1().to_string(),
-                file_name,
-                file.contents(),
-            ));
+            let contents = match directory.get_file(file_name) {
+                Some(file) => file.contents(),
+                None if file_name == "unique-ngrams.fst" => empty_set.as_slice(),
+                None => return Err(ErrorKind::NotFound.into()),
+            };
+            entries.push((language.iso_code_639_1().to_string(), file_name, contents));
         }
     }
 
