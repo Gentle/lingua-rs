@@ -106,7 +106,22 @@ pub(crate) fn grid<D: AsRef<[u8]>>(map: &fst::Map<D>) -> (f64, f64) {
 }
 
 /// Every real entry's ngram and log-probability, grid keys dropped.
+///
+/// A map with no grid at all is in upstream lingua's own format, each value
+/// the raw `f64` bit pattern of its log-probability. That is what a language
+/// arriving from upstream looks like (Luxembourgish did), so the tooling reads
+/// it as such: quantizing a new upstream model is the same [`build`] call that
+/// requantizes an old one. The detector never takes this path — it reads
+/// through [`grid`], which refuses a model without bounds.
 pub(crate) fn dequantize<D: AsRef<[u8]>>(map: &fst::Map<D>) -> Vec<(Vec<u8>, f64)> {
+    if map.get(MIN_KEY).is_none() && map.get(MAX_KEY).is_none() {
+        let mut entries = vec![];
+        let mut stream = map.stream();
+        while let Some((key, bits)) = stream.next() {
+            entries.push((key.to_vec(), f64::from_bits(bits)));
+        }
+        return entries;
+    }
     let (min, step) = grid(map);
     let mut entries = vec![];
     let mut stream = map.stream();
@@ -274,6 +289,30 @@ mod tests {
         for (key, value) in entries {
             let actual = min + narrow.get(&key).unwrap() as f64 * step;
             assert!((actual - value).abs() <= step / 2.0 + 1e-9);
+        }
+    }
+
+    /// An upstream model stores raw `f64` bit patterns and no grid; the tooling
+    /// reads it as exactly those values, so quantizing it is one `build`.
+    #[test]
+    fn an_upstream_model_is_read_as_raw_floats() {
+        let entries: Vec<(Vec<u8>, f64)> = (0..100)
+            .map(|i| (format!("u{i:03}").into_bytes(), -15.0 + i as f64 * 0.11))
+            .collect();
+        let mut builder = fst::MapBuilder::memory();
+        builder
+            .extend_iter(entries.iter().map(|(k, v)| (k.clone(), v.to_bits())))
+            .unwrap();
+        let upstream = map(builder.into_inner().unwrap());
+
+        assert_eq!(dequantize(&upstream), entries);
+
+        let quantized = map(build(dequantize(&upstream), LEVELS));
+        assert_eq!(quantized.get(LEVELS_KEY), Some(LEVELS));
+        let (min, step) = grid(&quantized);
+        for (key, value) in entries {
+            let actual = min + quantized.get(&key).unwrap() as f64 * step;
+            assert!((actual - value).abs() <= step / 2.0 + 1e-12);
         }
     }
 
